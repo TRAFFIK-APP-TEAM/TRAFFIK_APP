@@ -2,9 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRAFFIK_APP.Views.DashboardPage"
              BackgroundColor="#000000"
+             Shell.TabBarIsVisible="False"
              Title="Dashboard">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*,Auto">
     <!-- Top Bar -->
     <Grid Padding="24" Row="0">
       <Grid.ColumnDefinitions>
@@ -115,5 +116,51 @@
         </Border>
       </VerticalStackLayout>
     </ScrollView>
+
+    <!-- Bottom Navigation Bar -->
+    <Grid Grid.Row="2"
+          BackgroundColor="#1E1E1E"
+          HeightRequest="70"
+          Padding="10,0"
+          ColumnSpacing="25">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackLayout Grid.Column="0" HorizontalOptions="Center">
+            <ImageButton Source="home.png"
+                         Command="{Binding GoHomeCommand}"
+                         BackgroundColor="Transparent"
+                         HeightRequest="28" WidthRequest="28"/>
+            <Label Text="Home" FontSize="12" TextColor="#007AFF" HorizontalOptions="Center"/>
+        </StackLayout>
+
+        <StackLayout Grid.Column="1" HorizontalOptions="Center">
+            <ImageButton Source="appointment.png"
+                         Command="{Binding GoAppointmentsCommand}"
+                         BackgroundColor="Transparent"
+                         HeightRequest="28" WidthRequest="28"/>
+            <Label Text="Appointment" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
+        </StackLayout>
+
+        <StackLayout Grid.Column="2" HorizontalOptions="Center">
+            <ImageButton Source="rewards.png"
+                         Command="{Binding GoRewardsCommand}"
+                         BackgroundColor="Transparent"
+                         HeightRequest="28" WidthRequest="28"/>
+            <Label Text="Rewards" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
+        </StackLayout>
+
+        <StackLayout Grid.Column="3" HorizontalOptions="Center">
+            <ImageButton Source="account.png"
+                         Command="{Binding GoAccountCommand}"
+                         BackgroundColor="Transparent"
+                         HeightRequest="28" WidthRequest="28"/>
+            <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
+        </StackLayout>
+    </Grid>
   </Grid>
 </ContentPage>

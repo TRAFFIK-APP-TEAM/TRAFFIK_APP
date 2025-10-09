@@ -45,6 +45,7 @@ namespace TRAFFIK_APP
             Routing.RegisterRoute(nameof(BookingPage), typeof(BookingPage));
             Routing.RegisterRoute(nameof(RewardsPage), typeof(RewardsPage));
             Routing.RegisterRoute(nameof(AccountPage), typeof(AccountPage));
+            Routing.RegisterRoute(nameof(AddVehiclePage), typeof(AddVehiclePage));
             
             // API Clients with timeout configuration
             builder.Services.AddHttpClient<AuthClient>(client =>
@@ -123,11 +124,16 @@ namespace TRAFFIK_APP
             builder.Services.AddSingleton<RewardClient>();
             builder.Services.AddSingleton<NotificationClient>();
             builder.Services.AddSingleton<VehicleClient>();
+            builder.Services.AddSingleton<CarTypeClient>();
 
 
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<SignupViewModel>();
             builder.Services.AddTransient<DashboardViewModel>();
+            builder.Services.AddTransient<AccountViewModel>();
+            builder.Services.AddTransient<AddVehicleViewModel>();
+            builder.Services.AddTransient<BookingViewModel>();
+            builder.Services.AddTransient<RewardsViewModel>();
 
             builder.Services.AddTransient<DashboardPage>();
             builder.Services.AddTransient<SignupPage>();

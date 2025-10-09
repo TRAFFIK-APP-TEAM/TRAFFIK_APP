@@ -18,8 +18,13 @@ namespace TRAFFIK_APP.ViewModels
         public ObservableCollection<Vehicle> Vehicles { get; } = new();
 
         public int RewardBalance { get; set; }
+        public string UserFullName => _session.UserName;
 
         public Command LoadDashboardCommand { get; }
+        public Command GoHomeCommand { get; }
+        public Command GoAppointmentsCommand { get; }
+        public Command GoRewardsCommand { get; }
+        public Command GoAccountCommand { get; }
 
         public DashboardViewModel(
             BookingClient bookingClient,
@@ -35,6 +40,10 @@ namespace TRAFFIK_APP.ViewModels
             _session = session;
 
             LoadDashboardCommand = new Command(() => ExecuteSafeAsync(LoadDashboardAsync, "Loading dashboard..."));
+            GoHomeCommand = new Command(async () => await Shell.Current.GoToAsync("//DashboardPage"));
+            GoAppointmentsCommand = new Command(async () => await Shell.Current.GoToAsync("//BookingPage"));
+            GoRewardsCommand = new Command(async () => await Shell.Current.GoToAsync("//RewardsPage"));
+            GoAccountCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
         }
 
         private async Task LoadDashboardAsync()
