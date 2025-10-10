@@ -10,20 +10,12 @@ namespace TRAFFIK_APP.ViewModels
     {
         private readonly SessionService _session;
         private readonly VehicleClient _vehicleClient;
-        private readonly CarTypeClient _carTypeClient;
 
-        private string _vehicleNickname = string.Empty;
+        //private string _vehicleNickname = string.Empty;
         private string _vehicleMake = string.Empty;
         private string _vehicleModel = string.Empty;
-        private string _vehicleColor = string.Empty;
         private string _licensePlate = string.Empty;
-        private CarType? _selectedVehicleType;
-
-        public string VehicleNickname
-        {
-            get => _vehicleNickname;
-            set => SetProperty(ref _vehicleNickname, value);
-        }
+        private string _selectedVehicleType = string.Empty;
 
         public string VehicleMake
         {
@@ -37,25 +29,19 @@ namespace TRAFFIK_APP.ViewModels
             set => SetProperty(ref _vehicleModel, value);
         }
 
-        public string VehicleColor
-        {
-            get => _vehicleColor;
-            set => SetProperty(ref _vehicleColor, value);
-        }
-
         public string LicensePlate
         {
             get => _licensePlate;
             set => SetProperty(ref _licensePlate, value);
         }
 
-        public CarType? SelectedVehicleType
+        public string SelectedVehicleType
         {
             get => _selectedVehicleType;
             set => SetProperty(ref _selectedVehicleType, value);
         }
 
-        public ObservableCollection<CarType> VehicleTypes { get; } = new();
+        public ObservableCollection<Vehicle> VehicleTypes { get; } = new();
 
         public string UserFullName => _session.UserName;
 
@@ -65,11 +51,10 @@ namespace TRAFFIK_APP.ViewModels
         public ICommand GoRewardsCommand { get; }
         public ICommand GoAccountCommand { get; }
 
-        public AddVehicleViewModel(SessionService session, VehicleClient vehicleClient, CarTypeClient carTypeClient)
+        public AddVehicleViewModel(SessionService session, VehicleClient vehicleClient)
         {
             _session = session;
             _vehicleClient = vehicleClient;
-            _carTypeClient = carTypeClient;
 
             AddVehicleCommand = new Command(async () => await ExecuteSafeAsync(AddVehicleAsync, "Saving vehicle..."));
             GoHomeCommand = new Command(async () => await NavigateToAsync("//DashboardPage"));
@@ -85,15 +70,7 @@ namespace TRAFFIK_APP.ViewModels
         {
             try
             {
-                var types = await _carTypeClient.GetAllAsync();
-                if (types != null && types.Count > 0)
-                {
-                    VehicleTypes.Clear();
-                    foreach (var type in types)
-                    {
-                        VehicleTypes.Add(type);
-                    }
-                }
+                var types = await _vehicleClient.GetAllVehicleTypesAsync();
             }
             catch (Exception ex)
             {
@@ -119,6 +96,12 @@ namespace TRAFFIK_APP.ViewModels
                     return;
                 }
 
+                if (string.IsNullOrWhiteSpace(LicensePlate))
+                {
+                    ErrorMessage = "Please enter the vehicle License Plate.";
+                    return;
+                }
+
                 if (SelectedVehicleType == null)
                 {
                     ErrorMessage = "Please select a vehicle type.";
@@ -134,12 +117,14 @@ namespace TRAFFIK_APP.ViewModels
                 // Create vehicle DTO
                 // Note: VehicleDto doesn't have all properties, so we'll use what's available
                 // The nickname and color can be stored in the Model field or we may need to update the DTO
+                //removed VehicleNickname and colour, can reintroduce once table corrected
                 var vehicleDto = new VehicleDto
                 {
                     Make = VehicleMake,
-                    Model = string.IsNullOrWhiteSpace(VehicleNickname) ? VehicleModel : $"{VehicleModel} ({VehicleNickname})",
+                    Model = VehicleModel,
                     LicensePlate = LicensePlate,
-                    ImageUrl = "" // Default empty for now
+                    ImageUrl = "", // Default empty for now
+                    VehicleType = SelectedVehicleType // This is the string selected from the dropdown
                 };
 
                 var result = await _vehicleClient.CreateAsync(vehicleDto);

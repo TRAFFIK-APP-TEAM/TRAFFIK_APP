@@ -11,6 +11,5 @@ public class Booking
     public bool IsConfirmed { get; set; }
 
     public User? User { get; set; }
-    public CarModel? CarModel { get; set; }
     public ServiceCatalog? ServiceCatalog { get; set; }
 }

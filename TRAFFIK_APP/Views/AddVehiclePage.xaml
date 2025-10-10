@@ -28,7 +28,7 @@
 
                     <VerticalStackLayout Spacing="25">
 
-                        <!-- Nickname -->
+                        <!-- 
                         <StackLayout>
                             <Label Text="Vehicle Nickname (Optional)"
                                    TextColor="White" FontSize="16" Margin="0,0,0,5"/>
@@ -38,7 +38,7 @@
                                    BackgroundColor="#333333"
                                    HeightRequest="45"/>
                         </StackLayout>
-
+-->
                         <!-- Vehicle Type -->
                         <StackLayout>
                             <Label Text="Vehicle Type"
@@ -69,17 +69,6 @@
                                    TextColor="White" FontSize="16" Margin="0,0,0,5"/>
                             <Entry Placeholder="E.g. Camry"
                                    Text="{Binding VehicleModel}"
-                                   TextColor="White" PlaceholderColor="Gray"
-                                   BackgroundColor="#333333"
-                                   HeightRequest="45"/>
-                        </StackLayout>
-
-                        <!-- Vehicle Color -->
-                        <StackLayout>
-                            <Label Text="Vehicle Color (Optional)"
-                                   TextColor="White" FontSize="16" Margin="0,0,0,5"/>
-                            <Entry Placeholder="E.g. White"
-                                   Text="{Binding VehicleColor}"
                                    TextColor="White" PlaceholderColor="Gray"
                                    BackgroundColor="#333333"
                                    HeightRequest="45"/>

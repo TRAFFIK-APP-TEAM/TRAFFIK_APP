@@ -37,34 +37,6 @@ namespace TRAFFIK_APP.Configuration
             public const string UpdateStage = $"{BaseUrl}/api/BookingStages/UpdateStage"; // Update stage status using DTO
         }
 
-        public static class Vehicle
-        {
-            public const string GetAll = $"{BaseUrl}/api/CarModels"; // Get all car models
-            public const string Create = $"{BaseUrl}/api/CarModels"; // Create a new car model
-            public const string GetById = $"{BaseUrl}/api/CarModels/{{id}}"; // Get car model by ID
-            public const string UpdateById = $"{BaseUrl}/api/CarModels/{{id}}"; // Update car model by ID
-            public const string DeleteById = $"{BaseUrl}/api/CarModels/{{id}}"; // Delete car model by ID
-            public const string GetByUser = $"{BaseUrl}/api/CarModels/User/{{userId}}"; // Get vehicles linked to a user
-        }
-
-        public static class CarTypes
-        {
-            public const string GetAll = $"{BaseUrl}/api/CarTypes"; // Get all car types
-            public const string Create = $"{BaseUrl}/api/CarTypes"; // Create a new car type
-            public const string GetById = $"{BaseUrl}/api/CarTypes/{{id}}"; // Get car type by ID
-            public const string UpdateById = $"{BaseUrl}/api/CarTypes/{{id}}"; // Update car type by ID
-            public const string DeleteById = $"{BaseUrl}/api/CarTypes/{{id}}"; // Delete car type by ID
-        }
-
-        public static class CarTypeServices
-        {
-            public const string GetAll = $"{BaseUrl}/api/CarTypeServices"; // Get all car type-service mappings
-            public const string Create = $"{BaseUrl}/api/CarTypeServices"; // Create a car type-service mapping
-            public const string GetById = $"{BaseUrl}/api/CarTypeServices/{{id}}"; // Get mapping by ID
-            public const string UpdateById = $"{BaseUrl}/api/CarTypeServices/{{id}}"; // Update mapping by ID
-            public const string DeleteById = $"{BaseUrl}/api/CarTypeServices/{{id}}"; // Delete mapping by ID
-        }
-
         public static class SocialFeed
         {
             public const string GetInstagramPosts = $"{BaseUrl}/api/InstagramPost"; // Get Instagram feed posts
@@ -145,13 +117,14 @@ namespace TRAFFIK_APP.Configuration
             public const string DeleteById = $"{BaseUrl}/api/User/{{id}}"; // Delete user by ID
         }
 
-        public static class UserVehicle
+        public static class Vehicle
         {
             public static string GetByUser = "/api/vehicles/user/{userId}"; // Get vehicles linked to a user
             public static string GetById = "/api/vehicles/{id}"; // Get vehicle by ID
             public static string Create = "/api/vehicles"; // Create a new vehicle
             public static string UpdateById = "/api/vehicles/{id}"; // Update vehicle by ID
             public static string DeleteById = "/api/vehicles/{id}"; // Delete vehicle by ID
+            public const string GetAllVehicleTypes = $"{BaseUrl}/api/Vehicles/VehicleTypes"; // Get all vehicle types
         }
     }
 }
