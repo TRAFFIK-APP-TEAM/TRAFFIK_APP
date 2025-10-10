@@ -36,5 +36,11 @@ namespace TRAFFIK_APP.Services.ApiClients
             var endpoint = Endpoints.Vehicle.DeleteById.Replace("{id}", id.ToString());
             return await DeleteAsync(endpoint);
         }
+
+        public async Task<List<string>> GetAllVehicleTypesAsync()
+        {
+            var endpoint = Endpoints.Vehicle.GetAllVehicleTypes;
+            return await GetAsync<List<string>>(endpoint);
+        }
     }
 }

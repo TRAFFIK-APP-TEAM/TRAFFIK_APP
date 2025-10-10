@@ -7,4 +7,5 @@ public class Vehicle
     public string LicensePlate { get; set; } = string.Empty;
     public string ImageUrl { get; set; } = string.Empty;
     public int UserId { get; set; }
+
 }

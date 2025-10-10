@@ -25,21 +25,24 @@
         <!-- Content -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="20">
-                <Frame BackgroundColor="#1E1E1E" CornerRadius="15" Padding="25" HasShadow="False">
+                <Border BackgroundColor="#1E1E1E"
+        StrokeThickness="0"
+        Padding="25"
+        StrokeShape="RoundRectangle 15">
                     <VerticalStackLayout Spacing="15">
                         <Label Text="Your Bookings"
-                               TextColor="White"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
-                        
+               TextColor="White"
+               FontSize="18"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"/>
+
                         <Label Text="No bookings yet"
-                               TextColor="#888"
-                               FontSize="14"
-                               HorizontalOptions="Center"
-                               Margin="0,20,0,0"/>
+               TextColor="#888"
+               FontSize="14"
+               HorizontalOptions="Center"
+               Margin="0,20,0,0"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
 
