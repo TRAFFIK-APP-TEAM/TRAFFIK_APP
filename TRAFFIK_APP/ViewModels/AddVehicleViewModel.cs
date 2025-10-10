@@ -16,6 +16,10 @@ namespace TRAFFIK_APP.ViewModels
         private string _vehicleModel = string.Empty;
         private string _licensePlate = string.Empty;
         private string _selectedVehicleType = string.Empty;
+        private ImageSource _vehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
+        public byte[] VehicleImageBytes { get; private set; }
+        public string UserFullName => _session.UserName;
+
 
         public string VehicleMake
         {
@@ -35,21 +39,32 @@ namespace TRAFFIK_APP.ViewModels
             set => SetProperty(ref _licensePlate, value);
         }
 
+        public ImageSource VehicleImage
+        {
+            get => _vehicleImage;
+            set => SetProperty(ref _vehicleImage, value);
+        }
+
+
         public string SelectedVehicleType
         {
             get => _selectedVehicleType;
             set => SetProperty(ref _selectedVehicleType, value);
         }
 
-        public ObservableCollection<Vehicle> VehicleTypes { get; } = new();
+        public ObservableCollection<string> VehicleTypes { get; } = new();
 
-        public string UserFullName => _session.UserName;
 
+
+
+        public ICommand UploadImageCommand { get; }
         public ICommand AddVehicleCommand { get; }
         public ICommand GoHomeCommand { get; }
         public ICommand GoAppointmentsCommand { get; }
         public ICommand GoRewardsCommand { get; }
         public ICommand GoAccountCommand { get; }
+
+        
 
         public AddVehicleViewModel(SessionService session, VehicleClient vehicleClient)
         {
@@ -61,6 +76,7 @@ namespace TRAFFIK_APP.ViewModels
             GoAppointmentsCommand = new Command(async () => await NavigateToAsync("//BookingPage"));
             GoRewardsCommand = new Command(async () => await NavigateToAsync("//RewardsPage"));
             GoAccountCommand = new Command(async () => await NavigateToAsync("//AccountPage"));
+            UploadImageCommand = new Command(async () => await PickImageAsync());
 
             // Load vehicle types
             _ = LoadVehicleTypesAsync();
@@ -71,6 +87,12 @@ namespace TRAFFIK_APP.ViewModels
             try
             {
                 var types = await _vehicleClient.GetAllVehicleTypesAsync();
+                VehicleTypes.Clear();
+                if (types != null)
+                {
+                    foreach (var type in types)
+                        VehicleTypes.Add(type);
+                }
             }
             catch (Exception ex)
             {
@@ -123,8 +145,9 @@ namespace TRAFFIK_APP.ViewModels
                     Make = VehicleMake,
                     Model = VehicleModel,
                     LicensePlate = LicensePlate,
-                    ImageUrl = "", // Default empty for now
-                    VehicleType = SelectedVehicleType // This is the string selected from the dropdown
+                    ImageUrl = VehicleImageBytes != null ? Convert.ToBase64String(VehicleImageBytes) : "",
+                    VehicleType = SelectedVehicleType,
+                    UserId = _session.UserId.Value
                 };
 
                 var result = await _vehicleClient.CreateAsync(vehicleDto);
@@ -132,9 +155,7 @@ namespace TRAFFIK_APP.ViewModels
                 if (result != null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Vehicle added successfully!", "OK");
-                    
-                    // Navigate back to Account page
-                    await Shell.Current.GoToAsync("//AccountPage");
+                                        await Shell.Current.GoToAsync("//AccountPage");
                 }
                 else
                 {
@@ -157,6 +178,33 @@ namespace TRAFFIK_APP.ViewModels
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            }
+        }
+        private async Task PickImageAsync()
+        {
+            try
+            {
+                var result = await FilePicker.PickAsync(new PickOptions
+                {
+                    PickerTitle = "Select a vehicle image",
+                    FileTypes = FilePickerFileType.Images
+                });
+
+                if (result != null)
+                {
+                    using var stream = await result.OpenReadAsync();
+                    using var memoryStream = new MemoryStream();
+                    await stream.CopyToAsync(memoryStream);
+                    VehicleImageBytes = memoryStream.ToArray();
+
+                    // Show preview
+                    VehicleImage = ImageSource.FromStream(() => new MemoryStream(VehicleImageBytes));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Image pick error: {ex.Message}");
+                ErrorMessage = "Failed to pick image.";
             }
         }
     }
