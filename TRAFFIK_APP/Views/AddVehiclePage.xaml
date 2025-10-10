@@ -5,7 +5,6 @@
              x:Class="TRAFFIK_APP.Views.AddVehiclePage"
              x:DataType="viewmodels:AddVehicleViewModel"
              Shell.TabBarIsVisible="False"
-             Title="Add Vehicle"
              BackgroundColor="#0D0D0D">
 
     <Grid RowDefinitions="Auto,*,Auto" Padding="20">
@@ -39,6 +38,23 @@
                                    HeightRequest="45"/>
                         </StackLayout>
 -->
+                        <!-- Vehicle Image Upload -->
+                        <StackLayout>
+                            <Label Text="Upload Vehicle Image"
+           TextColor="White" FontSize="16" Margin="0,0,0,5"/>
+                            <Image Source="{Binding VehicleImage}"
+           HeightRequest="150" Aspect="AspectFill"
+           BackgroundColor="#333333" />
+                            <Button Text="Choose Image"
+            Command="{Binding UploadImageCommand}"
+            BackgroundColor="White"
+            TextColor="Black"
+            CornerRadius="25"
+            FontAttributes="Bold"
+            FontSize="14"
+            HeightRequest="45"/>
+                        </StackLayout>
+
                         <!-- Vehicle Type -->
                         <StackLayout>
                             <Label Text="Vehicle Type"

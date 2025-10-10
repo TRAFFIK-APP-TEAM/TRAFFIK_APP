@@ -8,6 +8,7 @@
              Title="Dashboard">
 
     <Grid RowDefinitions="Auto,*,Auto">
+
         <!-- Top Bar -->
         <Grid Padding="24" Row="0">
             <Grid.ColumnDefinitions>
@@ -29,6 +30,7 @@
         <!-- Main Content -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="24" Spacing="24">
+
                 <!-- Greeting -->
                 <Label Text="Welcome back," FontSize="18" TextColor="White" />
                 <Label Text="{Binding UserFullName}" FontSize="24" FontAttributes="Bold" TextColor="White" />
@@ -53,24 +55,25 @@
                 <Label Text="Your vehicles" FontSize="18" FontAttributes="Bold" TextColor="White" />
                 <ScrollView Orientation="Horizontal">
                     <HorizontalStackLayout Spacing="12" Padding="0,8">
+
                         <!-- Add Vehicle Card -->
                         <Border x:Name="AddCardBorder"
-        Stroke="Gray"
-        StrokeThickness="2"
-        BackgroundColor="#1C1C1E"
-        WidthRequest="160"
-        HeightRequest="160"
-        StrokeShape="RoundRectangle 16"
-        Margin="0,0,8,0">
+                                Stroke="Gray"
+                                StrokeThickness="2"
+                                BackgroundColor="#1C1C1E"
+                                WidthRequest="160"
+                                HeightRequest="160"
+                                StrokeShape="RoundRectangle 16"
+                                Margin="0,0,8,0">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnAddVehicleTapped" />
                             </Border.GestureRecognizers>
                             <Grid>
                                 <Image Source="plus_icon.png"
-               HeightRequest="40"
-               WidthRequest="40"
-               HorizontalOptions="Center"
-               VerticalOptions="Center" />
+                                       HeightRequest="40"
+                                       WidthRequest="40"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
                             </Grid>
                         </Border>
 
@@ -95,8 +98,10 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
+
                     </HorizontalStackLayout>
                 </ScrollView>
+
             </VerticalStackLayout>
         </ScrollView>
 
@@ -117,33 +122,34 @@
                 <ImageButton Source="home.png"
                              Command="{Binding GoHomeCommand}"
                              BackgroundColor="Transparent"
-                             HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Home" FontSize="12" TextColor="#007AFF" HorizontalOptions="Center"/>
+                             HeightRequest="28" WidthRequest="28" />
+                <Label Text="Home" FontSize="12" TextColor="#007AFF" HorizontalOptions="Center" />
             </StackLayout>
 
             <StackLayout Grid.Column="1" HorizontalOptions="Center">
                 <ImageButton Source="appointment.png"
                              Command="{Binding GoAppointmentsCommand}"
                              BackgroundColor="Transparent"
-                             HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Appointment" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
+                             HeightRequest="28" WidthRequest="28" />
+                <Label Text="Appointment" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </StackLayout>
 
             <StackLayout Grid.Column="2" HorizontalOptions="Center">
                 <ImageButton Source="rewards.png"
                              Command="{Binding GoRewardsCommand}"
                              BackgroundColor="Transparent"
-                             HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Rewards" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
+                             HeightRequest="28" WidthRequest="28" />
+                <Label Text="Rewards" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </StackLayout>
 
             <StackLayout Grid.Column="3" HorizontalOptions="Center">
                 <ImageButton Source="account.png"
                              Command="{Binding GoAccountCommand}"
                              BackgroundColor="Transparent"
-                             HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
+                             HeightRequest="28" WidthRequest="28" />
+                <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </StackLayout>
         </Grid>
+
     </Grid>
 </ContentPage>
