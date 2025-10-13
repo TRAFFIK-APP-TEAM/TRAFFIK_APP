@@ -6,7 +6,33 @@
     xmlns:views="clr-namespace:TRAFFIK_APP.Views"
     Title="TRAFFIK_APP">
 
-    <!-- Initial Login Page -->
-    <ShellContent Title="Login" ContentTemplate="{DataTemplate views:LoginPage}" Route="LoginPage" />
+    <!-- Login route (used before authentication) -->
+    <ShellContent Title="Login"
+                  ContentTemplate="{DataTemplate views:LoginPage}"
+                  Route="LoginPage"
+                  Shell.TabBarIsVisible="False" />
+
+    <!-- Main tabbed navigation -->
+    <TabBar>
+        <ShellContent Title="Dashboard"
+                      Icon="home_icon.png"
+                      ContentTemplate="{DataTemplate views:DashboardPage}"
+                      Route="DashboardPage" />
+
+        <ShellContent Title="Booking"
+                      Icon="calendar_icon.png"
+                      ContentTemplate="{DataTemplate views:BookingPage}"
+                      Route="BookingPage" />
+
+        <ShellContent Title="Rewards"
+                      Icon="gift_icon.png"
+                      ContentTemplate="{DataTemplate views:RewardsPage}"
+                      Route="RewardsPage" />
+
+        <ShellContent Title="Account"
+                      Icon="account_icon.png"
+                      ContentTemplate="{DataTemplate views:AccountPage}"
+                      Route="AccountPage" />
+    </TabBar>
 
 </Shell>

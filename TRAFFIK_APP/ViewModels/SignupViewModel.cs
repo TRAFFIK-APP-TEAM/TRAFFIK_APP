@@ -121,7 +121,7 @@ namespace TRAFFIK_APP.ViewModels
                 await SecureStorage.SetAsync("email", user.Email);
                 
                 // Switch to the main app shell with TabBar
-                Application.Current.MainPage = new MainShell();
+                Application.Current.MainPage = new AppShell();
             }
             else
             {
