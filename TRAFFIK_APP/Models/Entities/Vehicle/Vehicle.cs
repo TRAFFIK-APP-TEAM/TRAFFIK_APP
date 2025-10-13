@@ -7,4 +7,6 @@ public class Vehicle
     public string ImageUrl { get; set; } = string.Empty;
     public int UserId { get; set; }
 
+    public string Type { get; set; } = string.Empty;
+
 }
