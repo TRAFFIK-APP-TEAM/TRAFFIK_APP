@@ -19,9 +19,9 @@
             }
             else
             {
-                // User is not logged in, navigate to LoginPage inside AppShell
+                // User is not logged in, go to login page
                 var shell = new AppShell();
-                shell.GoToAsync("//LoginPage"); // Ensure LoginPage route is registered in AppShell
+                shell.GoToAsync("//LoginPage"); 
                 return new Window(shell);
             }
         }
