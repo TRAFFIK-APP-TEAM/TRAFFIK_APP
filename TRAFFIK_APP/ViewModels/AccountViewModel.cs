@@ -107,7 +107,7 @@ namespace TRAFFIK_APP.ViewModels
                         {
                             Vehicles.Add(new VehicleItem
                             {
-                                Id = vehicle.Id,
+                                LicensePlate = vehicle.LicensePlate,
                                 Make = vehicle.Make ?? "Unknown",
                                 Model = vehicle.Model ?? "Unknown",
                                 ImageUrl = !string.IsNullOrEmpty(vehicle.ImageUrl) ? vehicle.ImageUrl : "car_placeholder.png"
@@ -183,10 +183,10 @@ namespace TRAFFIK_APP.ViewModels
         }
     }
 
-    // Helper class for vehicle display
+    // Vehicle display
     public class VehicleItem
     {
-        public int Id { get; set; }
+        public string LicensePlate { get; set; } = string.Empty;
         public string Make { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
