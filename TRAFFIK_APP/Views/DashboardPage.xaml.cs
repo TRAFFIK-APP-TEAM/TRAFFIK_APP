@@ -50,7 +50,7 @@ namespace TRAFFIK_APP.Views
         {
             if (sender is VisualElement element && element.BindingContext is Vehicle vehicle)
             {
-                var route = $"{nameof(VehiclePage)}?vehicleId={vehicle.Id}";
+                var route = $"{nameof(VehiclePage)}?vehicleId={vehicle.LicensePlate}";
                 await Shell.Current.GoToAsync(route);
             }
         }
