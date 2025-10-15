@@ -81,6 +81,12 @@ namespace TRAFFIK_APP.Configuration
             public const string Redeem = $"{BaseUrl}/api/Reward/redeem"; // Redeem reward points
         }
 
+        public static class RewardCatalog
+        {
+            public const string GetAll = $"{BaseUrl}/api/RewardCatalog"; // Get all catalog items
+            public const string RedeemItem = $"{BaseUrl}/api/RewardCatalog/redeem/{{itemId}}"; // Redeem a specific item
+        }
+
         public static class ServiceCatalog
         {
             public const string GetAll = $"{BaseUrl}/api/ServiceCatalog"; // Get all services in catalog

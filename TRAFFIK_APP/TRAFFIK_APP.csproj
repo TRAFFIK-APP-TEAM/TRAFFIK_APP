@@ -60,11 +60,23 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Helpers\**" />
+	  <AndroidResource Remove="Navigation\**" />
 	  <AndroidResource Remove="NewFolder1\**" />
+	  <Compile Remove="Helpers\**" />
+	  <Compile Remove="Navigation\**" />
 	  <Compile Remove="NewFolder1\**" />
+	  <EmbeddedResource Remove="Helpers\**" />
+	  <EmbeddedResource Remove="Navigation\**" />
 	  <EmbeddedResource Remove="NewFolder1\**" />
+	  <MauiCss Remove="Helpers\**" />
+	  <MauiCss Remove="Navigation\**" />
 	  <MauiCss Remove="NewFolder1\**" />
+	  <MauiXaml Remove="Helpers\**" />
+	  <MauiXaml Remove="Navigation\**" />
 	  <MauiXaml Remove="NewFolder1\**" />
+	  <None Remove="Helpers\**" />
+	  <None Remove="Navigation\**" />
 	  <None Remove="NewFolder1\**" />
 	</ItemGroup>
 
@@ -77,8 +89,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Navigation\" />
-	  <Folder Include="Helpers\" />
 	  <Folder Include="Documents\" />
 	</ItemGroup>
 

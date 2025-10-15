@@ -83,6 +83,10 @@ namespace TRAFFIK_APP
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             });
+            builder.Services.AddHttpClient<RewardCatalogClient>(client =>
+            {
+                client.Timeout = TimeSpan.FromSeconds(30);
+            });
             builder.Services.AddHttpClient<NotificationClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
@@ -113,7 +117,7 @@ namespace TRAFFIK_APP
             builder.Services.AddSingleton<RewardClient>();
             builder.Services.AddSingleton<NotificationClient>();
             builder.Services.AddSingleton<VehicleClient>();
-
+            builder.Services.AddSingleton<RewardCatalogClient>();
 
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<SignupViewModel>();

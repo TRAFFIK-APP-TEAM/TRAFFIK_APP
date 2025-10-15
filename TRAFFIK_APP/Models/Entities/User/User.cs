@@ -9,7 +9,6 @@ namespace TRAFFIK_APP.Models.Entities.User
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public int RoleId { get; set; }
-        public UserRole? Role { get; set; }
 
         // Create User from login response
         public static User FromLoginResponse(UserLoginResponseDto response)
