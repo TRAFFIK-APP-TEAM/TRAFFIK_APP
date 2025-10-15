@@ -14,7 +14,6 @@ namespace TRAFFIK_APP.Views
         {
             InitializeComponent();
             BindingContext = viewModel;
-            this.BindingContext = this;
             Loaded += OnPageLoaded;
         }
 
@@ -29,7 +28,7 @@ namespace TRAFFIK_APP.Views
         private void UpdateVehicleCards()
         {
             VehicleCards.Clear();
-            VehicleCards.Add(null); // Add card placeholder!
+            VehicleCards.Add(null); // Add card placeholder
 
             if (ViewModel?.Vehicles != null)
             {
