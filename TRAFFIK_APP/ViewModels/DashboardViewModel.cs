@@ -2,8 +2,7 @@
 using TRAFFIK_APP.Services.ApiClients;
 using System.Collections.ObjectModel;
 using TRAFFIK_APP.Views;
-using TRAFFIK_APP.Models.Dtos;
-using TRAFFIK_APP.Models.Dtos.Dummy_data;
+
 
 namespace TRAFFIK_APP.ViewModels
 {
@@ -75,8 +74,7 @@ namespace TRAFFIK_APP.ViewModels
             var notifications = await _notificationClient.GetAllAsync();
             var balance = await _rewardClient.GetBalanceAsync(userId);
             var vehicleDtos = await _vehicleClient.GetByUserAsync(userId);
-            // var catalog = await _catalogClient.GetAllAsync();
-            var catalog = DummyRewards.GetSampleRewards();
+            var catalog = await _catalogClient.GetAllAsync();
 
             RewardBalance = balance ?? 0;
 
