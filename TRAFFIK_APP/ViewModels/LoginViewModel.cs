@@ -85,7 +85,7 @@ namespace TRAFFIK_APP.ViewModels
             Password = string.Empty;
 
             // Switch to the main app shell with TabBar
-            Application.Current.MainPage = new AppShell();
+            await Shell.Current.GoToAsync("//DashboardPage");
         }
     }
 }
