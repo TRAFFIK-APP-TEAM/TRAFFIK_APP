@@ -96,6 +96,12 @@
 	  <Compile Update="Views\Components\VehicleCard.xaml.cs">
 	    <DependentUpon>VehicleCard.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\BookingServiceSelectPage.xaml.cs">
+      	<DependentUpon>BookingServiceSelectPage.xaml</DependentUpon>
+      </Compile>
+      <Compile Update="Views\BookingVehicleSelectPage.xaml.cs">
+     	 <DependentUpon>BookingVehicleSelectPage.xaml</DependentUpon>
+      </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -129,6 +135,14 @@
 	  <MauiXaml Update="Views\VehiclePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  </MauiXaml>
+      <MauiXaml Update="Views\BookingServiceSelectPage.xaml">
+      	<Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="Views\BookingVehicleSelectPage.xaml">
+      	<Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+
 	</ItemGroup>
 
 </Project>
