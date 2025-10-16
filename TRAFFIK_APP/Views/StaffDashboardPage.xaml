@@ -1,0 +1,50 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TRAFFIK_APP.Views.StaffDashboardPage"
+             BackgroundColor="{StaticResource Gray100Brush}">
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Staff Dashboard"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource PrimaryBrush}" />
+            <CollectionView ItemsSource="{Binding ActiveBookings}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="{StaticResource WhiteBrush}"
+                               BorderColor="{StaticResource Gray300Brush}"
+                               CornerRadius="8"
+                               Padding="15"
+                               Margin="0,5">
+                            
+                            <VerticalStackLayout>
+                                <Label Text="{Binding BookingId, StringFormat='Booking ID: {0}' }"
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding VehicleId, StringFormat='Vehicle ID: {0}'}" />
+                                <Label Text="{Binding CurrentStage, StringFormat='Current Stage: {0}'}" />
+                                
+                                <Picker Title="Update Stage"
+                                        ItemsSource="{Binding AvailableStages}"
+                                        SelectedItem="{Binding SelectedStage}" />
+                                
+                                <Button Text="Confirm Update"
+                                        Command="{Binding UpdateStageCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="{StaticResource PrimaryBrush}"
+                                        TextColor="White" /> 
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+                                
+                                
+                                
+                                
+                                
+
+
