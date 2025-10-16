@@ -4,13 +4,30 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:TRAFFIK_APP.Views"
-    Title="TRAFFIK_APP">
+    Title="TRAFFIK_APP"
+    Shell.NavBarHasShadow="False"
+    Shell.BackgroundColor="Black"
+    Shell.TitleColor="White">
 
-    <!-- Login route (used before authentication) -->
+    <!-- Custom global title bar -->
+    <Shell.TitleView>
+        <Grid BackgroundColor="Black" HeightRequest="56">
+            <Label 
+                Text="TRAFFFIK"
+                TextColor="White"
+                FontSize="20"
+                FontAttributes="Bold"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+        </Grid>
+    </Shell.TitleView>
+
+    <!-- Login route (hidden tab bar) -->
     <ShellContent Title="Login"
                   ContentTemplate="{DataTemplate views:LoginPage}"
                   Route="LoginPage"
-                  Shell.TabBarIsVisible="False" />
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False" />
 
     <!-- Main tabbed navigation -->
     <TabBar>
@@ -34,5 +51,4 @@
                       ContentTemplate="{DataTemplate views:AccountPage}"
                       Route="AccountPage" />
     </TabBar>
-
 </Shell>
