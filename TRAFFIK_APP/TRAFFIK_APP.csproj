@@ -126,7 +126,6 @@
 	  <MauiXaml Update="Views\VehiclePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  </MauiXaml>
       <MauiXaml Update="Views\BookingServiceSelectPage.xaml">
       	<Generator>MSBuild:Compile</Generator>
       </MauiXaml>
