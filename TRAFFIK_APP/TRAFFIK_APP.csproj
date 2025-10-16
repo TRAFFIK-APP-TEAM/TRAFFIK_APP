@@ -90,12 +90,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Documents\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Views\Components\VehicleCard.xaml.cs">
-	    <DependentUpon>VehicleCard.xaml</DependentUpon>
-	  </Compile>
+	  <Folder Include="Views\Components\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -105,10 +100,10 @@
 	  <MauiXaml Update="Views\AddVehiclePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\BookingPage.xaml">
+	  <MauiXaml Update="Views\AdminAnalyticsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Components\VehicleCard.xaml">
+	  <MauiXaml Update="Views\BookingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\DashboardPage.xaml">

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Project_Jeremy.Presentation.Pages.Admin.AdminAnalyticsPage"
+             Title="Analytics"
+             BackgroundColor="#101726">
+
+	<ScrollView>
+		<VerticalStackLayout Padding="20" Spacing="16">
+
+			<Label Text="Bookings & Transactions History"
+                   TextColor="White"
+                   FontSize="22"
+                   FontAttributes="Bold"/>
+
+			<!-- Add Admin Button -->
+			<Button Text="Add Admin / Employee Account"
+                    BackgroundColor="#2E8B57"
+                    TextColor="White"
+                    CornerRadius="12"
+                    Clicked="OnAddAdminClicked"
+                    Margin="0,10,0,20"/>
+
+			<!-- Section: Bookings -->
+			<Label Text="Recent Bookings"
+                   TextColor="#C8CDD6"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0"/>
+
+			<CollectionView>
+				<CollectionView.ItemsSource>
+					<x:Array Type="{x:Type x:String}">
+						<x:String>Audi A6 – Traffik Wash – 12 Oct 2025</x:String>
+						<x:String>Toyota RAV4 – SUV Premium – 10 Oct 2025</x:String>
+						<x:String>Ford Ranger – Bakkie Deep Clean – 9 Oct 2025</x:String>
+					</x:Array>
+				</CollectionView.ItemsSource>
+
+				<CollectionView.ItemTemplate>
+					<DataTemplate>
+						<Frame BackgroundColor="#262B34"
+                               CornerRadius="12"
+                               HasShadow="True"
+                               Padding="12"
+                               Margin="0,6">
+							<Label Text="{Binding .}" TextColor="#C8CDD6"/>
+						</Frame>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+
+			<!-- Section: Transactions -->
+			<Label Text="Recent Transactions"
+                   TextColor="#C8CDD6"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0"/>
+
+			<CollectionView>
+				<CollectionView.ItemsSource>
+					<x:Array Type="{x:Type x:String}">
+						<x:String>#TXN1023 – R238 – Completed</x:String>
+						<x:String>#TXN1022 – R900 – Pending</x:String>
+						<x:String>#TXN1021 – R558 – Completed</x:String>
+					</x:Array>
+				</CollectionView.ItemsSource>
+
+				<CollectionView.ItemTemplate>
+					<DataTemplate>
+						<Frame BackgroundColor="#262B34"
+                               CornerRadius="12"
+                               HasShadow="True"
+                               Padding="12"
+                               Margin="0,6">
+							<Label Text="{Binding .}" TextColor="#C8CDD6"/>
+						</Frame>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+		</VerticalStackLayout>
+	</ScrollView>
+</ContentPage>
