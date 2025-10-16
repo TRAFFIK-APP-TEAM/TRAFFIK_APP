@@ -6,20 +6,15 @@
              Shell.TabBarIsVisible="False"
              Title="Profile">
 
+
     <Grid RowDefinitions="*,Auto">
         <ScrollView Grid.Row="0">
         <VerticalStackLayout Padding="20" Spacing="20">
 
             <!-- HEADER -->
-            <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
-                <Label Text="TRAFFIK"
-                       FontSize="22"
-                       FontAttributes="Bold"
-                       TextColor="White"
-                       HorizontalOptions="Start"
-                       VerticalOptions="Center"/>
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
 
-                <ImageButton Source="bell_icon.png"
+                    <ImageButton Source="bell_icon.png"
                              HeightRequest="26"
                              WidthRequest="26"
                              BackgroundColor="Transparent"
