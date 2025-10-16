@@ -1,45 +1,116 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRAFFIK_APP.Views.StaffDashboardPage"
-             BackgroundColor="{StaticResource Gray100Brush}">
-    
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="Staff Dashboard"
+             x:Name="StaffDashboardRoot"
+             BackgroundColor="#000000"
+             Shell.FlyoutBehavior="Disabled">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Top Bar -->
+        <Grid Padding="24" Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Staff"
                    FontSize="24"
                    FontAttributes="Bold"
-                   TextColor="{StaticResource PrimaryBrush}" />
-            <CollectionView ItemsSource="{Binding ActiveBookings}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="{StaticResource WhiteBrush}"
-                               BorderColor="{StaticResource Gray300Brush}"
-                               CornerRadius="8"
-                               Padding="15"
-                               Margin="0,5">
-                            
-                            <VerticalStackLayout>
-                                <Label Text="{Binding BookingId, StringFormat='Booking ID: {0}' }"
-                                       FontAttributes="Bold" />
-                                <Label Text="{Binding VehicleId, StringFormat='Vehicle ID: {0}'}" />
-                                <Label Text="{Binding CurrentStage, StringFormat='Current Stage: {0}'}" />
-                                
-                                <Picker Title="Update Stage"
-                                        ItemsSource="{Binding AvailableStages}"
-                                        SelectedItem="{Binding SelectedStage}" />
-                                
-                                <Button Text="Confirm Update"
-                                        Command="{Binding UpdateStageCommand}"
+                   TextColor="White"
+                   HorizontalOptions="Start" />
+            <Button Text="Edit Profile"
+                    Grid.Column="1"
+                    Command="{Binding EditProfileCommand}"
+                    BackgroundColor="#007AFF"
+                    TextColor="White"
+                    CornerRadius="8" />
+        </Grid>
+
+        <!-- Main Content -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24" Spacing="24">
+                <Label Text="Active Bookings" FontSize="18" FontAttributes="Bold" TextColor="White" />
+
+                <!-- Bookings Table Header -->
+                <Grid ColumnDefinitions="Auto,Auto,*,Auto" Padding="0,0,0,8">
+                    <Label Text="#" TextColor="#C8C8C8" />
+                    <Label Grid.Column="1" Text="Vehicle" TextColor="#C8C8C8" />
+                    <Label Grid.Column="2" Text="Stage" TextColor="#C8C8C8" />
+                    <Label Grid.Column="3" Text="Action" TextColor="#C8C8C8" />
+                </Grid>
+
+                <!-- Bookings List -->
+                <CollectionView ItemsSource="{Binding ActiveBookings}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="Auto,Auto,*,Auto" Padding="12" BackgroundColor="#1E1E1E" Margin="0,0,0,10">
+                                <Label Text="{Binding BookingId}" TextColor="White" />
+                                <Label Grid.Column="1" Text="{Binding VehicleId}" TextColor="#C8C8C8" />
+                                <HorizontalStackLayout Grid.Column="2" Spacing="8">
+                                    <Label Text="{Binding CurrentStage}" TextColor="White" />
+                                    <Picker Title="Update" WidthRequest="180"
+                                            ItemsSource="{Binding AvailableStages}"
+                                            SelectedItem="{Binding SelectedStage}" />
+                                </HorizontalStackLayout>
+                                <Button Grid.Column="3" Text="Update"
+                                        Command="{Binding Source={x:Reference StaffDashboardRoot}, Path=BindingContext.UpdateStageCommand}"
                                         CommandParameter="{Binding .}"
-                                        BackgroundColor="{StaticResource PrimaryBrush}"
-                                        TextColor="White" /> 
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+                                        BackgroundColor="#007AFF"
+                                        TextColor="White"
+                                        CornerRadius="8" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Navigation Bar (reuse style) -->
+        <Grid Grid.Row="2"
+              BackgroundColor="#1E1E1E"
+              HeightRequest="70"
+              Padding="10,0"
+              ColumnSpacing="25">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Grid.Column="0" HorizontalOptions="Center">
+                <ImageButton Source="home.png"
+                             Command="{Binding GoHomeCommand}"
+                             BackgroundColor="Transparent"
+                             HeightRequest="28" WidthRequest="28" />
+                <Label Text="Home" FontSize="12" TextColor="#007AFF" HorizontalOptions="Center" />
+            </StackLayout>
+
+            <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                <ImageButton Source="appointment.png"
+                             Command="{Binding GoAppointmentsCommand}"
+                             BackgroundColor="Transparent"
+                             HeightRequest="28" WidthRequest="28" />
+                <Label Text="Appointment" FontSize="12" TextColor="White" HorizontalOptions="Center" />
+            </StackLayout>
+
+            <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                <ImageButton Source="rewards.png"
+                             Command="{Binding GoRewardsCommand}"
+                             BackgroundColor="Transparent"
+                             HeightRequest="28" WidthRequest="28" />
+                <Label Text="Rewards" FontSize="12" TextColor="White" HorizontalOptions="Center" />
+            </StackLayout>
+
+            <StackLayout Grid.Column="3" HorizontalOptions="Center">
+                <ImageButton Source="account.png"
+                             Command="{Binding GoAccountCommand}"
+                             BackgroundColor="Transparent"
+                             HeightRequest="28" WidthRequest="28" />
+                <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center" />
+            </StackLayout>
+        </Grid>
+    </Grid>
+
 </ContentPage>
                                 
                                 

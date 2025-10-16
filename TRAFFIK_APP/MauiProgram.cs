@@ -4,6 +4,7 @@ using TRAFFIK_APP.ViewModels;
 using TRAFFIK_APP.Services;
 using TRAFFIK_APP.Services.ApiClients;
 using TRAFFIK_APP.Views;
+using TRAFFIK_APP.Helpers;
 
 namespace TRAFFIK_APP
 {
@@ -48,6 +49,8 @@ namespace TRAFFIK_APP
             Routing.RegisterRoute(nameof(AddVehiclePage), typeof(AddVehiclePage));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(StaffDashboardPage), typeof(StaffDashboardPage));
+            Routing.RegisterRoute(nameof(BookingServiceSelectPage), typeof(BookingServiceSelectPage));
+            Routing.RegisterRoute(nameof(BookingVehicleSelectPage), typeof(BookingVehicleSelectPage));
             
 
 
@@ -114,6 +117,10 @@ namespace TRAFFIK_APP
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             });
+            builder.Services.AddHttpClient<BookingStagesClient>(client =>
+            {
+                client.Timeout = TimeSpan.FromSeconds(30);
+            });
 
             builder.Services.AddSingleton<SessionService>();
             builder.Services.AddSingleton<BookingClient>();
@@ -128,6 +135,8 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<AccountViewModel>();
             builder.Services.AddTransient<AddVehicleViewModel>();
             builder.Services.AddTransient<BookingViewModel>();
+            builder.Services.AddTransient<BookingServiceSelectViewModel>();
+            builder.Services.AddTransient<BookingVehicleSelectViewModel>();
             builder.Services.AddTransient<RewardsViewModel>();
             builder.Services.AddTransient<StaffDashboardViewModel>();
 
@@ -135,6 +144,8 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<SignupPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<BookingPage>();
+            builder.Services.AddTransient<BookingServiceSelectPage>();
+            builder.Services.AddTransient<BookingVehicleSelectPage>();
             builder.Services.AddTransient<RewardsPage>();
             builder.Services.AddTransient<AccountPage>();
             builder.Services.AddTransient<AddVehiclePage>();
@@ -143,7 +154,9 @@ namespace TRAFFIK_APP
 
 
 
-            return builder.Build();
+            var app = builder.Build();
+            ServiceHelper.Initialize(app.Services);
+            return app;
         }
     }
 }

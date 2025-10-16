@@ -34,7 +34,7 @@
                                    Margin="0,5"
                                    HasShadow="False">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <Label Text="{Binding Name}"
+                                    <Label Text="{Binding ServiceName}"
                                            TextColor="White"
                                            FontSize="16"
                                            VerticalOptions="Center"/>

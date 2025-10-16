@@ -59,26 +59,7 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <AndroidResource Remove="Helpers\**" />
-	  <AndroidResource Remove="Navigation\**" />
-	  <AndroidResource Remove="NewFolder1\**" />
-	  <Compile Remove="Helpers\**" />
-	  <Compile Remove="Navigation\**" />
-	  <Compile Remove="NewFolder1\**" />
-	  <EmbeddedResource Remove="Helpers\**" />
-	  <EmbeddedResource Remove="Navigation\**" />
-	  <EmbeddedResource Remove="NewFolder1\**" />
-	  <MauiCss Remove="Helpers\**" />
-	  <MauiCss Remove="Navigation\**" />
-	  <MauiCss Remove="NewFolder1\**" />
-	  <MauiXaml Remove="Helpers\**" />
-	  <MauiXaml Remove="Navigation\**" />
-	  <MauiXaml Remove="NewFolder1\**" />
-	  <None Remove="Helpers\**" />
-	  <None Remove="Navigation\**" />
-	  <None Remove="NewFolder1\**" />
-	</ItemGroup>
+	<!-- Removed old Remove rules for Helpers/Navigation folders to include source files -->
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.9" />

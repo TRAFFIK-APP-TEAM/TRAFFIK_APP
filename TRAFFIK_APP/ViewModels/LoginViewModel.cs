@@ -84,7 +84,7 @@ namespace TRAFFIK_APP.ViewModels
             // Clear sensitive data from the form
             Password = string.Empty;
 
-            // Switch to the main app shell with TabBar
+            // RBAC navigation
             switch (user.RoleId)
             {
                 case 1:

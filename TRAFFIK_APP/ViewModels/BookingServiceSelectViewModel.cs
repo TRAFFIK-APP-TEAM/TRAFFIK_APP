@@ -22,7 +22,7 @@ namespace TRAFFIK_APP.ViewModels
             }
         }
 
-        public ICommand ContinueCommand { get; }
+        public ICommand SelectServiceCommand { get; }
 
         public BookingServiceSelectViewModel()
         {
@@ -31,12 +31,12 @@ namespace TRAFFIK_APP.ViewModels
             Services.Add(new BookingServiceDto { ServiceCatalogId = 2, ServiceName = "Oil Change", Description = "Engine oil & filter replacement" });
             Services.Add(new BookingServiceDto { ServiceCatalogId = 3, ServiceName = "Tyre Rotation", Description = "Rotate tyres for even wear" });
 
-            ContinueCommand = new Command(OnContinue);
+            SelectServiceCommand = new Command<BookingServiceDto>(OnSelectService);
         }
 
-        private async void OnContinue()
+        private async void OnSelectService(BookingServiceDto? service)
         {
-            if (SelectedService == null)
+            if (service == null && SelectedService == null)
             {
                 await Shell.Current.DisplayAlert("Select a Service", "Please select a service to continue.", "OK");
                 return;

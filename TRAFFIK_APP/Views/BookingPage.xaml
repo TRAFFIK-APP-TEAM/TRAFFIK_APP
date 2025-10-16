@@ -41,6 +41,14 @@
                FontSize="14"
                HorizontalOptions="Center"
                Margin="0,20,0,0"/>
+
+                        <Button Text="Make a Booking"
+                                Command="{Binding StartBookingCommand}"
+                                BackgroundColor="#007AFF"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Margin="0,10,0,0"
+                                HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>
