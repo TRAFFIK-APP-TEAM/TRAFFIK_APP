@@ -1,4 +1,4 @@
-﻿namespace Project_Jeremy.Presentation.Pages.Admin;
+﻿namespace TRAFFIK_APP.Views;
 
 public partial class AdminDashboardPage : ContentPage
 {

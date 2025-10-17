@@ -30,7 +30,11 @@ namespace TRAFFIK_APP
 				return;
 			}
 
-			if (target.Contains("AdminDashboardPage", StringComparison.OrdinalIgnoreCase) && !_sessionService.IsAdmin)
+			// Guard all Admin pages
+			if ((target.Contains("AdminDashboardPage", StringComparison.OrdinalIgnoreCase)
+				|| target.Contains("AdminAnalyticsPage", StringComparison.OrdinalIgnoreCase)
+				|| target.Contains("AddAdminPage", StringComparison.OrdinalIgnoreCase))
+				&& !_sessionService.IsAdmin)
 			{
 				args.Cancel();
 				await Shell.Current.DisplayAlert("Access Denied", "Admin only area.", "OK");

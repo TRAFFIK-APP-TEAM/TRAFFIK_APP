@@ -58,9 +58,19 @@
                   Route="StaffDashboardPage"
                   Shell.TabBarIsVisible="False" />
 
-    <!-- Admin route placeholder -->
+    <!-- Admin routes -->
     <ShellContent Title="Admin"
-                  ContentTemplate="{DataTemplate views:DashboardPage}"
+                  ContentTemplate="{DataTemplate views:AdminDashboardPage}"
                   Route="AdminDashboardPage"
+                  Shell.TabBarIsVisible="False" />
+
+    <ShellContent Title="AdminAnalytics"
+                  ContentTemplate="{DataTemplate views:AdminAnalyticsPage}"
+                  Route="AdminAnalyticsPage"
+                  Shell.TabBarIsVisible="False" />
+
+    <ShellContent Title="AddAdmin"
+                  ContentTemplate="{DataTemplate views:AddAdminPage}"
+                  Route="AddAdminPage"
                   Shell.TabBarIsVisible="False" />
 </Shell>
