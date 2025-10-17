@@ -8,6 +8,14 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
 
+            <!-- Back Button -->
+            <Button Text="← Back to Analytics"
+                    BackgroundColor="#262B34"
+                    TextColor="White"
+                    CornerRadius="12"
+                    Clicked="OnBackClicked"
+                    Margin="0,0,0,10"/>
+
             <Label Text="Add New Admin or Employee Account"
                    TextColor="White"
                    FontSize="22"

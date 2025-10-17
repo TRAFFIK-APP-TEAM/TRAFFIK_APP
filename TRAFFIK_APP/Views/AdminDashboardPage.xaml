@@ -26,8 +26,8 @@
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Admin Tools" TextColor="White" FontSize="18" FontAttributes="Bold"/>
                     <Button Text="View Analytics" CornerRadius="12" Clicked="OnViewAnalytics"/>
-                    <Button Text="Manage Bookings" CornerRadius="12"/>
-                    <Button Text="Manage Users" CornerRadius="12"/>
+                    <Button Text="Manage Bookings" CornerRadius="12" Clicked="OnManageBookings"/>
+                    <Button Text="Manage Users" CornerRadius="12" Clicked="OnManageUsers"/>
                 </VerticalStackLayout>
             </Frame>
         </VerticalStackLayout>

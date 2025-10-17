@@ -13,12 +13,6 @@ namespace TRAFFIK_APP.Services.ApiClients
 
         public Task<UserLoginResponseDto?> RegisterAsync(UserRegisterDto dto) =>
             PostAsync<UserLoginResponseDto>(Endpoints.Auth.Register, dto);
- 
-        public async Task<bool> PingAuthAsync()
-        {
-            // Ping the base URL to check if API is reachable
-            return await PingAsync("/api/Auth/Login");
-        }
 
         public Task<bool> LogoutAsync() =>
             PostAsync<bool>(Endpoints.Auth.Logout, new { });
