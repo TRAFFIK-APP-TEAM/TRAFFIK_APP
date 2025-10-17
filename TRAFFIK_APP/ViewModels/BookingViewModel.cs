@@ -13,6 +13,8 @@ namespace TRAFFIK_APP.ViewModels
         public ICommand GoAppointmentsCommand { get; }
         public ICommand GoRewardsCommand { get; }
         public ICommand GoAccountCommand { get; }
+        public ICommand EditProfileCommand { get; }
+        public ICommand StartBookingCommand { get; }
 
         public BookingViewModel(SessionService session)
         {
@@ -22,6 +24,8 @@ namespace TRAFFIK_APP.ViewModels
             GoAppointmentsCommand = new Command(async () => await Shell.Current.GoToAsync("//BookingPage"));
             GoRewardsCommand = new Command(async () => await Shell.Current.GoToAsync("//RewardsPage"));
             GoAccountCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
+            EditProfileCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
+            StartBookingCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.BookingServiceSelectPage)));
         }
     }
 }

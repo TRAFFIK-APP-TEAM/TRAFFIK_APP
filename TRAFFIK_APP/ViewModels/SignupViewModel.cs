@@ -104,7 +104,7 @@ namespace TRAFFIK_APP.ViewModels
                 Email = Email,
                 Password = Password,
                 PhoneNumber = "", // Still must add a phone field
-                RoleId = 2 // Default role
+                RoleId = 1 // Default role
             };
 
             var response = await _authClient.RegisterAsync(dto);

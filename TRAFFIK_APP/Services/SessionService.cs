@@ -21,5 +21,9 @@ namespace TRAFFIK_APP.Services
         public int? UserId => CurrentUser?.Id;
         public string UserName => CurrentUser?.FullName ?? string.Empty;
         public int? RoleId => CurrentUser?.RoleId;
+
+        public bool IsAdmin => RoleId == 1;
+        public bool IsStaff => RoleId == 2;
+        public bool IsUser => RoleId == 3;
     }
 }
