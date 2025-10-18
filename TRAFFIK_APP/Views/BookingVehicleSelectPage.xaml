@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodels="clr-namespace:TRAFFIK_APP.ViewModels"
-             x:Class="TRAFFIK_APP.Views.BookingPage"
-             x:DataType="viewmodels:BookingViewModel"
+             x:Class="TRAFFIK_APP.Views.BookingVehicleSelectPage"
              BackgroundColor="#0D0D0D"
              Shell.TabBarIsVisible="False"
-             Title="Bookings">
+             Title="Select Vehicle">
 
     <Grid RowDefinitions="Auto,*,Auto" Padding="20">
 
@@ -16,7 +14,7 @@
                    TextColor="White"
                    FontAttributes="Bold"
                    FontSize="22"/>
-            <Label Text="Appointments"
+            <Label Text="Choose Your Vehicle"
                    TextColor="#C8C8C8"
                    FontSize="16"
                    Margin="0,10,0,0"/>
@@ -24,37 +22,46 @@
 
         <!-- Content -->
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="20">
-                <Border BackgroundColor="#1E1E1E"
-        StrokeThickness="0"
-        Padding="25"
-        StrokeShape="RoundRectangle 15">
-                    <VerticalStackLayout Spacing="15">
-                        <Label Text="Your Bookings"
-               TextColor="White"
-               FontSize="18"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"/>
+            <VerticalStackLayout Spacing="15">
 
-                        <Label Text="No bookings yet"
-               TextColor="#888"
-               FontSize="14"
-               HorizontalOptions="Center"
-               Margin="0,20,0,0"/>
+                <!-- Three placeholder clickable frames -->
+                <Frame BackgroundColor="#1E1E1E"
+                       CornerRadius="15"
+                       Padding="20"
+                       Margin="0,5"
+                       HasShadow="False">
+                    <Button Text="Vehicle Option 1"
+                            BackgroundColor="#007AFF"
+                            TextColor="White"
+                            CornerRadius="10"/>
+                </Frame>
 
-                        <Button Text="Make a Booking"
-                                Command="{Binding StartBookingCommand}"
-                                BackgroundColor="#007AFF"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Margin="0,10,0,0"
-                                HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Border>
+                <Frame BackgroundColor="#1E1E1E"
+                       CornerRadius="15"
+                       Padding="20"
+                       Margin="0,5"
+                       HasShadow="False">
+                    <Button Text="Vehicle Option 2"
+                            BackgroundColor="#007AFF"
+                            TextColor="White"
+                            CornerRadius="10"/>
+                </Frame>
+
+                <Frame BackgroundColor="#1E1E1E"
+                       CornerRadius="15"
+                       Padding="20"
+                       Margin="0,5"
+                       HasShadow="False">
+                    <Button Text="Vehicle Option 3"
+                            BackgroundColor="#007AFF"
+                            TextColor="White"
+                            CornerRadius="10"/>
+                </Frame>
+
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Bottom Navigation Bar -->
+        <!-- Bottom Navigation Bar (same as BookingPage) -->
         <Grid Grid.Row="2"
               BackgroundColor="#1E1E1E"
               HeightRequest="70"
@@ -69,7 +76,6 @@
 
             <StackLayout Grid.Column="0" HorizontalOptions="Center">
                 <ImageButton Source="home.png"
-                             Command="{Binding GoHomeCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
                 <Label Text="Home" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
@@ -77,7 +83,6 @@
 
             <StackLayout Grid.Column="1" HorizontalOptions="Center">
                 <ImageButton Source="appointment.png"
-                             Command="{Binding GoAppointmentsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
                 <Label Text="Appointment" FontSize="12" TextColor="#007AFF" HorizontalOptions="Center"/>
@@ -85,7 +90,6 @@
 
             <StackLayout Grid.Column="2" HorizontalOptions="Center">
                 <ImageButton Source="rewards.png"
-                             Command="{Binding GoRewardsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
                 <Label Text="Rewards" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
@@ -93,7 +97,6 @@
 
             <StackLayout Grid.Column="3" HorizontalOptions="Center">
                 <ImageButton Source="account.png"
-                             Command="{Binding GoAccountCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
                 <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center"/>

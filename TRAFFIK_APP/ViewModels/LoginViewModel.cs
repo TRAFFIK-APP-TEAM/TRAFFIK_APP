@@ -41,7 +41,7 @@ namespace TRAFFIK_APP.ViewModels
             _authClient = authClient;
             _session = session;
             LoginCommand = new Command(() => ExecuteSafeAsync(LoginAsync, "Logging in..."));
-            
+
             // Log that ViewModel was created
             System.Diagnostics.Debug.WriteLine($"[LoginViewModel] Created successfully");
             Console.WriteLine($"[LoginViewModel] Created successfully"); // Also write to Console
@@ -84,9 +84,20 @@ namespace TRAFFIK_APP.ViewModels
             // Clear sensitive data from the form
             Password = string.Empty;
 
-            // Switch to the main app shell with TabBar
-            await Shell.Current.GoToAsync("//DashboardPage");
+            // RBAC navigation
+            switch (user.RoleId)
+            {
+                case 1:
+                    await Shell.Current.GoToAsync("//AdminDashboardPage");
+                    break;
+                case 2:
+                    await Shell.Current.GoToAsync("//StaffDashboardPage");
+                    break;
+                default:
+                case 3:
+                    await Shell.Current.GoToAsync("//UserDashboardPage");
+                    break;
+            }
         }
     }
 }
-

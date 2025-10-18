@@ -29,8 +29,8 @@
                   Shell.TabBarIsVisible="False"
                   Shell.NavBarIsVisible="False" />
 
-    <!-- Main tabbed navigation -->
-    <TabBar>
+    <!-- Main tabbed navigation (regular user) -->
+    <TabBar Route="UserDashboardPage">
         <ShellContent Title="Dashboard"
                       Icon="home_icon.png"
                       ContentTemplate="{DataTemplate views:DashboardPage}"
@@ -51,4 +51,26 @@
                       ContentTemplate="{DataTemplate views:AccountPage}"
                       Route="AccountPage" />
     </TabBar>
+
+    <!-- Staff dashboard route (no tab bar) -->
+    <ShellContent Title="Staff"
+                  ContentTemplate="{DataTemplate views:StaffDashboardPage}"
+                  Route="StaffDashboardPage"
+                  Shell.TabBarIsVisible="False" />
+
+    <!-- Admin routes -->
+    <ShellContent Title="Admin"
+                  ContentTemplate="{DataTemplate views:AdminDashboardPage}"
+                  Route="AdminDashboardPage"
+                  Shell.TabBarIsVisible="False" />
+
+    <ShellContent Title="AdminAnalytics"
+                  ContentTemplate="{DataTemplate views:AdminAnalyticsPage}"
+                  Route="AdminAnalyticsPage"
+                  Shell.TabBarIsVisible="False" />
+
+    <ShellContent Title="AddAdmin"
+                  ContentTemplate="{DataTemplate views:AddAdminPage}"
+                  Route="AddAdminPage"
+                  Shell.TabBarIsVisible="False" />
 </Shell>

@@ -16,28 +16,6 @@ namespace TRAFFIK_APP.Services.ApiClients
             _httpClient.BaseAddress = new Uri(Endpoints.BaseUrl);
         }
 
-        public async Task<bool> PingAsync(string api)
-        {
-            try
-            {
-                var fullUrl = _httpClient.BaseAddress != null 
-                    ? new Uri(_httpClient.BaseAddress, api).ToString() 
-                    : api;
-                             
-                var response = await _httpClient.GetAsync(api);
-                return response.IsSuccessStatusCode;
-            }
-            catch (HttpRequestException ex)
-            {
-                _logger.LogError(ex, "[PING] Connection failed");
-                return false;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "[PING] Unexpected error");
-                return false;
-            }
-        }
         protected async Task<T?> GetAsync<T>(string url)
         {
             var response = await _httpClient.GetAsync(url);
@@ -55,8 +33,6 @@ namespace TRAFFIK_APP.Services.ApiClients
                     : url;
 
                 var payloadJson = System.Text.Json.JsonSerializer.Serialize(payload);
-                _logger.LogInformation("[API] POST to: {Url}", fullUrl);
-                _logger.LogInformation("[API] Payload: {Payload}", payloadJson);
 
                 var response = await _httpClient.PostAsJsonAsync(url, payload);
                 

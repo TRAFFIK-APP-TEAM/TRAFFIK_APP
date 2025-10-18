@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Project_Jeremy.Presentation.Pages.Admin.AddAdminPage"
+             x:Class="TRAFFIK_APP.Views.AddAdminPage"
              Title="Add Admin / Employee"
              BackgroundColor="#101726">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
+
+            <!-- Back Button -->
+            <Button Text="← Back to Analytics"
+                    BackgroundColor="#262B34"
+                    TextColor="White"
+                    CornerRadius="12"
+                    Clicked="OnBackClicked"
+                    Margin="0,0,0,10"/>
 
             <Label Text="Add New Admin or Employee Account"
                    TextColor="White"
