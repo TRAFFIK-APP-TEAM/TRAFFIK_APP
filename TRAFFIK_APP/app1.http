@@ -1,0 +1,13 @@
+@baseurl = https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net
+@accept = application/json
+
+POST {{baseurl}}/api/Auth/register
+Content-Type: application/json
+Accept: {{accept}}
+{
+  "FullName": "Ashley Craig",
+  "Email": "Admin@gmail.com",
+  "Password": "TestPassword123!",
+  "PhoneNumber": "12345678",
+  "RoleId": 1
+}

@@ -7,8 +7,13 @@ public partial class AdminAnalyticsPage : ContentPage
         InitializeComponent();
     }
 
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("///AdminDashboardPage");
+    }
+
     private async void OnAddAdminClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(AddAdminPage));
+        await Shell.Current.GoToAsync("///AddAdminPage");
     }
 }

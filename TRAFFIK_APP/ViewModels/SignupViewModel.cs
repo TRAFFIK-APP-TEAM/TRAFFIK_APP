@@ -71,6 +71,8 @@ namespace TRAFFIK_APP.ViewModels
             SignupCommand = new Command(() => ExecuteSafeAsync(SignupAsync, "Creating account..."));
         }
 
+
+
         private async Task SignupAsync()
         {
             // Validate input
