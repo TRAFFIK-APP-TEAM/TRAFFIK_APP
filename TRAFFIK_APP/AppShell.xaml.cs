@@ -1,5 +1,6 @@
-﻿using TRAFFIK_APP.Services;
-using TRAFFIK_APP.Helpers;
+﻿using TRAFFIK_APP.Helpers;
+using TRAFFIK_APP.Services;
+using TRAFFIK_APP.Views;
 
 namespace TRAFFIK_APP
 {
@@ -11,9 +12,16 @@ namespace TRAFFIK_APP
 		{
 			InitializeComponent();
 			_sessionService = ServiceHelper.GetService<SessionService>();
-		}
 
-		protected override async void OnNavigating(ShellNavigatingEventArgs args)
+            Routing.RegisterRoute(nameof(AdminDashboardPage), typeof(AdminDashboardPage));
+            Routing.RegisterRoute(nameof(AdminAnalyticsPage), typeof(AdminAnalyticsPage));
+            Routing.RegisterRoute(nameof(AdminManageBookingsPage), typeof(AdminManageBookingsPage));
+            Routing.RegisterRoute(nameof(AdminManageUsersPage), typeof(AdminManageUsersPage));
+            Routing.RegisterRoute(nameof(AddAdminPage), typeof(AddAdminPage));
+
+        }
+
+        protected override async void OnNavigating(ShellNavigatingEventArgs args)
 		{
 			base.OnNavigating(args);
 			if (_sessionService is null) return;

@@ -1,28 +1,32 @@
-﻿namespace TRAFFIK_APP.Views;
+﻿using Microsoft.Maui.Controls;
 
-public partial class AdminDashboardPage : ContentPage
+namespace TRAFFIK_APP.Views
 {
-    public AdminDashboardPage()
+    public partial class AdminDashboardPage : ContentPage
     {
-        InitializeComponent();
-    }
+        public AdminDashboardPage()
+        {
+            InitializeComponent();
+        }
 
-    private async void OnViewAnalytics(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("///AdminAnalyticsPage");
-    }
+        private async void OnViewAnalytics(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AdminAnalyticsPage));
+        }
 
-    private async void OnManageBookings(object sender, EventArgs e)
-    {
-        // Navigate to a bookings management page
-        // For now, show a simple alert since we don't have a dedicated bookings management page
-        await DisplayAlert("Manage Bookings", "Bookings management feature coming soon!", "OK");
-    }
+        private async void OnManageBookings(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AdminManageBookingsPage));
+        }
 
-    private async void OnManageUsers(object sender, EventArgs e)
-    {
-        // Navigate to a users management page
-        // For now, show a simple alert since we don't have a dedicated users management page
-        await DisplayAlert("Manage Users", "Users management feature coming soon!", "OK");
+        private async void OnManageUsers(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AdminManageUsersPage));
+        }
+
+        private async void OnAddAdmin(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AddAdminPage));
+        }
     }
 }
