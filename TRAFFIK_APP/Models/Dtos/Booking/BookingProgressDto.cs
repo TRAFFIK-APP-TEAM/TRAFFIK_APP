@@ -1,12 +1,15 @@
-﻿namespace TRAFFIK_APP.Models
+﻿namespace TRAFFIK_APP.Models.Dtos.Booking
 {
     public class BookingProgressDto
     {
+        public int Id { get; set; }
         public int BookingId { get; set; }
         public string ServiceName { get; set; } = string.Empty;
         public DateTime ScheduledDate { get; set; }
         public string CurrentStage { get; set; } = "Pending";
         public DateTime? CompletionDate { get; set; }
+        public string Location { get; set; } = string.Empty;
+        public string VehicleDisplayName { get; set; } = string.Empty;
 
         public List<string> StageSequence { get; set; } = new()
         {
