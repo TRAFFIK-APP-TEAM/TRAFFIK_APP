@@ -5,31 +5,72 @@
              Title="Admin Dashboard"
              BackgroundColor="#101726">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+	<ScrollView>
+		<VerticalStackLayout Padding="20" Spacing="20">
 
-            <Label Text="Administrator Dashboard"
+			<!-- Header -->
+			<Label Text="Administrator Dashboard"
                    TextColor="White"
                    FontSize="22"
-                   FontAttributes="Bold" />
+                   FontAttributes="Bold"
+                   Margin="0,0,0,10"/>
 
-            <Frame BackgroundColor="#262B34" CornerRadius="16" HasShadow="True" Padding="16">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Quick Overview" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                    <Label Text="Active Bookings: 42" TextColor="#C8CDD6"/>
-                    <Label Text="Completed Services: 118" TextColor="#C8CDD6"/>
-                    <Label Text="Pending Transactions: 6" TextColor="#C8CDD6"/>
-                </VerticalStackLayout>
-            </Frame>
+			<!-- Overview Card -->
+			<Frame BackgroundColor="#262B34"
+                   CornerRadius="16"
+                   HasShadow="True"
+                   Padding="16">
+				<VerticalStackLayout Spacing="8">
+					<Label Text="Quick Overview"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"/>
+					<Label Text="Monitor your business operations at a glance."
+                           TextColor="#C8CDD6"
+                           FontSize="13"/>
+				</VerticalStackLayout>
+			</Frame>
 
-            <Frame BackgroundColor="#262B34" CornerRadius="16" HasShadow="True" Padding="16">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Admin Tools" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                    <Button Text="View Analytics" CornerRadius="12" Clicked="OnViewAnalytics"/>
-                    <Button Text="Manage Bookings" CornerRadius="12"/>
-                    <Button Text="Manage Users" CornerRadius="12"/>
-                </VerticalStackLayout>
-            </Frame>
-        </VerticalStackLayout>
-    </ScrollView>
+			<!-- Admin Tools -->
+			<Frame BackgroundColor="#262B34"
+                   CornerRadius="16"
+                   HasShadow="True"
+                   Padding="16">
+				<VerticalStackLayout Spacing="12">
+
+					<Label Text="Admin Tools"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           Margin="0,0,0,8"/>
+
+					<!-- Navigation Buttons -->
+					<Button Text="View Analytics"
+                            CornerRadius="12"
+                            Clicked="OnViewAnalytics"
+                            BackgroundColor="#303743"
+                            TextColor="White"/>
+
+					<Button Text="Manage Bookings"
+                            CornerRadius="12"
+                            Clicked="OnManageBookings"
+                            BackgroundColor="#303743"
+                            TextColor="White"/>
+
+					<Button Text="Manage Users"
+                            CornerRadius="12"
+                            Clicked="OnManageUsers"
+                            BackgroundColor="#303743"
+                            TextColor="White"/>
+
+					<Button Text="Add Admin / Employee"
+                            CornerRadius="12"
+                            Clicked="OnAddAdmin"
+                            BackgroundColor="#2E8B57"
+                            TextColor="White"/>
+				</VerticalStackLayout>
+			</Frame>
+
+		</VerticalStackLayout>
+	</ScrollView>
 </ContentPage>

@@ -1,14 +1,32 @@
-﻿namespace TRAFFIK_APP.Views;
+﻿using Microsoft.Maui.Controls;
 
-public partial class AdminDashboardPage : ContentPage
+namespace TRAFFIK_APP.Views
 {
-    public AdminDashboardPage()
+    public partial class AdminDashboardPage : ContentPage
     {
-        InitializeComponent();
-    }
+        public AdminDashboardPage()
+        {
+            InitializeComponent();
+        }
 
-    private async void OnViewAnalytics(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(AdminAnalyticsPage));
+        private async void OnViewAnalytics(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AdminAnalyticsPage));
+        }
+
+        private async void OnManageBookings(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AdminManageBookingsPage));
+        }
+
+        private async void OnManageUsers(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AdminManageUsersPage));
+        }
+
+        private async void OnAddAdmin(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AddAdminPage));
+        }
     }
 }
