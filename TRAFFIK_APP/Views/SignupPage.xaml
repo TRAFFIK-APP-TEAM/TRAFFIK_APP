@@ -65,7 +65,7 @@
                                TextColor="White"
                                PlaceholderColor="#8E8E93"
                                FontSize="16" />
-                        <ImageButton Source="eye_icon.png"
+                        <ImageButton Source="visibility_24.png"
                                      BackgroundColor="Transparent"
                                      HorizontalOptions="End"
                                      VerticalOptions="Center"
