@@ -1,21 +1,25 @@
-﻿using TRAFFIK_APP.Models.Dtos;
+﻿using TRAFFIK_APP.Models.Dtos.Reward;
 using TRAFFIK_APP.Services.ApiClients;
 using TRAFFIK_APP.Configuration;
 using Microsoft.Extensions.Logging;
-public class RewardCatalogClient : ApiClient
+
+namespace TRAFFIK_APP.Services.ApiClients
 {
-    public RewardCatalogClient(HttpClient httpClient, ILogger<ApiClient> logger) : base(httpClient, logger) { }
-
-    public Task<List<RewardItemDto>?> GetAllAsync() =>
-        GetAsync<List<RewardItemDto>>(Endpoints.RewardCatalog.GetAll);
-
-    public Task<bool> RedeemItemAsync(int itemId, int userId)
+    public class RewardCatalogClient : ApiClient
     {
-        var dto = new RedeemCatalogItemRequest
+        public RewardCatalogClient(HttpClient httpClient, ILogger<ApiClient> logger) : base(httpClient, logger) { }
+
+        public Task<List<RewardItemDto>?> GetAllAsync() =>
+            GetAsync<List<RewardItemDto>>(Endpoints.RewardCatalog.GetAll);
+
+        public Task<bool> RedeemItemAsync(int itemId, int userId)
         {
-            UserId = userId,
-            ItemId = itemId
-        };
-        return PostAsync<bool>(Endpoints.RewardCatalog.RedeemItem.Replace("{itemId}", itemId.ToString()), dto);
+            var dto = new RedeemCatalogItemRequest
+            {
+                UserId = userId,
+                ItemId = itemId
+            };
+            return PostAsync<bool>(Endpoints.RewardCatalog.RedeemItem.Replace("{itemId}", itemId.ToString()), dto);
+        }
     }
 }

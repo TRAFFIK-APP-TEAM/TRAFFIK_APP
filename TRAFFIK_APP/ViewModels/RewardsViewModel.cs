@@ -2,6 +2,7 @@ using TRAFFIK_APP.Services;
 using TRAFFIK_APP.Services.ApiClients;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TRAFFIK_APP.Models.Dtos.Reward;
 
 
 namespace TRAFFIK_APP.ViewModels

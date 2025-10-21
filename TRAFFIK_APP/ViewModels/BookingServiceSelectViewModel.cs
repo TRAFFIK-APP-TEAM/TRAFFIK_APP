@@ -1,11 +1,14 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TRAFFIK_APP.Models.Dtos.Booking;
+using TRAFFIK_APP.Services.ApiClients;
 
 namespace TRAFFIK_APP.ViewModels
 {
     public class BookingServiceSelectViewModel : BaseViewModel
     {
+        private readonly ServiceCatalogClient _serviceCatalogClient;
+
         public ObservableCollection<BookingServiceDto> Services { get; } = new();
 
         private BookingServiceDto _selectedService;
@@ -23,15 +26,46 @@ namespace TRAFFIK_APP.ViewModels
         }
 
         public ICommand SelectServiceCommand { get; }
+        public ICommand LoadServicesCommand { get; }
 
-        public BookingServiceSelectViewModel()
+        public BookingServiceSelectViewModel(ServiceCatalogClient serviceCatalogClient)
         {
-            // Mock data
-            Services.Add(new BookingServiceDto { ServiceCatalogId = 1, ServiceName = "Car Wash", Description = "Full wash inside and out" });
-            Services.Add(new BookingServiceDto { ServiceCatalogId = 2, ServiceName = "Oil Change", Description = "Engine oil & filter replacement" });
-            Services.Add(new BookingServiceDto { ServiceCatalogId = 3, ServiceName = "Tyre Rotation", Description = "Rotate tyres for even wear" });
-
+            _serviceCatalogClient = serviceCatalogClient;
+            
             SelectServiceCommand = new Command<BookingServiceDto>(OnSelectService);
+            LoadServicesCommand = new Command(() => ExecuteSafeAsync(LoadServicesAsync, "Loading services..."));
+
+            // Load services on initialization
+            _ = LoadServicesAsync();
+        }
+
+        private async Task LoadServicesAsync()
+        {
+            try
+            {
+                var serviceCatalogs = await _serviceCatalogClient.GetAllAsync();
+                Services.Clear();
+                
+                if (serviceCatalogs != null)
+                {
+                    foreach (var service in serviceCatalogs)
+                    {
+                        Services.Add(new BookingServiceDto
+                        {
+                            Id = service.Id,
+                            ServiceCatalogId = service.Id,
+                            ServiceName = service.Name,
+                            Description = service.Description,
+                            Price = service.Price
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading services: {ex.Message}");
+                ErrorMessage = "Failed to load services. Please try again.";
+            }
         }
 
         private async void OnSelectService(BookingServiceDto? service)

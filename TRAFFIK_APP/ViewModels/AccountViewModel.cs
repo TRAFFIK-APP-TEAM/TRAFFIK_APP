@@ -3,6 +3,7 @@ using TRAFFIK_APP.Services.ApiClients;
 using TRAFFIK_APP.ViewModels;
 using TRAFFIK_APP.Views;
 using System.Collections.ObjectModel;
+using TRAFFIK_APP.Models.Dtos.User;
 
 namespace TRAFFIK_APP.ViewModels
 {
@@ -10,6 +11,7 @@ namespace TRAFFIK_APP.ViewModels
     {
         private readonly SessionService _session;
         private readonly VehicleClient _vehicleClient;
+        private readonly UserClient _userClient;
         
         private string _name = string.Empty;
         private string _surname = string.Empty;
@@ -60,10 +62,11 @@ namespace TRAFFIK_APP.ViewModels
         public Command GoRewardsCommand { get; }
         public Command GoAccountCommand { get; }
 
-        public AccountViewModel(SessionService session, VehicleClient vehicleClient)
+        public AccountViewModel(SessionService session, VehicleClient vehicleClient, UserClient userClient)
         {
             _session = session;
             _vehicleClient = vehicleClient;
+            _userClient = userClient;
             
             LogoutCommand = new Command(() => ExecuteSafeAsync(LogoutAsync, "Logging out..."));
             SaveProfileCommand = new Command(() => ExecuteSafeAsync(SaveProfileAsync, "Saving profile..."));
@@ -126,19 +129,37 @@ namespace TRAFFIK_APP.ViewModels
         {
             try
             {
-                // TODO: Call API to update user profile
-                // For now, just update session and secure storage
-                
                 if (_session.CurrentUser != null)
                 {
-                    _session.CurrentUser.FullName = FullName;
-                    _session.CurrentUser.Email = Email;
-                    _session.CurrentUser.PhoneNumber = PhoneNumber;
+                    // Create user update DTO
+                    var userUpdateDto = new UserUpdateDto
+                    {
+                        Id = _session.CurrentUser.Id,
+                        FullName = FullName,
+                        Email = Email,
+                        PhoneNumber = PhoneNumber,
+                        RoleId = _session.CurrentUser.RoleId
+                    };
+
+                    // Call API to update user profile
+                    var success = await _userClient.UpdateAsync(_session.CurrentUser.Id, _session.CurrentUser);
                     
-                    await SecureStorage.SetAsync("user_name", FullName);
-                    await SecureStorage.SetAsync("email", Email);
-                    
-                    await Application.Current.MainPage.DisplayAlert("Success", "Profile updated successfully!", "OK");
+                    if (success)
+                    {
+                        // Update session and secure storage
+                        _session.CurrentUser.FullName = FullName;
+                        _session.CurrentUser.Email = Email;
+                        _session.CurrentUser.PhoneNumber = PhoneNumber;
+                        
+                        await SecureStorage.SetAsync("user_name", FullName);
+                        await SecureStorage.SetAsync("email", Email);
+                        
+                        await Application.Current.MainPage.DisplayAlert("Success", "Profile updated successfully!", "OK");
+                    }
+                    else
+                    {
+                        ErrorMessage = "Failed to update profile. Please try again.";
+                    }
                 }
             }
             catch (Exception ex)
@@ -192,4 +213,5 @@ namespace TRAFFIK_APP.ViewModels
         public string ImageUrl { get; set; } = string.Empty;
     }
 }
+
 
