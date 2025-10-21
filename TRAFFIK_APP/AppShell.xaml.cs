@@ -19,6 +19,9 @@ namespace TRAFFIK_APP
             Routing.RegisterRoute(nameof(AdminManageUsersPage), typeof(AdminManageUsersPage));
             Routing.RegisterRoute(nameof(AddAdminPage), typeof(AddAdminPage));
 
+        
+
+
         }
 
         protected override async void OnNavigating(ShellNavigatingEventArgs args)

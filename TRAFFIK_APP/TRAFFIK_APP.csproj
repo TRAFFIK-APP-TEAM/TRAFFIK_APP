@@ -109,6 +109,9 @@
 	  <MauiXaml Update="Views\SignupPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\StaffBookingListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\VehiclePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
