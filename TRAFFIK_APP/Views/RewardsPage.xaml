@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:TRAFFIK_APP.ViewModels"
+             xmlns:models="clr-namespace:TRAFFIK_APP.Models.Dtos.Reward"
              x:Class="TRAFFIK_APP.Views.RewardsPage"
              x:DataType="viewmodels:RewardsViewModel"
              BackgroundColor="#0D0D0D"
@@ -28,75 +29,81 @@
         </VerticalStackLayout>
 
         <!-- Content -->
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="25">
+        <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
+            <ScrollView>
+                <VerticalStackLayout Spacing="25">
 
-                <!-- Available Rewards -->
-                <Label Text="Available Rewards" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                <ScrollView>
-                    <VerticalStackLayout>
-                        <CollectionView ItemsSource="{Binding AvailableRewards}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BackgroundColor="#1E1E1E"
-                                            Stroke="#1E1E1E"
-                                            StrokeThickness="0"
-                                            Padding="15"
-                                            Margin="0,0,0,10"
-                                            StrokeShape="RoundRectangle 15">
-                                        <VerticalStackLayout>
-                                            <Label Text="{Binding Name}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
-                                            <Label Text="{Binding Description}" TextColor="#C8C8C8" FontSize="14"/>
-                                            <Label Text="{Binding Cost, StringFormat='Cost: {0} pts'}" TextColor="#007AFF" FontSize="14"/>
-                                            <Button Text="Redeem"
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:RewardsViewModel}}, Path=RedeemCommand}"
-                                                    CommandParameter="{Binding}"
-                                                    BackgroundColor="#007AFF"
-                                                    TextColor="White"
-                                                    CornerRadius="10"
-                                                    Margin="0,10,0,0"/>
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                </ScrollView>
+                    <!-- Available Rewards -->
+                    <Label Text="Available Rewards" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <CollectionView ItemsSource="{Binding AvailableRewards}">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20">
+                                <Label Text="No available rewards" TextColor="#888" FontSize="16" HorizontalOptions="Center"/>
+                                <Label Text="Earn more points to unlock rewards!" TextColor="#666" FontSize="14" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:RewardItemDto">
+                                <Border BackgroundColor="#1E1E1E"
+                                        Stroke="#1E1E1E"
+                                        StrokeThickness="0"
+                                        Padding="15"
+                                        Margin="0,0,0,10"
+                                        StrokeShape="RoundRectangle 15">
+                                    <VerticalStackLayout>
+                                        <Label Text="{Binding Name, FallbackValue='Reward Name'}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Description, FallbackValue='Reward Description'}" TextColor="#C8C8C8" FontSize="14"/>
+                                        <Label Text="{Binding Cost, StringFormat='Cost: {0} pts', FallbackValue='Cost: 0 pts'}" TextColor="#007AFF" FontSize="14"/>
+                                        <Button Text="Redeem Now"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:RewardsViewModel}}, Path=RedeemCommand}"
+                                                CommandParameter="{Binding}"
+                                                BackgroundColor="#007AFF"
+                                                TextColor="White"
+                                                CornerRadius="10"
+                                                Margin="0,10,0,0"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
-                <!-- Locked Rewards -->
-                <Label Text="Locked Rewards" TextColor="#888" FontSize="18" FontAttributes="Bold"/>
-                <ScrollView>
-                    <VerticalStackLayout>
-                        <CollectionView ItemsSource="{Binding LockedRewards}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BackgroundColor="#1E1E1E"
-                                            Stroke="#1E1E1E"
-                                            StrokeThickness="0"
-                                            Padding="15"
-                                            Margin="0,0,0,10"
-                                            StrokeShape="RoundRectangle 15"
-                                            Opacity="0.5">
-                                        <VerticalStackLayout>
-                                            <Label Text="{Binding Name}" TextColor="#888" FontSize="16" FontAttributes="Bold"/>
-                                            <Label Text="{Binding Description}" TextColor="#666" FontSize="14"/>
-                                            <Label Text="{Binding Cost, StringFormat='Requires {0} pts'}" TextColor="#FF3B30" FontSize="14"/>
-                                            <Button Text="Locked"
-                                                    IsEnabled="False"
-                                                    BackgroundColor="#444"
-                                                    TextColor="#999"
-                                                    CornerRadius="10"
-                                                    Margin="0,10,0,0"/>
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                </ScrollView>
+                    <!-- Locked Rewards -->
+                    <Label Text="Locked Rewards" TextColor="#888" FontSize="18" FontAttributes="Bold"/>
+                    <CollectionView ItemsSource="{Binding LockedRewards}">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20">
+                                <Label Text="All rewards unlocked!" TextColor="#888" FontSize="16" HorizontalOptions="Center"/>
+                                <Label Text="Great job earning points!" TextColor="#666" FontSize="14" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:RewardItemDto">
+                                <Border BackgroundColor="#1E1E1E"
+                                        Stroke="#1E1E1E"
+                                        StrokeThickness="0"
+                                        Padding="15"
+                                        Margin="0,0,0,10"
+                                        StrokeShape="RoundRectangle 15"
+                                        Opacity="0.5">
+                                    <VerticalStackLayout>
+                                        <Label Text="{Binding Name, FallbackValue='Locked Reward'}" TextColor="#888" FontSize="16" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Description, FallbackValue='Locked Reward Description'}" TextColor="#666" FontSize="14"/>
+                                        <Label Text="{Binding Cost, StringFormat='Requires {0} pts', FallbackValue='Requires 0 pts'}" TextColor="#FF3B30" FontSize="14"/>
+                                        <Button Text="Locked"
+                                                IsEnabled="False"
+                                                BackgroundColor="#444"
+                                                TextColor="#999"
+                                                CornerRadius="10"
+                                                Margin="0,10,0,0"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
-            </VerticalStackLayout>
-        </ScrollView>
+                </VerticalStackLayout>
+            </ScrollView>
+        </RefreshView>
 
         <!-- Bottom Navigation Bar -->
         <Grid Grid.Row="2"
