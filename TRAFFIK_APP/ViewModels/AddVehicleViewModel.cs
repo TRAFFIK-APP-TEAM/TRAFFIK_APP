@@ -3,6 +3,7 @@ using TRAFFIK_APP.Services.ApiClients;
 using TRAFFIK_APP.Views;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TRAFFIK_APP.Models.Dtos.Vehicle;
 
 namespace TRAFFIK_APP.ViewModels
 {

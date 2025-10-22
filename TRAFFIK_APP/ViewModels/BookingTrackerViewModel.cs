@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TRAFFIK_APP.Models;
+using TRAFFIK_APP.Models.Dtos.Booking;
 
 namespace TRAFFIK_APP.ViewModels
 {

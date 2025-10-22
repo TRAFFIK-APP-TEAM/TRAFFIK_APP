@@ -125,12 +125,12 @@ namespace TRAFFIK_APP.Configuration
 
         public static class Vehicle
         {
-            public static string GetByUser = "/api/vehicles/user/{userId}"; // Get vehicles linked to a user
-            public static string GetById = "/api/vehicles/{id}"; // Get vehicle by ID
-            public static string Create = "/api/vehicles"; // Create a new vehicle
-            public static string UpdateById = "/api/vehicles/{id}"; // Update vehicle by ID
-            public static string DeleteById = "/api/vehicles/{id}"; // Delete vehicle by ID
-            public const string GetAllVehicleTypes = $"{BaseUrl}/api/Vehicles/VehicleTypes"; // Get all vehicle types
+            public const string GetByUser = "/api/vehicles/user/{userId}"; // Get vehicles linked to a user
+            public const string GetById = "/api/vehicles/{id}"; // Get vehicle by ID
+            public const string Create = "/api/vehicles"; // Create a new vehicle
+            public const string UpdateById = "/api/vehicles/{id}"; // Update vehicle by ID
+            public const string DeleteById = "/api/vehicles/{id}"; // Delete vehicle by ID
+            public const string GetAllVehicleTypes = "/api/vehicles/types"; // Get all vehicle types
         }
     }
 }

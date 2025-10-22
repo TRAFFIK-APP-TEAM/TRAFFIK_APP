@@ -1,5 +1,6 @@
 ﻿using TRAFFIK_APP.Configuration;
 using Microsoft.Extensions.Logging;
+using TRAFFIK_APP.Models.Dtos.Reward;
 
 namespace TRAFFIK_APP.Services.ApiClients
 {

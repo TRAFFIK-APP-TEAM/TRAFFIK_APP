@@ -1,8 +1,11 @@
-﻿public class BookingCreateDto
+﻿namespace TRAFFIK_APP.Models.Dtos.Booking
 {
-    public int UserId { get; set; }
-    public int CarModelId { get; set; }
-    public int ServiceCatalogId { get; set; }
-    public DateTime ScheduledDate { get; set; }
-    public string Location { get; set; } = string.Empty;
+    public class BookingCreateDto
+    {
+        public int UserId { get; set; }
+        public int VehicleId { get; set; }
+        public int ServiceCatalogId { get; set; }
+        public DateTime ScheduledDate { get; set; }
+        public string Location { get; set; } = string.Empty;
+    }
 }

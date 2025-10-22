@@ -7,11 +7,13 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="20">
+
             <!-- Logo -->
             <Border BackgroundColor="#1C1C1E"
                     StrokeShape="RoundRectangle 12"
                     Padding="12"
-                    HorizontalOptions="Center">
+                    HorizontalOptions="Center"
+                    Shadow="0,2,4,#333333">
                 <Label Text="TRAFFIK"
                        FontSize="24"
                        FontAttributes="Bold"
@@ -28,33 +30,51 @@
 
             <!-- Form Fields -->
             <VerticalStackLayout Spacing="12">
+
+                <!-- Email -->
                 <Label Text="EMAIL" TextColor="White" FontSize="14" />
-                <Border BackgroundColor="#1C1C1E" StrokeShape="RoundRectangle 12" Padding="8">
-                    <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email"
+                <Border BackgroundColor="#1C1C1E" StrokeShape="RoundRectangle 12" Padding="8" Shadow="0,2,4,#333333">
+                    <Entry Placeholder="Email"
+                           Text="{Binding Email}"
+                           Keyboard="Email"
+                           ReturnType="Next"
                            BackgroundColor="Transparent"
                            TextColor="White"
                            PlaceholderColor="#8E8E93"
-                           FontSize="16" />
+                           FontSize="16"/>
                 </Border>
 
+                <!-- Password -->
                 <Label Text="PASSWORD" TextColor="White" FontSize="14" />
-                <Border BackgroundColor="#1C1C1E" StrokeShape="RoundRectangle 12" Padding="8">
+                <Border BackgroundColor="#1C1C1E" StrokeShape="RoundRectangle 12" Padding="8" Shadow="0,2,4,#333333">
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
                         <Entry x:Name="PasswordEntry"
+                               Grid.Column="0"
                                Placeholder="Password"
                                Text="{Binding Password}"
                                IsPassword="{Binding IsPasswordHidden}"
+                               ReturnType="Go"
                                BackgroundColor="Transparent"
                                TextColor="White"
                                PlaceholderColor="#8E8E93"
-                               FontSize="16" />
-                        <ImageButton Source="eye_icon.png"
+                               FontSize="16"/>
+
+                        <ImageButton Grid.Column="1"
+                                     Source="eye_icon.svg"
                                      BackgroundColor="Transparent"
+                                     Aspect="AspectFit"
                                      HorizontalOptions="End"
                                      VerticalOptions="Center"
-                                     Clicked="TogglePasswordVisibility" />
+                                     Margin="0,0,0,6"
+                                     Clicked="TogglePasswordVisibility"/>
                     </Grid>
                 </Border>
+
             </VerticalStackLayout>
 
             <!-- Error Message -->
@@ -70,7 +90,8 @@
                     TextColor="White"
                     FontAttributes="Bold"
                     CornerRadius="8"
-                    HeightRequest="48" />
+                    HeightRequest="48"
+                    HorizontalOptions="FillAndExpand" />
 
             <!-- Signup Link -->
             <HorizontalStackLayout HorizontalOptions="Center">
@@ -84,6 +105,7 @@
                     </Label.GestureRecognizers>
                 </Label>
             </HorizontalStackLayout>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

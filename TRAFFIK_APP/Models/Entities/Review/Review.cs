@@ -7,6 +7,9 @@ public class Review
     public int UserId { get; set; }
     public int Rating { get; set; } // 1–5
     public string Comment { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public bool IsVerified { get; set; } = false;
 
     public Booking? Booking { get; set; }
     public User? User { get; set; }
