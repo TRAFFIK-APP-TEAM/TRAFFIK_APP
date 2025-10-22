@@ -13,7 +13,17 @@ namespace TRAFFIK_APP.ViewModels
         private readonly RewardCatalogClient _catalogClient;
         private readonly SessionService _session;
 
-        public int Points { get; private set; }
+        private int _points;
+        public int Points 
+        { 
+            get => _points; 
+            private set 
+            { 
+                _points = value;
+                OnPropertyChanged();
+            } 
+        }
+
         public ObservableCollection<RewardItemDto> AvailableRewards { get; } = new();
         public ObservableCollection<RewardItemDto> LockedRewards { get; } = new();
 
@@ -21,6 +31,8 @@ namespace TRAFFIK_APP.ViewModels
         public ICommand GoAppointmentsCommand { get; }
         public ICommand GoRewardsCommand { get; }
         public ICommand GoAccountCommand { get; }
+        public ICommand RedeemCommand { get; }
+        public ICommand RefreshCommand { get; }
 
         public RewardsViewModel(SessionService session, RewardClient rewardClient, RewardCatalogClient catalogClient)
         {
@@ -32,24 +44,149 @@ namespace TRAFFIK_APP.ViewModels
             GoAppointmentsCommand = new Command(async () => await Shell.Current.GoToAsync("//BookingPage"));
             GoRewardsCommand = new Command(async () => await Shell.Current.GoToAsync("//RewardsPage"));
             GoAccountCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
+            RedeemCommand = new Command<RewardItemDto>(async (item) => await RedeemReward(item));
+            RefreshCommand = new Command(async () => await LoadRewardsAsync());
 
-            LoadRewards();
+            LoadRewardsAsync();
         }
 
-        private async void LoadRewards()
+        private async Task LoadRewardsAsync()
         {
-            OnPropertyChanged(nameof(Points));
-
-            var catalog = await _catalogClient.GetAllAsync() ?? new List<RewardItemDto>();
-            AvailableRewards.Clear();
-            LockedRewards.Clear();
-
-            foreach (var item in catalog)
+            try
             {
-                if (item.Cost <= Points)
-                    AvailableRewards.Add(item);
-                else
-                    LockedRewards.Add(item);
+                IsBusy = true;
+
+                // Load user points
+                if (_session.UserId.HasValue)
+                {
+                    var balance = await _rewardClient.GetBalanceAsync(_session.UserId.Value);
+                    Points = balance ?? 0;
+                }
+
+                // Load reward catalog
+                var catalog = await _catalogClient.GetAllAsync() ?? new List<RewardItemDto>();
+                AvailableRewards.Clear();
+                LockedRewards.Clear();
+
+                System.Diagnostics.Debug.WriteLine($"Loaded {catalog.Count} catalog items, User has {Points} points");
+
+                if (catalog is not null)
+                {
+                    foreach (var reward in catalog)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Item: '{reward.Name}', Description: '{reward.Description}', Cost: {reward.Cost}, Points: {Points}");
+                        System.Diagnostics.Debug.WriteLine($"Name empty: {string.IsNullOrEmpty(reward.Name)}, Description empty: {string.IsNullOrEmpty(reward.Description)}");
+                        
+                        // Skip items with empty names or descriptions
+                        if (string.IsNullOrEmpty(reward.Name) || string.IsNullOrEmpty(reward.Description))
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Skipping item with empty data: ID={reward.Id}");
+                            continue;
+                        }
+                        
+                        if (reward.Cost <= Points)
+                        {
+                            AvailableRewards.Add(reward);
+                            System.Diagnostics.Debug.WriteLine($"Added to Available: {reward.Name}");
+                        }
+                        else
+                        {
+                            LockedRewards.Add(reward);
+                            System.Diagnostics.Debug.WriteLine($"Added to Locked: {reward.Name}");
+                        }
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine($"Available rewards count: {AvailableRewards.Count}");
+                System.Diagnostics.Debug.WriteLine($"Locked rewards count: {LockedRewards.Count}");
+                
+                // Force UI update
+                OnPropertyChanged(nameof(AvailableRewards));
+                OnPropertyChanged(nameof(LockedRewards));
+            }
+            catch (Exception ex)
+            {
+                // Handle error - you might want to show a message to the user
+                System.Diagnostics.Debug.WriteLine($"Error loading rewards: {ex.Message}");
+                
+                // Add some test data for debugging
+                if (AvailableRewards.Count == 0 && LockedRewards.Count == 0)
+                {
+                    AvailableRewards.Add(new RewardItemDto 
+                    { 
+                        Id = 1, 
+                        Name = "Test Reward", 
+                        Description = "This is a test reward", 
+                        Cost = 100 
+                    });
+                    
+                    LockedRewards.Add(new RewardItemDto 
+                    { 
+                        Id = 2, 
+                        Name = "Expensive Reward", 
+                        Description = "This is an expensive test reward", 
+                        Cost = 1000 
+                    });
+                    
+                    System.Diagnostics.Debug.WriteLine("Added test data for debugging");
+                }
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task RedeemReward(RewardItemDto item)
+        {
+            try
+            {
+                if (!_session.UserId.HasValue)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Please log in to redeem rewards.", "OK");
+                    return;
+                }
+
+                if (Points < item.Cost)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Insufficient Points", 
+                        $"You need {item.Cost} points to redeem this item. You currently have {Points} points.", "OK");
+                    return;
+                }
+
+                if (item.Stock <= 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Out of Stock", 
+                        "This item is currently out of stock.", "OK");
+                    return;
+                }
+
+                var confirmed = await Application.Current.MainPage.DisplayAlert("Confirm Redemption", 
+                    $"Are you sure you want to redeem '{item.Name}' for {item.Cost} points?", "Yes", "No");
+
+                if (confirmed)
+                {
+                    var success = await _catalogClient.RedeemItemAsync(item.Id, _session.UserId.Value);
+                    
+                    if (success)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Success", 
+                            $"Successfully redeemed '{item.Name}'!", "OK");
+                        
+                        // Refresh the rewards list
+                        await LoadRewardsAsync();
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", 
+                            "Failed to redeem item. Please try again.", "OK");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", 
+                    $"An error occurred: {ex.Message}", "OK");
             }
         }
     }

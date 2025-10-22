@@ -13,7 +13,7 @@
     <Shell.TitleView>
         <Grid BackgroundColor="Black" HeightRequest="56">
             <Label 
-                Text="TRAFFFIK"
+                Text="TRAFFIK"
                 TextColor="White"
                 FontSize="20"
                 FontAttributes="Bold"
@@ -32,22 +32,22 @@
     <!-- Main tabbed navigation (regular user) -->
     <TabBar Route="UserDashboardPage">
         <ShellContent Title="Dashboard"
-                      Icon="home_icon.png"
+                      Icon="home_icon"
                       ContentTemplate="{DataTemplate views:DashboardPage}"
                       Route="DashboardPage" />
 
         <ShellContent Title="Booking"
-                      Icon="calendar_icon.png"
+                      Icon="calendar_icon"
                       ContentTemplate="{DataTemplate views:BookingPage}"
                       Route="BookingPage" />
 
         <ShellContent Title="Rewards"
-                      Icon="gift_icon.png"
+                      Icon="gift_icon"
                       ContentTemplate="{DataTemplate views:RewardsPage}"
                       Route="RewardsPage" />
 
         <ShellContent Title="Account"
-                      Icon="account_icon.png"
+                      Icon="account_icon"
                       ContentTemplate="{DataTemplate views:AccountPage}"
                       Route="AccountPage" />
     </TabBar>

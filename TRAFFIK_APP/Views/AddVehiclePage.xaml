@@ -23,13 +23,16 @@
         <!-- Vehicle Form -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="15">
-                <Frame BackgroundColor="#1E1E1E" CornerRadius="15" Padding="25" HasShadow="False">
+                <Border Background="#1E1E1E" Padding="25">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
 
                     <VerticalStackLayout Spacing="25">
 
                         <!-- 
                         <StackLayout>
-                            <Label Text="Vehicle Nickname (Optional)"
+                            <Label Text="Vehicle Nickname"
                                    TextColor="White" FontSize="16" Margin="0,0,0,5"/>
                             <Entry Placeholder="E.g. My Blue Ride"
                                    Text="{Binding VehicleNickname}"
@@ -111,7 +114,7 @@
                                 FontSize="16"
                                 HeightRequest="50"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
                 <!-- Privacy note -->
                 <Label Text="We only collect basic vehicle info to personalize your experience. No personal or tracking data is stored or shared."

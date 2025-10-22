@@ -25,38 +25,35 @@
             <VerticalStackLayout Spacing="15">
 
                 <!-- Three placeholder clickable frames -->
-                <Frame BackgroundColor="#1E1E1E"
-                       CornerRadius="15"
-                       Padding="20"
-                       Margin="0,5"
-                       HasShadow="False">
+                <Border Background="#1E1E1E" Padding="20" Margin="0,5">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
                     <Button Text="Vehicle Option 1"
                             BackgroundColor="#007AFF"
                             TextColor="White"
                             CornerRadius="10"/>
-                </Frame>
+                </Border>
 
-                <Frame BackgroundColor="#1E1E1E"
-                       CornerRadius="15"
-                       Padding="20"
-                       Margin="0,5"
-                       HasShadow="False">
+                <Border Background="#1E1E1E" Padding="20" Margin="0,5">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
                     <Button Text="Vehicle Option 2"
                             BackgroundColor="#007AFF"
                             TextColor="White"
                             CornerRadius="10"/>
-                </Frame>
+                </Border>
 
-                <Frame BackgroundColor="#1E1E1E"
-                       CornerRadius="15"
-                       Padding="20"
-                       Margin="0,5"
-                       HasShadow="False">
+                <Border Background="#1E1E1E" Padding="20" Margin="0,5">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
                     <Button Text="Vehicle Option 3"
                             BackgroundColor="#007AFF"
                             TextColor="White"
                             CornerRadius="10"/>
-                </Frame>
+                </Border>
 
             </VerticalStackLayout>
         </ScrollView>

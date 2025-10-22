@@ -28,11 +28,13 @@
                             IsVisible="{Binding IsNotEmpty}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#1E1E1E"
-                               BorderColor="Gray"
-                               CornerRadius="12"
-                               Padding="20"
-                               Margin="0,5">
+                        <Border Background="#1E1E1E" Padding="20" Margin="0,5">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12"/>
+                            </Border.StrokeShape>
+                            <Border.Stroke>
+                                <SolidColorBrush Color="Gray"/>
+                            </Border.Stroke>
                             <VerticalStackLayout Spacing="10">
                                 <Label Text="{Binding ServiceName, StringFormat='Service: {0}'}"
                                        TextColor="White"
@@ -48,7 +50,7 @@
                                              ProgressColor="#007AFF"
                                              HeightRequest="8" />
                             </VerticalStackLayout>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
