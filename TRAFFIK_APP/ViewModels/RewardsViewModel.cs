@@ -13,6 +13,10 @@ namespace TRAFFIK_APP.ViewModels
         private readonly RewardCatalogClient _catalogClient;
         private readonly SessionService _session;
 
+        private int _points;
+        public int Points 
+        { 
+            get => _points; 
             private set 
             { 
                 _points = value;
