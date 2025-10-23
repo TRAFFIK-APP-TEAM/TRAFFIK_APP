@@ -5,13 +5,13 @@ namespace TRAFFIK_APP.Configuration
     public static class Endpoints
     {
         // Toggle between local and Azure API
-/*#if ANDROID
-        public const string BaseUrl = "http://10.0.2.2:5027"; // Android emulator localhost
-#elif IOS
-        public const string BaseUrl = "http://localhost:5027"; // iOS simulator localhost
-#else
-        public const string BaseUrl = "http://localhost:5027"; // Windows/other platforms
-#endif*/
+        /*#if ANDROID
+                public const string BaseUrl = "http://10.0.2.2:5027"; // Android emulator localhost
+        #elif IOS
+                public const string BaseUrl = "http://localhost:5027"; // iOS simulator localhost
+        #else
+                public const string BaseUrl = "http://localhost:5027"; // Windows/other platforms
+        #endif*/
         public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net"; // Azure API endpoint
 
         public static class Auth
@@ -134,12 +134,12 @@ namespace TRAFFIK_APP.Configuration
 
         public static class Vehicle
         {
-            public const string GetByUser = "/api/vehicles/user/{userId}"; // Get vehicles linked to a user
-            public const string GetById = "/api/vehicles/{id}"; // Get vehicle by ID
-            public const string Create = "/api/vehicles"; // Create a new vehicle
-            public const string UpdateById = "/api/vehicles/{id}"; // Update vehicle by ID
-            public const string DeleteById = "/api/vehicles/{id}"; // Delete vehicle by ID
-            public const string GetAllVehicleTypes = "/api/vehicles/types"; // Get all vehicle types
+            public const string GetByUser = "/api/vehicle/user/{userId}"; // Get vehicles linked to a user
+            public const string GetById = "/api/vehicle/{id}"; // Get vehicle by ID
+            public const string Create = "/api/vehicle"; // Create a new vehicle
+            public const string UpdateById = "/api/vehicle/{id}"; // Update vehicle by ID
+            public const string DeleteById = "/api/vehicle/{id}"; // Delete vehicle by ID
+            public const string GetAllVehicleTypes = "/api/vehicle/types"; // Get all vehicle types
         }
     }
 }

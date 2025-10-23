@@ -42,7 +42,7 @@ namespace TRAFFIK_APP.Services.ApiClients
 
         public async Task<List<string>> GetAllVehicleTypesAsync()
         {
-            var response = await _httpClient.GetAsync("api/Vehicle/Types");
+            var response = await _httpClient.GetAsync("api/vehicle/Types");
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
