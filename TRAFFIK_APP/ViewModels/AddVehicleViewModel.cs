@@ -168,7 +168,17 @@ namespace TRAFFIK_APP.ViewModels
                 if (result != null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Vehicle added successfully!", "OK");
-                                        await Shell.Current.GoToAsync("//AccountPage");
+                    VehicleMake = string.Empty;
+                    VehicleModel = string.Empty;
+                    LicensePlate = string.Empty;
+                    SelectedVehicleType = string.Empty;
+                    VehicleColor = string.Empty;
+                    VehicleYear = DateTime.Now.Year;
+                    VehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
+                    VehicleImageBytes = null;
+
+                    await Shell.Current.GoToAsync("//AccountPage");
+
                 }
                 else
                 {
