@@ -1,6 +1,7 @@
 ﻿using TRAFFIK_APP.ViewModels;
 using TRAFFIK_APP.Models;
 using System.Collections.ObjectModel;
+using TRAFFIK_APP.Models.Entities.Vehicle;
 
 namespace TRAFFIK_APP.Views
 {

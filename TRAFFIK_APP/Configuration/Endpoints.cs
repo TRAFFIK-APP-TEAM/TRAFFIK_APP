@@ -124,11 +124,11 @@ namespace TRAFFIK_APP.Configuration
 
         public static class User
         {
-            public const string GetAll = $"{BaseUrl}/api/User"; // Get all users in the system
-            public const string Create = $"{BaseUrl}/api/User"; // Create a new user
-            public const string GetById = $"{BaseUrl}/api/User/{{id}}"; // Get user details by ID
-            public const string UpdateById = $"{BaseUrl}/api/User/{{id}}"; // Update user info by ID
-            public const string DeleteById = $"{BaseUrl}/api/User/{{id}}"; // Delete user by ID
+            public const string GetAll = "/api/Users"; // Get all users in the system
+            public const string Create = "/api/Users"; // Create a new user
+            public const string GetById = "/api/Users/{id}"; // Get user details by ID
+            public const string UpdateById = "/api/Users/{id}"; // Update user info by ID
+            public const string DeleteById = "/api/Users/{id}"; // Delete user by ID
         }
 
         public static class Vehicle

@@ -1,6 +1,8 @@
-﻿using TRAFFIK_APP.Models.Entities.User;
+﻿using TRAFFIK_APP.Models.Entities;
 
-public class Notification
+namespace TRAFFIK_APP.Models.Entities.Notification
+{
+    public class Notification
 {
     public int Id { get; set; }
     public int UserId { get; set; }
@@ -11,4 +13,5 @@ public class Notification
     public string Title { get; set; } = string.Empty;
 
     public User? User { get; set; }
+    }
 }

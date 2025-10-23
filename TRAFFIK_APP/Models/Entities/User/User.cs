@@ -1,6 +1,6 @@
 ﻿using TRAFFIK_APP.Models.Dtos.Auth;
 
-namespace TRAFFIK_APP.Models.Entities.User
+namespace TRAFFIK_APP.Models.Entities
 {
     public class User
     {

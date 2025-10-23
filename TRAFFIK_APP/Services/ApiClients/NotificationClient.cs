@@ -1,4 +1,5 @@
 ﻿using TRAFFIK_APP.Configuration;
+using TRAFFIK_APP.Models.Entities.Notification;
 using Microsoft.Extensions.Logging;
 
 namespace TRAFFIK_APP.Services.ApiClients

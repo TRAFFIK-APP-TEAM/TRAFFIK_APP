@@ -40,7 +40,7 @@
                 <VerticalStackLayout Padding="16" Spacing="20">
 
                     <!-- Points Display -->
-                    <Label Text="{Binding Points, StringFormat='Your Points: {0}'}"
+                    <Label Text="{Binding RewardBalance, StringFormat='Your Points: {0}'}"
            FontSize="18"
            FontAttributes="Bold"
            TextColor="White" />
@@ -68,7 +68,7 @@
 
                     <!-- Locked Reward (First Only) -->
                     <Label Text="Locked Reward" FontSize="16" TextColor="#888" />
-                    <CollectionView ItemsSource="{Binding FirstLockedReward}" SelectionMode="None">
+                    <CollectionView ItemsSource="{Binding FourthLockedReward}" SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <VerticalStackLayout Padding="10" BackgroundColor="#1E1E1E" Margin="0,0,0,10" Opacity="0.5">
@@ -115,7 +115,7 @@
                         </Border>
 
                         <!-- Vehicle Cards -->
-                        <CollectionView ItemsSource="{Binding VehicleCards}" ItemsLayout="HorizontalList" HeightRequest="160">
+                        <CollectionView ItemsSource="{Binding Vehicles}" ItemsLayout="HorizontalList" HeightRequest="160">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <ContentView>

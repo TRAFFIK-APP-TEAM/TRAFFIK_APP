@@ -1,4 +1,5 @@
 ﻿using TRAFFIK_APP.Configuration;
+using TRAFFIK_APP.Models.Entities.Reward;
 using Microsoft.Extensions.Logging;
 using TRAFFIK_APP.Models.Dtos.Reward;
 
