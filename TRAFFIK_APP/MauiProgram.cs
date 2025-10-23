@@ -72,157 +72,157 @@ namespace TRAFFIK_APP
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<UserRoleClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<BookingClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<PaymentClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<RewardClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<RewardCatalogClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<NotificationClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<ServiceCatalogClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<ServiceHistoryClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<ReviewClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<SocialFeedClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<VehicleClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<BookingStagesClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
 
             builder.Services.AddSingleton<SessionService>();
