@@ -32,7 +32,7 @@ namespace TRAFFIK_APP.Services.ApiClients
         public Task<Reward?> EarnAsync(EarnRewardRequest dto) =>
     PostAsync<Reward>(Endpoints.Reward.Earn, dto);
 
-        public Task<bool> RedeemAsync(RedeemRewardRequest dto) =>
-            PostAsync<bool>(Endpoints.Reward.Redeem, dto);
+        public Task<RedemptionResponse> RedeemAsync(RedeemRewardRequest dto) =>
+            PostAsync<RedemptionResponse>(Endpoints.Reward.Redeem, dto);
     }
 }

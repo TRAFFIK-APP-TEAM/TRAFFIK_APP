@@ -101,9 +101,39 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
+                    <!-- Redeemed Rewards -->
+                    <Label Text="Redeemed Rewards" TextColor="#FFD700" FontSize="18" FontAttributes="Bold"/>
+                    <CollectionView ItemsSource="{Binding RedeemedRewards}">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20">
+                                <Label Text="No redeemed rewards yet" TextColor="#888" FontSize="16" HorizontalOptions="Center"/>
+                                <Label Text="Redeem a reward to see it here!" TextColor="#666" FontSize="14" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:RewardItemDto">
+                                <Border BackgroundColor="#2E2E2E"
+                    Stroke="#FFD700"
+                    StrokeThickness="1"
+                    Padding="15"
+                    Margin="0,0,0,10"
+                    StrokeShape="RoundRectangle 15">
+                                    <VerticalStackLayout>
+                                        <Label Text="{Binding Name}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Description}" TextColor="#C8C8C8" FontSize="14"/>
+                                        <Label Text="{Binding Cost, StringFormat='Redeemed for {0} pts'}" TextColor="#FFD700" FontSize="14"/>
+                                        <Label Text="Pending Use" TextColor="#FF9500" FontSize="14" FontAttributes="Italic"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
                 </VerticalStackLayout>
             </ScrollView>
         </RefreshView>
+        
+        
 
         <!-- Bottom Navigation Bar -->
         <Grid Grid.Row="2"

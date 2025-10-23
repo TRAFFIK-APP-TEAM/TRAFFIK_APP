@@ -12,14 +12,16 @@ namespace TRAFFIK_APP.Services.ApiClients
         public Task<List<RewardItemDto>?> GetAllAsync() =>
             GetAsync<List<RewardItemDto>>(Endpoints.RewardCatalog.GetAll);
 
-        public Task<bool> RedeemItemAsync(int itemId, int userId)
+        public Task<RedemptionResponse> RedeemItemAsync(int itemId, int userId)
         {
             var dto = new RedeemCatalogItemRequest
             {
                 UserId = userId,
                 ItemId = itemId
             };
-            return PostAsync<bool>(Endpoints.RewardCatalog.RedeemItem.Replace("{itemId}", itemId.ToString()), dto);
+
+            var endpoint = Endpoints.RewardCatalog.RedeemItem.Replace("{itemId}", itemId.ToString());
+            return PostAsync<RedemptionResponse>(endpoint, dto);
         }
     }
 }

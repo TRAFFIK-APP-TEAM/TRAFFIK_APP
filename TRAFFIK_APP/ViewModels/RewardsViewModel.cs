@@ -109,27 +109,6 @@ namespace TRAFFIK_APP.ViewModels
                 // Handle error - you might want to show a message to the user
                 System.Diagnostics.Debug.WriteLine($"Error loading rewards: {ex.Message}");
                 
-                // Add some test data for debugging
-                if (AvailableRewards.Count == 0 && LockedRewards.Count == 0)
-                {
-                    AvailableRewards.Add(new RewardItemDto 
-                    { 
-                        Id = 1, 
-                        Name = "Test Reward", 
-                        Description = "This is a test reward", 
-                        Cost = 100 
-                    });
-                    
-                    LockedRewards.Add(new RewardItemDto 
-                    { 
-                        Id = 2, 
-                        Name = "Expensive Reward", 
-                        Description = "This is an expensive test reward", 
-                        Cost = 1000 
-                    });
-                    
-                    System.Diagnostics.Debug.WriteLine("Added test data for debugging");
-                }
             }
             finally
             {
@@ -154,21 +133,14 @@ namespace TRAFFIK_APP.ViewModels
                     return;
                 }
 
-                if (item.Stock <= 0)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Out of Stock", 
-                        "This item is currently out of stock.", "OK");
-                    return;
-                }
-
                 var confirmed = await Application.Current.MainPage.DisplayAlert("Confirm Redemption", 
                     $"Are you sure you want to redeem '{item.Name}' for {item.Cost} points?", "Yes", "No");
 
                 if (confirmed)
                 {
-                    var success = await _catalogClient.RedeemItemAsync(item.Id, _session.UserId.Value);
-                    
-                    if (success)
+                    var response = await _catalogClient.RedeemItemAsync(item.Id, _session.UserId.Value);
+
+                    if (response?.Redeemed > 0)
                     {
 
                         Points -= item.Cost;
