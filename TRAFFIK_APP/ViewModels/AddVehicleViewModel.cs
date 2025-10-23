@@ -15,13 +15,20 @@ namespace TRAFFIK_APP.ViewModels
         private string _vehicleMake = string.Empty;
         private string _vehicleModel = string.Empty;
         private string _licensePlate = string.Empty;
-        private string _selectedVehicleType = string.Empty;
+        private VehicleTypeDto _selectedVehicleType;
         private string _vehicleColor = string.Empty;
         private int _vehicleYear = DateTime.Now.Year;
         private ImageSource _vehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
+
+        public ObservableCollection<VehicleTypeDto> VehicleTypes { get; } = new();
+
+        public class VehicleTypeDto
+        {
+            public string Name { get; set; }
+        }
+
         public byte[] VehicleImageBytes { get; private set; }
         public string UserFullName => _session.UserName;
-
 
         public string VehicleMake
         {
@@ -47,8 +54,7 @@ namespace TRAFFIK_APP.ViewModels
             set => SetProperty(ref _vehicleImage, value);
         }
 
-
-        public string SelectedVehicleType
+        public VehicleTypeDto SelectedVehicleType
         {
             get => _selectedVehicleType;
             set => SetProperty(ref _selectedVehicleType, value);
@@ -66,19 +72,12 @@ namespace TRAFFIK_APP.ViewModels
             set => SetProperty(ref _vehicleYear, value);
         }
 
-        public ObservableCollection<string> VehicleTypes { get; } = new();
-
-
-
-
         public ICommand UploadImageCommand { get; }
         public ICommand AddVehicleCommand { get; }
         public ICommand GoHomeCommand { get; }
         public ICommand GoAppointmentsCommand { get; }
         public ICommand GoRewardsCommand { get; }
         public ICommand GoAccountCommand { get; }
-
-        
 
         public AddVehicleViewModel(SessionService session, VehicleClient vehicleClient)
         {
@@ -92,7 +91,6 @@ namespace TRAFFIK_APP.ViewModels
             GoAccountCommand = new Command(async () => await NavigateToAsync("//AccountPage"));
             UploadImageCommand = new Command(async () => await PickImageAsync());
 
-            // Load vehicle types
             _ = LoadVehicleTypesAsync();
         }
 
@@ -105,7 +103,7 @@ namespace TRAFFIK_APP.ViewModels
                 if (types != null)
                 {
                     foreach (var type in types)
-                        VehicleTypes.Add(type);
+                        VehicleTypes.Add(new VehicleTypeDto { Name = type });
                 }
             }
             catch (Exception ex)
@@ -119,7 +117,6 @@ namespace TRAFFIK_APP.ViewModels
         {
             try
             {
-                // Validation
                 if (string.IsNullOrWhiteSpace(VehicleMake))
                 {
                     ErrorMessage = "Please enter the vehicle make.";
@@ -150,14 +147,13 @@ namespace TRAFFIK_APP.ViewModels
                     return;
                 }
 
-                // Create vehicle DTO
                 var vehicleDto = new VehicleDto
                 {
                     Make = VehicleMake,
                     Model = VehicleModel,
                     LicensePlate = LicensePlate,
                     ImageUrl = VehicleImageBytes != null ? Convert.ToBase64String(VehicleImageBytes) : "",
-                    VehicleType = SelectedVehicleType,
+                    VehicleType = SelectedVehicleType.Name,
                     Color = VehicleColor,
                     Year = VehicleYear,
                     UserId = _session.UserId.Value
@@ -171,14 +167,13 @@ namespace TRAFFIK_APP.ViewModels
                     VehicleMake = string.Empty;
                     VehicleModel = string.Empty;
                     LicensePlate = string.Empty;
-                    SelectedVehicleType = string.Empty;
+                    SelectedVehicleType = null;
                     VehicleColor = string.Empty;
                     VehicleYear = DateTime.Now.Year;
                     VehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
                     VehicleImageBytes = null;
 
                     await Shell.Current.GoToAsync("//AccountPage");
-
                 }
                 else
                 {
@@ -203,6 +198,7 @@ namespace TRAFFIK_APP.ViewModels
                 System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
             }
         }
+
         private async Task PickImageAsync()
         {
             try
@@ -220,7 +216,6 @@ namespace TRAFFIK_APP.ViewModels
                     await stream.CopyToAsync(memoryStream);
                     VehicleImageBytes = memoryStream.ToArray();
 
-                    // Show preview
                     VehicleImage = ImageSource.FromStream(() => new MemoryStream(VehicleImageBytes));
                 }
             }
@@ -232,4 +227,3 @@ namespace TRAFFIK_APP.ViewModels
         }
     }
 }
-

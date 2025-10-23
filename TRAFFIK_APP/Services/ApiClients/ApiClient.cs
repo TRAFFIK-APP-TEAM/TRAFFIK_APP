@@ -6,7 +6,7 @@ namespace TRAFFIK_APP.Services.ApiClients
 {
     public class ApiClient
     {
-        private readonly HttpClient _httpClient;
+        protected readonly HttpClient _httpClient;
         protected readonly ILogger _logger;
 
         public ApiClient(HttpClient httpClient, ILogger<ApiClient> logger)
@@ -15,6 +15,7 @@ namespace TRAFFIK_APP.Services.ApiClients
             _logger = logger;
             _httpClient.BaseAddress = new Uri(Endpoints.BaseUrl);
         }
+
 
         protected async Task<T?> GetAsync<T>(string url)
         {

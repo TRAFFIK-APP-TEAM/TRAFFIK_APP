@@ -30,17 +30,7 @@
 
                     <VerticalStackLayout Spacing="25">
 
-                        <!-- 
-                        <StackLayout>
-                            <Label Text="Vehicle Nickname"
-                                   TextColor="White" FontSize="16" Margin="0,0,0,5"/>
-                            <Entry Placeholder="E.g. My Blue Ride"
-                                   Text="{Binding VehicleNickname}"
-                                   TextColor="White" PlaceholderColor="Gray"
-                                   BackgroundColor="#333333"
-                                   HeightRequest="45"/>
-                        </StackLayout>
--->
+       
                         <!-- Vehicle Image Upload -->
                         <StackLayout>
                             <Label Text="Upload Vehicle Image"
@@ -58,6 +48,17 @@
             HeightRequest="45"/>
                         </StackLayout>
 
+
+                        <StackLayout>
+                            <Label Text="Vehicle Nickname"
+           TextColor="White" FontSize="16" Margin="0,0,0,5"/>
+                            <Entry Placeholder="E.g. My Blue Ride"
+           Text="{Binding VehicleNickname}"
+           TextColor="White" PlaceholderColor="Gray"
+           BackgroundColor="#333333"
+           HeightRequest="45"/>
+                        </StackLayout>
+                        
                         <!-- Vehicle Type -->
                         <StackLayout>
                             <Label Text="Vehicle Type"
