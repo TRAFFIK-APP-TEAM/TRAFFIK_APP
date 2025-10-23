@@ -1,4 +1,4 @@
-﻿using TRAFFIK_APP.Configuration;
+using TRAFFIK_APP.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace TRAFFIK_APP.Services.ApiClients

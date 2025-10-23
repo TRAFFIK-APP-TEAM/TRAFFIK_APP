@@ -1,13 +1,15 @@
 using System.Windows.Input;
-using TRAFFIK_APP.Models.Dtos.Booking;  // adjust if your models live elsewhere
+using TRAFFIK_APP.Models.Dtos.Booking;
+using TRAFFIK_APP.Models.Dtos.Vehicle;
+using TRAFFIK_APP.Models.Dtos.ServiceCatalog;
 using TRAFFIK_APP.Services;
 
 namespace TRAFFIK_APP.ViewModels
 {
     public class BookingConfirmationViewModel : BaseViewModel
     {
-        public BookingServiceDto SelectedService { get; set; }
-        public BookingVehicleDto SelectedVehicle { get; set; }
+        public ServiceCatalogDto SelectedService { get; set; }
+        public VehicleDto SelectedVehicle { get; set; }
         public DateTime SelectedDate { get; set; }
         public TimeSpan SelectedTime { get; set; }
 

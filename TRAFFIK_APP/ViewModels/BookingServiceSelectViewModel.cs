@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TRAFFIK_APP.Models.Dtos.Booking;
+using TRAFFIK_APP.Models.Dtos.ServiceCatalog;
 using TRAFFIK_APP.Services.ApiClients;
 
 namespace TRAFFIK_APP.ViewModels
@@ -9,10 +9,10 @@ namespace TRAFFIK_APP.ViewModels
     {
         private readonly ServiceCatalogClient _serviceCatalogClient;
 
-        public ObservableCollection<BookingServiceDto> Services { get; } = new();
+        public ObservableCollection<ServiceCatalogDto> Services { get; } = new();
 
-        private BookingServiceDto _selectedService;
-        public BookingServiceDto SelectedService
+        private ServiceCatalogDto _selectedService;
+        public ServiceCatalogDto SelectedService
         {
             get => _selectedService;
             set
@@ -32,7 +32,7 @@ namespace TRAFFIK_APP.ViewModels
         {
             _serviceCatalogClient = serviceCatalogClient;
             
-            SelectServiceCommand = new Command<BookingServiceDto>(OnSelectService);
+            SelectServiceCommand = new Command<ServiceCatalogDto>(OnSelectService);
             LoadServicesCommand = new Command(() => ExecuteSafeAsync(LoadServicesAsync, "Loading services..."));
 
             // Load services on initialization
@@ -50,14 +50,7 @@ namespace TRAFFIK_APP.ViewModels
                 {
                     foreach (var service in serviceCatalogs)
                     {
-                        Services.Add(new BookingServiceDto
-                        {
-                            //Id = service.Id,
-                            ServiceCatalogId = service.Id,
-                            ServiceName = service.Name,
-                            Description = service.Description,
-                            Price = service.Price
-                        });
+                        Services.Add(service);
                     }
                 }
             }
@@ -68,7 +61,7 @@ namespace TRAFFIK_APP.ViewModels
             }
         }
 
-        private async void OnSelectService(BookingServiceDto? service)
+        private async void OnSelectService(ServiceCatalogDto? service)
         {
             if (service == null && SelectedService == null)
             {

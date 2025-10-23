@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using TRAFFIK_APP.Models.Dtos.Booking;
+using TRAFFIK_APP.Models.Dtos.Vehicle;
 using TRAFFIK_APP.Views;
 using TRAFFIK_APP.Services.ApiClients;
 using TRAFFIK_APP.Services;
@@ -13,10 +13,10 @@ namespace TRAFFIK_APP.ViewModels
         private readonly SessionService _session;
 
         // Vehicle list
-        public ObservableCollection<BookingVehicleDto> Vehicles { get; } = new();
+        public ObservableCollection<VehicleDto> Vehicles { get; } = new();
 
         // Commands
-        public Command<BookingVehicleDto> SelectVehicleCommand { get; }
+        public Command<VehicleDto> SelectVehicleCommand { get; }
         public Command GoHomeCommand { get; }
         public Command GoAppointmentsCommand { get; }
         public Command GoRewardsCommand { get; }
@@ -29,13 +29,13 @@ namespace TRAFFIK_APP.ViewModels
             _session = session;
 
             // Commands
-            SelectVehicleCommand = new Command<BookingVehicleDto>(async vehicle =>
+            SelectVehicleCommand = new Command<VehicleDto>(async vehicle =>
             {
                 if (vehicle == null)
                     return;
 
                 await Shell.Current.DisplayAlert("Vehicle Selected",
-                    $"You chose {vehicle.VehicleDisplayName}", "OK");
+                    $"You chose {vehicle.DisplayName}", "OK");
             });
 
             GoHomeCommand = new Command(async () => await Shell.Current.GoToAsync("//DashboardPage"));
@@ -65,16 +65,7 @@ namespace TRAFFIK_APP.ViewModels
                 {
                     foreach (var vehicle in vehicleDtos)
                     {
-                        Vehicles.Add(new BookingVehicleDto
-                        {
-                            //Id = vehicle.Id,
-                            UserId = vehicle.UserId,
-                            VehicleDisplayName = $"{vehicle.Make} {vehicle.Model} ({vehicle.LicensePlate})",
-                            Make = vehicle.Make,
-                            Model = vehicle.Model,
-                            //LicensePlate = vehicle.LicensePlate,
-                            //VehicleType = vehicle.VehicleType
-                        });
+                        Vehicles.Add(vehicle);
                     }
                 }
             }

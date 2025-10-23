@@ -12,11 +12,12 @@ namespace TRAFFIK_APP.ViewModels
         private readonly SessionService _session;
         private readonly VehicleClient _vehicleClient;
 
-        //private string _vehicleNickname = string.Empty;
         private string _vehicleMake = string.Empty;
         private string _vehicleModel = string.Empty;
         private string _licensePlate = string.Empty;
         private string _selectedVehicleType = string.Empty;
+        private string _vehicleColor = string.Empty;
+        private int _vehicleYear = DateTime.Now.Year;
         private ImageSource _vehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
         public byte[] VehicleImageBytes { get; private set; }
         public string UserFullName => _session.UserName;
@@ -51,6 +52,18 @@ namespace TRAFFIK_APP.ViewModels
         {
             get => _selectedVehicleType;
             set => SetProperty(ref _selectedVehicleType, value);
+        }
+
+        public string VehicleColor
+        {
+            get => _vehicleColor;
+            set => SetProperty(ref _vehicleColor, value);
+        }
+
+        public int VehicleYear
+        {
+            get => _vehicleYear;
+            set => SetProperty(ref _vehicleYear, value);
         }
 
         public ObservableCollection<string> VehicleTypes { get; } = new();
@@ -138,9 +151,6 @@ namespace TRAFFIK_APP.ViewModels
                 }
 
                 // Create vehicle DTO
-                // Note: VehicleDto doesn't have all properties, so we'll use what's available
-                // The nickname and color can be stored in the Model field or we may need to update the DTO
-                //removed VehicleNickname and colour, can reintroduce once table corrected
                 var vehicleDto = new VehicleDto
                 {
                     Make = VehicleMake,
@@ -148,6 +158,8 @@ namespace TRAFFIK_APP.ViewModels
                     LicensePlate = LicensePlate,
                     ImageUrl = VehicleImageBytes != null ? Convert.ToBase64String(VehicleImageBytes) : "",
                     VehicleType = SelectedVehicleType,
+                    Color = VehicleColor,
+                    Year = VehicleYear,
                     UserId = _session.UserId.Value
                 };
 
