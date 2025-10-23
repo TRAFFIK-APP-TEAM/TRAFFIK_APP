@@ -67,13 +67,13 @@ namespace TRAFFIK_APP.ViewModels
                     {
                         Vehicles.Add(new BookingVehicleDto
                         {
-                            Id = vehicle.Id,
+                            //Id = vehicle.Id,
                             UserId = vehicle.UserId,
                             VehicleDisplayName = $"{vehicle.Make} {vehicle.Model} ({vehicle.LicensePlate})",
                             Make = vehicle.Make,
                             Model = vehicle.Model,
-                            LicensePlate = vehicle.LicensePlate,
-                            VehicleType = vehicle.VehicleType
+                            //LicensePlate = vehicle.LicensePlate,
+                            //VehicleType = vehicle.VehicleType
                         });
                     }
                 }
