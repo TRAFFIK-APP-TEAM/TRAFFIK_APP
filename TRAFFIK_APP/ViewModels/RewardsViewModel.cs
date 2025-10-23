@@ -170,6 +170,9 @@ namespace TRAFFIK_APP.ViewModels
                     
                     if (success)
                     {
+
+                        Points -= item.Cost;
+
                         await Application.Current.MainPage.DisplayAlert("Success", 
                             $"Successfully redeemed '{item.Name}'!", "OK");
                         
@@ -181,6 +184,7 @@ namespace TRAFFIK_APP.ViewModels
                         await Application.Current.MainPage.DisplayAlert("Error", 
                             "Failed to redeem item. Please try again.", "OK");
                     }
+                    Points = await _rewardClient.GetBalanceAsync(_session.UserId.Value) ?? 0;
                 }
             }
             catch (Exception ex)
