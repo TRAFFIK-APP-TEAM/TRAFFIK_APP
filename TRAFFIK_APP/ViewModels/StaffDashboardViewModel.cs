@@ -5,6 +5,7 @@ using System.Windows.Input;
 using TRAFFIK_APP.Models.Dtos.Booking;
 using TRAFFIK_APP.Services;
 using TRAFFIK_APP.Services.ApiClients;
+using TRAFFIK_APP.Views;
 
 
 namespace TRAFFIK_APP.ViewModels
@@ -20,7 +21,11 @@ namespace TRAFFIK_APP.ViewModels
 		public ICommand RefreshCommand { get; }
 		public ICommand EditProfileCommand { get; }
 
-		public StaffDashboardViewModel(SessionService sessionService, BookingStagesClient bookingStagesClient)
+        public ICommand ViewAllBookingsCommand { get; }
+
+
+
+        public StaffDashboardViewModel(SessionService sessionService, BookingStagesClient bookingStagesClient)
 		{
 			_sessionService = sessionService;
 			_bookingStagesClient = bookingStagesClient;
@@ -28,6 +33,10 @@ namespace TRAFFIK_APP.ViewModels
 			UpdateStageCommand = new Command<BookingStageUpdateDto>(booking => ExecuteSafeAsync(() => UpdateStageAsync(booking), "Updating stage..."));
 			RefreshCommand = new Command(() => ExecuteSafeAsync(LoadActiveBookingsAsync, "Loading bookings..."));
 			EditProfileCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
+			ViewAllBookingsCommand = new Command(async () =>
+			{
+				await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+			});
 
 			// Auto-load on create for staff only
 			if (_sessionService.RoleId == 2)

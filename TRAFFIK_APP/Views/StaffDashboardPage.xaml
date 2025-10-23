@@ -29,6 +29,14 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="24" Spacing="24">
                 <Label Text="Active Bookings" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                <HorizontalStackLayout Spacing="16" HorizontalOptions="Center">
+                    <Button Text="View All Bookings"
+                            Command="{Binding ViewAllBookingsCommand}"
+                            BackgroundColor="#444"
+                            TextColor="White"
+                            CornerRadius="10"
+                            WidthRequest="100" />
+                </HorizontalStackLayout>
 
                 <!-- Bookings Table Header -->
                 <Grid ColumnDefinitions="Auto,Auto,*,Auto" Padding="0,0,0,8">
