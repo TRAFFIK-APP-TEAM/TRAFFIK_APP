@@ -27,12 +27,15 @@ namespace TRAFFIK_APP.ViewModels
         public ObservableCollection<RewardItemDto> AvailableRewards { get; } = new();
         public ObservableCollection<RewardItemDto> LockedRewards { get; } = new();
 
+        public ObservableCollection<RedeemedRewardDto> RedeemedRewards { get; } = new();
+
         public ICommand GoHomeCommand { get; }
         public ICommand GoAppointmentsCommand { get; }
         public ICommand GoRewardsCommand { get; }
         public ICommand GoAccountCommand { get; }
         public ICommand RedeemCommand { get; }
         public ICommand RefreshCommand { get; }
+        public ICommand MarkAsUsedCommand { get; }
 
         public RewardsViewModel(SessionService session, RewardClient rewardClient, RewardCatalogClient catalogClient)
         {
@@ -46,9 +49,26 @@ namespace TRAFFIK_APP.ViewModels
             GoAccountCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
             RedeemCommand = new Command<RewardItemDto>(async (item) => await RedeemReward(item));
             RefreshCommand = new Command(async () => await LoadRewardsAsync());
+            MarkAsUsedCommand = new Command<RedeemedRewardDto>(async item =>
+            {
+                try
+                {
+                    await _catalogClient.MarkAsUsedAsync(_session.UserId.Value, item.ItemId);
+                    item.Used = true;
+                    OnPropertyChanged(nameof(RedeemedRewards));
+
+                    await Application.Current.MainPage.DisplayAlert("Marked as Used", $"'{item.Name}' has been marked as used.", "OK");
+                }
+                catch (Exception ex)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", $"Failed to mark item as used: {ex.Message}", "OK");
+                }
+            });
 
             LoadRewardsAsync();
         }
+
+
 
         private async Task LoadRewardsAsync()
         {
@@ -69,6 +89,15 @@ namespace TRAFFIK_APP.ViewModels
                 LockedRewards.Clear();
 
                 System.Diagnostics.Debug.WriteLine($"Loaded {catalog.Count} catalog items, User has {Points} points");
+
+                RedeemedRewards.Clear();
+                var redeemed = await _catalogClient.GetRedeemedAsync(_session.UserId.Value) ?? new List<RedeemedRewardDto>();
+
+                foreach (var item in redeemed)
+                {
+                    RedeemedRewards.Add(item);
+                }
+                OnPropertyChanged(nameof(RedeemedRewards));
 
                 if (catalog is not null)
                 {
@@ -109,33 +138,14 @@ namespace TRAFFIK_APP.ViewModels
                 // Handle error - you might want to show a message to the user
                 System.Diagnostics.Debug.WriteLine($"Error loading rewards: {ex.Message}");
                 
-                // Add some test data for debugging
-                if (AvailableRewards.Count == 0 && LockedRewards.Count == 0)
-                {
-                    AvailableRewards.Add(new RewardItemDto 
-                    { 
-                        Id = 1, 
-                        Name = "Test Reward", 
-                        Description = "This is a test reward", 
-                        Cost = 100 
-                    });
-                    
-                    LockedRewards.Add(new RewardItemDto 
-                    { 
-                        Id = 2, 
-                        Name = "Expensive Reward", 
-                        Description = "This is an expensive test reward", 
-                        Cost = 1000 
-                    });
-                    
-                    System.Diagnostics.Debug.WriteLine("Added test data for debugging");
-                }
             }
             finally
             {
                 IsBusy = false;
             }
         }
+
+
 
         private async Task RedeemReward(RewardItemDto item)
         {
@@ -154,22 +164,18 @@ namespace TRAFFIK_APP.ViewModels
                     return;
                 }
 
-                if (item.Stock <= 0)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Out of Stock", 
-                        "This item is currently out of stock.", "OK");
-                    return;
-                }
-
                 var confirmed = await Application.Current.MainPage.DisplayAlert("Confirm Redemption", 
                     $"Are you sure you want to redeem '{item.Name}' for {item.Cost} points?", "Yes", "No");
 
                 if (confirmed)
                 {
-                    var success = await _catalogClient.RedeemItemAsync(item.Id, _session.UserId.Value);
-                    
-                    if (success)
+                    var response = await _catalogClient.RedeemItemAsync(item.Id, _session.UserId.Value);
+
+                    if (response?.Redeemed > 0)
                     {
+
+                        Points -= item.Cost;
+
                         await Application.Current.MainPage.DisplayAlert("Success", 
                             $"Successfully redeemed '{item.Name}'!", "OK");
                         
@@ -181,6 +187,7 @@ namespace TRAFFIK_APP.ViewModels
                         await Application.Current.MainPage.DisplayAlert("Error", 
                             "Failed to redeem item. Please try again.", "OK");
                     }
+                    Points = await _rewardClient.GetBalanceAsync(_session.UserId.Value) ?? 0;
                 }
             }
             catch (Exception ex)
@@ -189,5 +196,7 @@ namespace TRAFFIK_APP.ViewModels
                     $"An error occurred: {ex.Message}", "OK");
             }
         }
+
     }
+
 }

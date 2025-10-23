@@ -52,7 +52,7 @@ namespace TRAFFIK_APP.ViewModels
                     {
                         Services.Add(new BookingServiceDto
                         {
-                            Id = service.Id,
+                            //Id = service.Id,
                             ServiceCatalogId = service.Id,
                             ServiceName = service.Name,
                             Description = service.Description,
