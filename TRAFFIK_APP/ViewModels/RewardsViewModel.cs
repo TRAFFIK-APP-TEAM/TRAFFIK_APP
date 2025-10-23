@@ -27,6 +27,8 @@ namespace TRAFFIK_APP.ViewModels
         public ObservableCollection<RewardItemDto> AvailableRewards { get; } = new();
         public ObservableCollection<RewardItemDto> LockedRewards { get; } = new();
 
+        public ObservableCollection<RewardItemDto> RedeemedRewards { get; } = new();
+
         public ICommand GoHomeCommand { get; }
         public ICommand GoAppointmentsCommand { get; }
         public ICommand GoRewardsCommand { get; }
@@ -69,6 +71,15 @@ namespace TRAFFIK_APP.ViewModels
                 LockedRewards.Clear();
 
                 System.Diagnostics.Debug.WriteLine($"Loaded {catalog.Count} catalog items, User has {Points} points");
+
+                RedeemedRewards.Clear();
+                var redeemed = await _catalogClient.GetRedeemedAsync(_session.UserId.Value) ?? new List<RewardItemDto>();
+
+                foreach (var item in redeemed)
+                {
+                    RedeemedRewards.Add(item);
+                }
+                OnPropertyChanged(nameof(RedeemedRewards));
 
                 if (catalog is not null)
                 {
