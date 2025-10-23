@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:TRAFFIK_APP.ViewModels"
              xmlns:models="clr-namespace:TRAFFIK_APP.Models.Dtos.Reward"
+             xmlns:local="clr-namespace:TRAFFIK_APP.ViewModels"
              x:Class="TRAFFIK_APP.Views.RewardsPage"
              x:DataType="viewmodels:RewardsViewModel"
              BackgroundColor="#0D0D0D"
@@ -102,29 +103,29 @@
                     </CollectionView>
 
                     <!-- Redeemed Rewards -->
-                    <Label Text="Redeemed Rewards" TextColor="#FFD700" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="Redeemed Rewards" TextColor="White" FontSize="18" FontAttributes="Bold"/>
                     <CollectionView ItemsSource="{Binding RedeemedRewards}">
-                        <CollectionView.EmptyView>
-                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20">
-                                <Label Text="No redeemed rewards yet" TextColor="#888" FontSize="16" HorizontalOptions="Center"/>
-                                <Label Text="Redeem a reward to see it here!" TextColor="#666" FontSize="14" HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </CollectionView.EmptyView>
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:RewardItemDto">
-                                <Border BackgroundColor="#2E2E2E"
-                    Stroke="#FFD700"
-                    StrokeThickness="1"
-                    Padding="15"
-                    Margin="0,0,0,10"
-                    StrokeShape="RoundRectangle 15">
-                                    <VerticalStackLayout>
-                                        <Label Text="{Binding Name}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
-                                        <Label Text="{Binding Description}" TextColor="#C8C8C8" FontSize="14"/>
-                                        <Label Text="{Binding Cost, StringFormat='Redeemed for {0} pts'}" TextColor="#FFD700" FontSize="14"/>
-                                        <Label Text="Pending Use" TextColor="#FF9500" FontSize="14" FontAttributes="Italic"/>
-                                    </VerticalStackLayout>
-                                </Border>
+                            <DataTemplate>
+                                <Frame Padding="10" Margin="10" BackgroundColor="White" HasShadow="True">
+                                    <StackLayout>
+                                        <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
+                                        <Label Text="{Binding Description}" FontSize="14" TextColor="Gray" />
+                                        <Label Text="{Binding Cost, StringFormat='Cost: {0} points'}" FontSize="14" />
+                                        <Label Text="{Binding RedeemedAt, StringFormat='Redeemed: {0:dd MMM yyyy}'}" FontSize="12" TextColor="DarkGray" />
+
+                                        <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                                            <Label Text="{Binding Used, Converter={StaticResource BoolToStatusConverter}}" 
+                               FontAttributes="Italic" TextColor="Green" />
+
+                                            <Button Text="Mark as Used"
+                                IsVisible="{Binding Used, Converter={StaticResource InverseBoolConverter}}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:RewardsViewModel}}, Path=MarkAsUsedCommand}"
+                                CommandParameter="{Binding}" 
+                                Margin="10,0,0,0" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>

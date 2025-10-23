@@ -17,4 +17,14 @@
         public int Redeemed { get; set; }
         public int ItemId { get; set; }
     }
+
+    public class RedeemedRewardDto
+    {
+        public int ItemId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public int Cost { get; set; }
+        public DateTime RedeemedAt { get; set; }
+        public bool Used { get; set; }
+    }
 }
