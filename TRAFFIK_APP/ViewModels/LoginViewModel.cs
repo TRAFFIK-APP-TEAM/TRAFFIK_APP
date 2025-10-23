@@ -95,7 +95,7 @@ namespace TRAFFIK_APP.ViewModels
                     break;
                 default:
                 case 3:
-                    await Shell.Current.GoToAsync("//UserDashboardPage");
+                    await Shell.Current.GoToAsync("//DashboardPage");
                     break;
             }
         }

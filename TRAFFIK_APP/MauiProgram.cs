@@ -49,6 +49,7 @@ namespace TRAFFIK_APP
             Routing.RegisterRoute(nameof(AddVehiclePage), typeof(AddVehiclePage));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(StaffDashboardPage), typeof(StaffDashboardPage));
+            Routing.RegisterRoute(nameof(AdminDashboardPage), typeof(AdminDashboardPage));
             Routing.RegisterRoute(nameof(BookingServiceSelectPage), typeof(BookingServiceSelectPage));
             Routing.RegisterRoute(nameof(BookingVehicleSelectPage), typeof(BookingVehicleSelectPage));
             
@@ -59,7 +60,6 @@ namespace TRAFFIK_APP
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-#if WINDOWS
             .ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
@@ -67,60 +67,163 @@ namespace TRAFFIK_APP
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
             })
-#endif
             ;
             builder.Services.AddHttpClient<UserClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<UserRoleClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<BookingClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<PaymentClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<RewardClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<RewardCatalogClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<NotificationClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<ServiceCatalogClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<ServiceHistoryClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<ReviewClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<SocialFeedClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<VehicleClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
             builder.Services.AddHttpClient<BookingStagesClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            });
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })
+            ;
 
             builder.Services.AddSingleton<SessionService>();
             builder.Services.AddSingleton<BookingClient>();
@@ -128,6 +231,7 @@ namespace TRAFFIK_APP
             builder.Services.AddSingleton<NotificationClient>();
             builder.Services.AddSingleton<VehicleClient>();
             builder.Services.AddSingleton<RewardCatalogClient>();
+            builder.Services.AddSingleton<ServiceCatalogClient>();
 
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<SignupViewModel>();
@@ -150,6 +254,7 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<AccountPage>();
             builder.Services.AddTransient<AddVehiclePage>();
             builder.Services.AddTransient<StaffDashboardPage>();
+            builder.Services.AddTransient<AdminDashboardPage>();
 
 
 

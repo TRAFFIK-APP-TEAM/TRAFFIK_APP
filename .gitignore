@@ -416,3 +416,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+TRAFFIK_APP/MauiProgram.cs
+TRAFFIK_APP/MauiProgram.cs
+TRAFFIK_APP/Platforms/Android/Resources/xml/network_security_config.xml
+TRAFFIK_APP/Platforms/Android/AndroidManifest.xml

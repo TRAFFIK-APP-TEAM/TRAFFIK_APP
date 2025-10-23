@@ -62,8 +62,9 @@ namespace TRAFFIK_APP.Services.ApiClients
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, "[API] HTTP request exception");
-                await Application.Current.MainPage.DisplayAlert("API Error", $"HTTP Exception: {ex.Message}", "OK");
+                _logger.LogError(ex, "[API] HTTP request exception: {Message}", ex.Message);
+                _logger.LogError(ex, "[API] Inner exception: {InnerException}", ex.InnerException?.Message);
+                await Application.Current.MainPage.DisplayAlert("API Error", $"HTTP Exception: {ex.Message}\nInner: {ex.InnerException?.Message}", "OK");
                 return default;
             }
             catch (TaskCanceledException ex)
