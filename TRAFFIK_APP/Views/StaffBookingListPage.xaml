@@ -14,7 +14,7 @@
                    FontAttributes="Bold"
                    TextColor="White"
                    HorizontalOptions="Center" />
-            <CollectionView ItemsSource="{Binding AllBokkings}">
+            <CollectionView ItemsSource="{Binding AllBookings}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame BackgroundColor="#1E1E1E"
