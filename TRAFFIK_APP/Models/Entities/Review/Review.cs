@@ -1,6 +1,8 @@
-﻿using TRAFFIK_APP.Models.Entities.User;
+﻿using TRAFFIK_APP.Models.Entities;
 
-public class Review
+namespace TRAFFIK_APP.Models.Entities.Review
+{
+    public class Review
 {
     public int Id { get; set; }
     public int BookingId { get; set; }
@@ -11,6 +13,7 @@ public class Review
     public DateTime? UpdatedAt { get; set; }
     public bool IsVerified { get; set; } = false;
 
-    public Booking? Booking { get; set; }
+    public TRAFFIK_APP.Models.Entities.Booking.Booking? Booking { get; set; }
     public User? User { get; set; }
+    }
 }

@@ -3,7 +3,7 @@ using TRAFFIK_APP.Services.ApiClients;
 using TRAFFIK_APP.ViewModels;
 using TRAFFIK_APP.Views;
 using TRAFFIK_APP.Models.Dtos.Auth;
-using TRAFFIK_APP.Models.Entities.User;
+using TRAFFIK_APP.Models.Entities;
 
 namespace TRAFFIK_APP.ViewModels
 {

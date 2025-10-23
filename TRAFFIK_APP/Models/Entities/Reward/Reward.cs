@@ -1,6 +1,8 @@
-﻿using TRAFFIK_APP.Models.Entities.User;
+﻿using TRAFFIK_APP.Models.Entities;
 
-public class Reward
+namespace TRAFFIK_APP.Models.Entities.Reward
+{
+    public class Reward
 {
     public int Id { get; set; }
     public int UserId { get; set; }
@@ -12,4 +14,5 @@ public class Reward
     public DateTime? RedeemedAt { get; set; }
 
     public User? User { get; set; }
+    }
 }

@@ -1,4 +1,4 @@
-﻿using TRAFFIK_APP.Models.Entities.User;
+﻿using TRAFFIK_APP.Models.Entities;
 
 namespace TRAFFIK_APP.Services
 {

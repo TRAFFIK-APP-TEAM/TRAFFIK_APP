@@ -1,5 +1,7 @@
 ﻿
-public class Vehicle
+namespace TRAFFIK_APP.Models.Entities.Vehicle
+{
+    public class Vehicle
 {
     public int Id { get; set; }
     public int UserId { get; set; }
@@ -14,4 +16,5 @@ public class Vehicle
     
     // Computed property for display
     public string DisplayName => $"{Make} {Model} ({LicensePlate})";
+    }
 }

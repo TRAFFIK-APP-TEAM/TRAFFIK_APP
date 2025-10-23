@@ -1,4 +1,5 @@
-﻿public class Payment
+﻿using TRAFFIK_APP.Models.Entities.Booking;
+public class Payment
 {
     public int Id { get; set; }
     public int BookingId { get; set; }

@@ -1,5 +1,5 @@
 ﻿using TRAFFIK_APP.Configuration;
-using TRAFFIK_APP.Models.Entities.User;
+using TRAFFIK_APP.Models.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace TRAFFIK_APP.Services.ApiClients

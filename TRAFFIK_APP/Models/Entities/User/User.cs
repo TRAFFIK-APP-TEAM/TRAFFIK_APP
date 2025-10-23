@@ -1,6 +1,6 @@
 ﻿using TRAFFIK_APP.Models.Dtos.Auth;
 
-namespace TRAFFIK_APP.Models.Entities.User
+namespace TRAFFIK_APP.Models.Entities
 {
     public class User
     {
@@ -8,6 +8,7 @@ namespace TRAFFIK_APP.Models.Entities.User
         public string FullName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
         public int RoleId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? LastLoginAt { get; set; }

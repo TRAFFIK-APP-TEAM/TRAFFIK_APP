@@ -13,6 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
             <converters:BoolToStatusConverter x:Key="BoolToStatusConverter" />
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:CountToBoolConverter x:Key="CountToBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

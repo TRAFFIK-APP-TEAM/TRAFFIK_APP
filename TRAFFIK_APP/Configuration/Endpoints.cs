@@ -5,14 +5,14 @@ namespace TRAFFIK_APP.Configuration
     public static class Endpoints
     {
         // Toggle between local and Azure API
-        /*#if ANDROID
+#if ANDROID
                 public const string BaseUrl = "http://10.0.2.2:5027"; // Android emulator localhost
         #elif IOS
                 public const string BaseUrl = "http://localhost:5027"; // iOS simulator localhost
         #else
                 public const string BaseUrl = "http://localhost:5027"; // Windows/other platforms
-        #endif*/
-        public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net"; // Azure API endpoint
+        #endif
+        //public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net"; // Azure API endpoint
 
         public static class Auth
         {
@@ -125,11 +125,11 @@ namespace TRAFFIK_APP.Configuration
 
         public static class User
         {
-            public const string GetAll = $"{BaseUrl}/api/User"; // Get all users in the system
-            public const string Create = $"{BaseUrl}/api/User"; // Create a new user
-            public const string GetById = $"{BaseUrl}/api/User/{{id}}"; // Get user details by ID
-            public const string UpdateById = $"{BaseUrl}/api/User/{{id}}"; // Update user info by ID
-            public const string DeleteById = $"{BaseUrl}/api/User/{{id}}"; // Delete user by ID
+            public const string GetAll = "/api/Users"; // Get all users in the system
+            public const string Create = "/api/Users"; // Create a new user
+            public const string GetById = "/api/Users/{id}"; // Get user details by ID
+            public const string UpdateById = "/api/Users/{id}"; // Update user info by ID
+            public const string DeleteById = "/api/Users/{id}"; // Delete user by ID
         }
 
         public static class Vehicle

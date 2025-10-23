@@ -1,6 +1,9 @@
-﻿using TRAFFIK_APP.Models.Entities.User;
+﻿using TRAFFIK_APP.Models.Entities;
+using TRAFFIK_APP.Models.Entities.Vehicle;
 
-public class Booking
+namespace TRAFFIK_APP.Models.Entities.Booking
+{
+    public class Booking
 {
     public int Id { get; set; }
     public int UserId { get; set; }
@@ -14,6 +17,7 @@ public class Booking
     public DateTime? CompletedAt { get; set; }
 
     public User? User { get; set; }
-    public Vehicle? Vehicle { get; set; }
-    public ServiceCatalog? ServiceCatalog { get; set; }
+    public TRAFFIK_APP.Models.Entities.Vehicle.Vehicle? Vehicle { get; set; }
+    public TRAFFIK_APP.Models.Entities.ServiceCatalog.ServiceCatalog? ServiceCatalog { get; set; }
+    }
 }

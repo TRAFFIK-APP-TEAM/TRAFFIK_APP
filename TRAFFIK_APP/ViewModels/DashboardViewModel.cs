@@ -3,7 +3,9 @@ using TRAFFIK_APP.Services.ApiClients;
 using System.Collections.ObjectModel;
 using TRAFFIK_APP.Views;
 using TRAFFIK_APP.Models.Dtos.Reward;
-
+using TRAFFIK_APP.Models.Entities.Vehicle;
+using TRAFFIK_APP.Models.Entities.Booking;
+using TRAFFIK_APP.Models.Entities.Notification;
 
 namespace TRAFFIK_APP.ViewModels
 {

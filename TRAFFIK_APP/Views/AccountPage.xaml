@@ -47,7 +47,14 @@
                             BackgroundColor="#007AFF"
                             TextColor="White"
                             CornerRadius="12"
-                            Margin="0,10,0,0"/>
+                            Margin="0,10,0,0"
+                            IsEnabled="{Binding IsNotBusy}"/>
+                    
+                    <!-- Loading indicator -->
+                    <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                     IsRunning="{Binding IsBusy}"
+                                     Color="#007AFF"
+                                     Margin="0,10,0,0"/>
                 </VerticalStackLayout>
             </Border>
 
@@ -94,11 +101,29 @@
                 </VerticalStackLayout>
             </Border>
 
+            <!-- Success Message -->
+            <Frame BackgroundColor="#00FF88" 
+                   Padding="15" 
+                   CornerRadius="8" 
+                   Margin="0,10,0,0"
+                   IsVisible="{Binding HasSuccess}">
+                <Label Text="{Binding SuccessMessage}"
+                       TextColor="White"
+                       FontSize="14"
+                       HorizontalOptions="Center"/>
+            </Frame>
+
             <!-- Error Message -->
-            <Label Text="{Binding ErrorMessage}"
-                   TextColor="Red"
-                   FontSize="14"
-                   IsVisible="{Binding HasError}" />
+            <Frame BackgroundColor="#FF3B30" 
+                   Padding="15" 
+                   CornerRadius="8" 
+                   Margin="0,10,0,0"
+                   IsVisible="{Binding HasError}">
+                <Label Text="{Binding ErrorMessage}"
+                       TextColor="White"
+                       FontSize="14"
+                       HorizontalOptions="Center"/>
+            </Frame>
 
             <!-- LOGOUT BUTTON -->
             <Button Text="Logout"
