@@ -1,5 +1,7 @@
-﻿using TRAFFIK_APP.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using System.Net.Http;
+using System.Text.Json;
+using TRAFFIK_APP.Configuration;
 using TRAFFIK_APP.Models.Dtos.Vehicle;
 
 namespace TRAFFIK_APP.Services.ApiClients
@@ -40,8 +42,13 @@ namespace TRAFFIK_APP.Services.ApiClients
 
         public async Task<List<string>> GetAllVehicleTypesAsync()
         {
-            var endpoint = Endpoints.Vehicle.GetAllVehicleTypes;
-            return await GetAsync<List<string>>(endpoint);
+            var response = await _httpClient.GetAsync("api/Vehicle/Types");
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<string>>(json);
+            }
+            return new List<string>();
         }
     }
 }

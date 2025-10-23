@@ -30,34 +30,35 @@
 
                     <VerticalStackLayout Spacing="25">
 
-                        <!-- 
-                        <StackLayout>
-                            <Label Text="Vehicle Nickname"
-                                   TextColor="White" FontSize="16" Margin="0,0,0,5"/>
-                            <Entry Placeholder="E.g. My Blue Ride"
-                                   Text="{Binding VehicleNickname}"
-                                   TextColor="White" PlaceholderColor="Gray"
-                                   BackgroundColor="#333333"
-                                   HeightRequest="45"/>
-                        </StackLayout>
--->
+       
                         <!-- Vehicle Image Upload -->
                         <StackLayout>
                             <Label Text="Upload Vehicle Image"
-           TextColor="White" FontSize="16" Margin="0,0,0,5"/>
+                                TextColor="White" FontSize="16" Margin="0,0,0,5"/>
                             <Image Source="{Binding VehicleImage}"
-           HeightRequest="150" Aspect="AspectFill"
-           BackgroundColor="#333333" />
+                                HeightRequest="150" Aspect="AspectFill"
+                                BackgroundColor="#333333" />
                             <Button Text="Choose Image"
-            Command="{Binding UploadImageCommand}"
-            BackgroundColor="White"
-            TextColor="Black"
-            CornerRadius="25"
-            FontAttributes="Bold"
-            FontSize="14"
-            HeightRequest="45"/>
+                                Command="{Binding UploadImageCommand}"
+                                BackgroundColor="White"
+                                TextColor="Black"
+                                CornerRadius="25"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                HeightRequest="45"/>
                         </StackLayout>
 
+
+                        <StackLayout>
+                            <Label Text="Vehicle Nickname"
+                                TextColor="White" FontSize="16" Margin="0,0,0,5"/>
+                            <Entry Placeholder="E.g. My Blue Ride"
+                                Text="{Binding VehicleNickname}"
+                                TextColor="White" PlaceholderColor="Gray"
+                                BackgroundColor="#333333"
+                                HeightRequest="45"/>
+                        </StackLayout>
+                        
                         <!-- Vehicle Type -->
                         <StackLayout>
                             <Label Text="Vehicle Type"
@@ -103,6 +104,17 @@
                                    BackgroundColor="#333333"
                                    HeightRequest="45"/>
                         </StackLayout>
+                        
+                        <!-- Colour -->
+                        <StackLayout>
+                            <Label Text="Colour"
+                                TextColor="White" FontSize="16" Margin="0,0,0,5"/>
+                            <Entry Placeholder="E.g. Blue"
+                                Text="{Binding VehicleColor}"
+                                TextColor="White" PlaceholderColor="Gray"
+                                BackgroundColor="#333333"
+                                HeightRequest="45"/>
+                        </StackLayout>
 
                         <!-- Add Vehicle Button -->
                         <Button Text="Save Vehicle"
@@ -139,7 +151,7 @@
             </Grid.ColumnDefinitions>
 
             <StackLayout Grid.Column="0" HorizontalOptions="Center">
-                <ImageButton Source="home.png"
+                <ImageButton Source="home_icon.svg"
                              Command="{Binding GoHomeCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
@@ -147,7 +159,7 @@
             </StackLayout>
 
             <StackLayout Grid.Column="1" HorizontalOptions="Center">
-                <ImageButton Source="appointment.png"
+                <ImageButton Source="calendar_icon.svg"
                              Command="{Binding GoAppointmentsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
@@ -155,7 +167,7 @@
             </StackLayout>
 
             <StackLayout Grid.Column="2" HorizontalOptions="Center">
-                <ImageButton Source="rewards.png"
+                <ImageButton Source="gift_icon.svg"
                              Command="{Binding GoRewardsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
@@ -163,7 +175,7 @@
             </StackLayout>
 
             <StackLayout Grid.Column="3" HorizontalOptions="Center">
-                <ImageButton Source="account.png"
+                <ImageButton Source="account_icon.svg"
                              Command="{Binding GoAccountCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
