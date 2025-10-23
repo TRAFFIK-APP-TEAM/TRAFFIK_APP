@@ -17,6 +17,7 @@ namespace TRAFFIK_APP.ViewModels
         private string _surname = string.Empty;
         private string _email = string.Empty;
         private string _phoneNumber = string.Empty;
+        private string _successMessage = string.Empty;
 
         public string Name
         {
@@ -51,6 +52,14 @@ namespace TRAFFIK_APP.ViewModels
             get => _phoneNumber;
             set => SetProperty(ref _phoneNumber, value);
         }
+
+        public string SuccessMessage
+        {
+            get => _successMessage;
+            set => SetProperty(ref _successMessage, value);
+        }
+
+        public bool HasSuccess => !string.IsNullOrEmpty(SuccessMessage);
 
         public ObservableCollection<VehicleItem> Vehicles { get; } = new();
 
@@ -131,18 +140,55 @@ namespace TRAFFIK_APP.ViewModels
             {
                 if (_session.CurrentUser != null)
                 {
-                    // Create user update DTO
-                    var userUpdateDto = new UserUpdateDto
+                    // Validate required fields
+                    if (string.IsNullOrWhiteSpace(FullName))
+                    {
+                        ErrorMessage = "Full name is required.";
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(Email))
+                    {
+                        ErrorMessage = "Email is required.";
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(PhoneNumber))
+                    {
+                        ErrorMessage = "Phone number is required.";
+                        return;
+                    }
+
+                    // Validate email format
+                    if (!Email.Contains("@") || !Email.Contains("."))
+                    {
+                        ErrorMessage = "Please enter a valid email address.";
+                        return;
+                    }
+
+                    // First, fetch the current user data to get the PasswordHash
+                    var currentUser = await _userClient.GetByIdAsync(_session.CurrentUser.Id);
+                    if (currentUser == null)
+                    {
+                        ErrorMessage = "Failed to fetch current user data. Please try again.";
+                        return;
+                    }
+
+                    // Create updated user object with the fetched PasswordHash
+                    var updatedUser = new TRAFFIK_APP.Models.Entities.User
                     {
                         Id = _session.CurrentUser.Id,
                         FullName = FullName,
                         Email = Email,
                         PhoneNumber = PhoneNumber,
-                        RoleId = _session.CurrentUser.RoleId
+                        PasswordHash = currentUser.PasswordHash, // Use the fetched password hash
+                        RoleId = _session.CurrentUser.RoleId,
+                        CreatedAt = _session.CurrentUser.CreatedAt,
+                        IsActive = _session.CurrentUser.IsActive
                     };
 
                     // Call API to update user profile
-                    var success = await _userClient.UpdateAsync(_session.CurrentUser.Id, _session.CurrentUser);
+                    var success = await _userClient.UpdateAsync(_session.CurrentUser.Id, updatedUser);
                     
                     if (success)
                     {
@@ -154,7 +200,15 @@ namespace TRAFFIK_APP.ViewModels
                         await SecureStorage.SetAsync("user_name", FullName);
                         await SecureStorage.SetAsync("email", Email);
                         
-                        await Application.Current.MainPage.DisplayAlert("Success", "Profile updated successfully!", "OK");
+                        // Clear any previous error messages and show success
+                        ErrorMessage = string.Empty;
+                        SuccessMessage = "Profile updated successfully!";
+                        
+                        // Clear success message after 3 seconds
+                        _ = Task.Delay(3000).ContinueWith(_ => 
+                        {
+                            MainThread.BeginInvokeOnMainThread(() => SuccessMessage = string.Empty);
+                        });
                     }
                     else
                     {
@@ -165,6 +219,7 @@ namespace TRAFFIK_APP.ViewModels
             catch (Exception ex)
             {
                 ErrorMessage = $"Error saving profile: {ex.Message}";
+                System.Diagnostics.Debug.WriteLine($"Profile update error: {ex}");
             }
         }
 

@@ -16,8 +16,16 @@ namespace TRAFFIK_APP.ViewModels
         public bool IsBusy
         {
             get => _isBusy;
-            set => SetProperty(ref _isBusy, value);
+            set
+            {
+                if (SetProperty(ref _isBusy, value))
+                {
+                    OnPropertyChanged(nameof(IsNotBusy));
+                }
+            }
         }
+
+        public bool IsNotBusy => !IsBusy;
 
         public string ErrorMessage
         {
