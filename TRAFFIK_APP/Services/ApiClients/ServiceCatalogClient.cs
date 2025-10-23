@@ -1,5 +1,6 @@
 ﻿using TRAFFIK_APP.Configuration;
 using Microsoft.Extensions.Logging;
+using TRAFFIK_APP.Models.Dtos.ServiceCatalog;
 
 namespace TRAFFIK_APP.Services.ApiClients
 {
@@ -7,16 +8,16 @@ namespace TRAFFIK_APP.Services.ApiClients
     {
         public ServiceCatalogClient(HttpClient httpClient, ILogger<ApiClient> logger) : base(httpClient, logger) { }
 
-        public Task<List<ServiceCatalog>?> GetAllAsync() =>
-            GetAsync<List<ServiceCatalog>>(Endpoints.ServiceCatalog.GetAll);
+        public Task<List<ServiceCatalogDto>?> GetAllAsync() =>
+            GetAsync<List<ServiceCatalogDto>>(Endpoints.ServiceCatalog.GetAll);
 
-        public Task<ServiceCatalog?> GetByIdAsync(int id) =>
-            GetAsync<ServiceCatalog>(Endpoints.ServiceCatalog.GetById.Replace("{id}", id.ToString()));
+        public Task<ServiceCatalogDto?> GetByIdAsync(int id) =>
+            GetAsync<ServiceCatalogDto>(Endpoints.ServiceCatalog.GetById.Replace("{id}", id.ToString()));
 
-        public Task<ServiceCatalog?> CreateAsync(ServiceCatalog service) =>
-            PostAsync<ServiceCatalog>(Endpoints.ServiceCatalog.Create, service);
+        public Task<ServiceCatalogDto?> CreateAsync(ServiceCatalogDto service) =>
+            PostAsync<ServiceCatalogDto>(Endpoints.ServiceCatalog.Create, service);
 
-        public Task<bool> UpdateAsync(int id, ServiceCatalog service) =>
+        public Task<bool> UpdateAsync(int id, ServiceCatalogDto service) =>
             PutAsync(Endpoints.ServiceCatalog.UpdateById.Replace("{id}", id.ToString()), service);
 
         public Task<bool> DeleteAsync(int id) =>

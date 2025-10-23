@@ -89,7 +89,7 @@ namespace TRAFFIK_APP.ViewModels
             {
                 var vehicles = vehicleDtos.Select(dto => new Vehicle
                 {
-                    Type = dto.VehicleType,
+                    VehicleType = dto.VehicleType,
                     Make = dto.Make,
                     Model = dto.Model,
                     LicensePlate = dto.LicensePlate,
