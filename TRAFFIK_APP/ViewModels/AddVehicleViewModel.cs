@@ -11,6 +11,7 @@ namespace TRAFFIK_APP.ViewModels
     {
         private readonly SessionService _session;
         private readonly VehicleClient _vehicleClient;
+        private string _vehicleNickname = string.Empty;
 
         private string _vehicleMake = string.Empty;
         private string _vehicleModel = string.Empty;
@@ -19,8 +20,8 @@ namespace TRAFFIK_APP.ViewModels
         private string _vehicleColor = string.Empty;
         private int _vehicleYear = DateTime.Now.Year;
         private ImageSource _vehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
-
         public ObservableCollection<VehicleTypeDto> VehicleTypes { get; } = new();
+        public VehicleTypeDto SelectedVehicleType { get; set; }
 
         public class VehicleTypeDto
         {
@@ -30,6 +31,11 @@ namespace TRAFFIK_APP.ViewModels
         public byte[] VehicleImageBytes { get; private set; }
         public string UserFullName => _session.UserName;
 
+        public string VehicleNickname
+        {
+            get => _vehicleNickname;
+            set => SetProperty(ref _vehicleNickname, value);
+        }
         public string VehicleMake
         {
             get => _vehicleMake;
@@ -52,12 +58,6 @@ namespace TRAFFIK_APP.ViewModels
         {
             get => _vehicleImage;
             set => SetProperty(ref _vehicleImage, value);
-        }
-
-        public VehicleTypeDto SelectedVehicleType
-        {
-            get => _selectedVehicleType;
-            set => SetProperty(ref _selectedVehicleType, value);
         }
 
         public string VehicleColor
@@ -100,10 +100,15 @@ namespace TRAFFIK_APP.ViewModels
             {
                 var types = await _vehicleClient.GetAllVehicleTypesAsync();
                 VehicleTypes.Clear();
-                if (types != null)
+
+                if (types != null && types.Any())
                 {
                     foreach (var type in types)
                         VehicleTypes.Add(new VehicleTypeDto { Name = type });
+                }
+                else
+                {
+                    ErrorMessage = "No vehicle types found.";
                 }
             }
             catch (Exception ex)
