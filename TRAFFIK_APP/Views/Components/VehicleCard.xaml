@@ -1,36 +1,53 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodels="clr-namespace:TRAFFIK_APP.ViewModels"
+             xmlns:entities="clr-namespace:TRAFFIK_APP.Models.Entities.Vehicle"
              x:Class="TRAFFIK_APP.Views.VehicleCard"
-             x:DataType="viewmodels:VehicleCardViewModel"
+             x:DataType="entities:Vehicle"
              BackgroundColor="Transparent"
-             Padding="10">
+             Padding="5">
 
     <Border BackgroundColor="#1E1E1E"
-            StrokeThickness="0"
+            StrokeThickness="1"
+            Stroke="Gray"
             StrokeShape="RoundRectangle 12"
-            Padding="15"
-            Margin="5">
+            Padding="8"
+            Margin="2"
+            WidthRequest="160"
+            HeightRequest="160"
+            VerticalOptions="Center">
 
-        <VerticalStackLayout Spacing="10"
-                             HorizontalOptions="Center"
-                             VerticalOptions="Center">
+        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+            
+            <!-- Vehicle Image -->
+            <Border Grid.Row="0"
+                    BackgroundColor="#2E2E2E"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="4"
+                    HeightRequest="100"
+                    WidthRequest="140">
+                <Image Source="{Binding ImageUrl}"
+                       Aspect="AspectFill"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Border>
 
-            <Image Source="{Binding imageUrl}"
-                   Aspect="AspectFill"
-                   HeightRequest="100"
-                   WidthRequest="150"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Clip="RectangleGeometry Rect='0,0,150,100'"/>
-
-            <Label Text="{Binding licensePlate}"
+            <!-- License Plate -->
+            <Label Grid.Row="1"
+                   Text="{Binding LicensePlate}"
                    FontSize="14"
                    FontAttributes="Bold"
                    TextColor="White"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"/>
-        </VerticalStackLayout>
+            
+            <!-- Make and Model -->
+            <Label Grid.Row="2"
+                   Text="{Binding Make}"
+                   FontSize="11"
+                   TextColor="#C8C8C8"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </Grid>
     </Border>
 </ContentView>

@@ -81,18 +81,18 @@
 
                 <!-- Vehicles -->
                 <Label Text="Your vehicles" FontSize="18" FontAttributes="Bold" TextColor="White" />
-                <ScrollView Orientation="Horizontal">
+                <ScrollView Orientation="Horizontal" HeightRequest="180">
                     <HorizontalStackLayout Spacing="12" Padding="0,8">
 
                         <!-- Add Vehicle Card -->
                         <Border x:Name="AddCardBorder"
                                 Stroke="Gray"
-                                StrokeThickness="2"
-                                BackgroundColor="#1C1C1E"
+                                StrokeThickness="1"
+                                BackgroundColor="#1E1E1E"
                                 WidthRequest="160"
                                 HeightRequest="160"
-                                StrokeShape="RoundRectangle 16"
-                                Margin="0,0,8,0">
+                                StrokeShape="RoundRectangle 12"
+                                Margin="2">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnAddVehicleTapped" />
                             </Border.GestureRecognizers>
@@ -106,23 +106,14 @@
                         </Border>
 
                         <!-- Vehicle Cards -->
-                        <CollectionView ItemsSource="{Binding Vehicles}" ItemsLayout="HorizontalList" HeightRequest="160">
+                        <CollectionView ItemsSource="{Binding Vehicles}" ItemsLayout="HorizontalList" HeightRequest="180" VerticalOptions="Center">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <ContentView>
-                                        <ContentView.Triggers>
-                                            <DataTrigger TargetType="ContentView" Binding="{Binding}" Value="{x:Null}">
-                                                <Setter Property="IsVisible" Value="False" />
-                                            </DataTrigger>
-                                        </ContentView.Triggers>
-
-                                        <!-- Actual Vehicle Card -->
-                                        <views:VehicleCard>
-                                            <views:VehicleCard.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnVehicleTapped" />
-                                            </views:VehicleCard.GestureRecognizers>
-                                        </views:VehicleCard>
-                                    </ContentView>
+                                    <views:VehicleCard>
+                                        <views:VehicleCard.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnVehicleTapped" />
+                                        </views:VehicleCard.GestureRecognizers>
+                                    </views:VehicleCard>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>

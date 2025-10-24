@@ -2,11 +2,97 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRAFFIK_APP.Views.VehiclePage"
-             Title="VehiclePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Vehicle Details"
+             BackgroundColor="Black">
+
+    <Grid RowDefinitions="Auto,*">
+        
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="20" BackgroundColor="#1E1E1E">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Vehicle Details"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+            <Button Grid.Column="1"
+                    Text="✕"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="20"
+                    Clicked="OnBackClicked" />
+        </Grid>
+
+        <!-- Main Content -->
+        <ScrollView Grid.Row="1" Padding="20">
+            <VerticalStackLayout Spacing="20">
+
+                <!-- Vehicle Image -->
+                <Border BackgroundColor="#1E1E1E" 
+                        StrokeShape="RoundRectangle 16"
+                        Padding="20"
+                        HorizontalOptions="Center">
+                    <Image x:Name="VehicleImage"
+                           Aspect="AspectFill"
+                           HeightRequest="200"
+                           WidthRequest="300"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <!-- Vehicle Information -->
+                <Border BackgroundColor="#1E1E1E" 
+                        StrokeShape="RoundRectangle 16"
+                        Padding="20">
+                    <VerticalStackLayout Spacing="15">
+                        
+                        <Label Text="Vehicle Information"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnSpacing="15" RowSpacing="10">
+                            
+                            <Label Grid.Row="0" Grid.Column="0" Text="License Plate:" TextColor="#C8C8C8" FontSize="14" />
+                            <Label x:Name="LicensePlateLabel" Grid.Row="0" Grid.Column="1" TextColor="White" FontSize="14" FontAttributes="Bold" />
+                            
+                            <Label Grid.Row="1" Grid.Column="0" Text="Make:" TextColor="#C8C8C8" FontSize="14" />
+                            <Label x:Name="MakeLabel" Grid.Row="1" Grid.Column="1" TextColor="White" FontSize="14" />
+                            
+                            <Label Grid.Row="2" Grid.Column="0" Text="Model:" TextColor="#C8C8C8" FontSize="14" />
+                            <Label x:Name="ModelLabel" Grid.Row="2" Grid.Column="1" TextColor="White" FontSize="14" />
+                            
+                            <Label Grid.Row="3" Grid.Column="0" Text="Type:" TextColor="#C8C8C8" FontSize="14" />
+                            <Label x:Name="TypeLabel" Grid.Row="3" Grid.Column="1" TextColor="White" FontSize="14" />
+                            
+                            <Label Grid.Row="4" Grid.Column="0" Text="Color:" TextColor="#C8C8C8" FontSize="14" />
+                            <Label x:Name="ColorLabel" Grid.Row="4" Grid.Column="1" TextColor="White" FontSize="14" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Action Buttons -->
+                <VerticalStackLayout Spacing="10">
+                    <Button Text="Book Service"
+                            BackgroundColor="#007AFF"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Clicked="OnBookServiceClicked" />
+                    
+                    <Button Text="View Service History"
+                            BackgroundColor="#1E1E1E"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Clicked="OnViewHistoryClicked" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
 </ContentPage>

@@ -4,6 +4,7 @@ using TRAFFIK_APP.ViewModels;
 using TRAFFIK_APP.Views;
 using System.Collections.ObjectModel;
 using TRAFFIK_APP.Models.Dtos.User;
+using TRAFFIK_APP.Models.Entities.Vehicle;
 
 namespace TRAFFIK_APP.ViewModels
 {
@@ -61,7 +62,7 @@ namespace TRAFFIK_APP.ViewModels
 
         public bool HasSuccess => !string.IsNullOrEmpty(SuccessMessage);
 
-        public ObservableCollection<VehicleItem> Vehicles { get; } = new();
+        public ObservableCollection<Vehicle> Vehicles { get; } = new();
 
         public Command LogoutCommand { get; }
         public Command SaveProfileCommand { get; }
@@ -115,14 +116,17 @@ namespace TRAFFIK_APP.ViewModels
                     Vehicles.Clear();
                     if (vehicles != null && vehicles.Count > 0)
                     {
-                        foreach (var vehicle in vehicles)
+                        foreach (var vehicleDto in vehicles)
                         {
-                            Vehicles.Add(new VehicleItem
+                            Vehicles.Add(new Vehicle
                             {
-                                LicensePlate = vehicle.LicensePlate,
-                                Make = vehicle.Make ?? "Unknown",
-                                Model = vehicle.Model ?? "Unknown",
-                                ImageUrl = !string.IsNullOrEmpty(vehicle.ImageUrl) ? vehicle.ImageUrl : "car_placeholder.png"
+                                LicensePlate = vehicleDto.LicensePlate,
+                                Make = vehicleDto.Make ?? "Unknown",
+                                Model = vehicleDto.Model ?? "Unknown",
+                                ImageUrl = !string.IsNullOrEmpty(vehicleDto.ImageUrl) ? vehicleDto.ImageUrl : "car_placeholder.png",
+                                VehicleType = vehicleDto.VehicleType ?? "Unknown",
+                                Color = "Unknown",
+                                UserId = _session.UserId ?? 0
                             });
                         }
                     }
@@ -257,15 +261,6 @@ namespace TRAFFIK_APP.ViewModels
                 ErrorMessage = $"Error during logout: {ex.Message}";
             }
         }
-    }
-
-    // Vehicle display
-    public class VehicleItem
-    {
-        public string LicensePlate { get; set; } = string.Empty;
-        public string Make { get; set; } = string.Empty;
-        public string Model { get; set; } = string.Empty;
-        public string ImageUrl { get; set; } = string.Empty;
     }
 }
 

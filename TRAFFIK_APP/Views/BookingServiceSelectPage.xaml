@@ -6,7 +6,7 @@
              x:Class="TRAFFIK_APP.Views.BookingServiceSelectPage"
              x:DataType="viewmodels:BookingServiceSelectViewModel"
              BackgroundColor="#0D0D0D"
-             Shell.TabBarIsVisible="False"
+             Shell.TabBarIsVisible="True"
              Title="Select Service">
     
     <ContentPage.Resources>
@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="0">
+    <Grid RowDefinitions="Auto,Auto,*" Padding="0">
 
         <!-- Header -->
         <Grid Grid.Row="0" BackgroundColor="#1A1A1A" Padding="20,50,20,20">
@@ -251,46 +251,5 @@
             </CollectionView>
         </RefreshView>
 
-        <!-- Bottom Navigation Bar -->
-        <Grid Grid.Row="3"
-              BackgroundColor="#1E1E1E"
-              HeightRequest="70"
-              Padding="10,0"
-              ColumnSpacing="25">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="home_icon.png"
-                             Command="{Binding GoHomeCommand}"
-                             BackgroundColor="Transparent"
-                             HeightRequest="28" WidthRequest="28"/>
-            </StackLayout>
-
-            <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="calendar_icon.png"
-                             Command="{Binding GoAppointmentsCommand}"
-                             BackgroundColor="Transparent"
-                             HeightRequest="28" WidthRequest="28"/>
-            </StackLayout>
-
-            <StackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="gift_icon.png"
-                             Command="{Binding GoRewardsCommand}"
-                             BackgroundColor="Transparent"
-                             HeightRequest="28" WidthRequest="28"/>
-            </StackLayout>
-
-            <StackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="account_icon.png"
-                             Command="{Binding GoAccountCommand}"
-                             BackgroundColor="Transparent"
-                             HeightRequest="28" WidthRequest="28"/>
-            </StackLayout>
-        </Grid>
     </Grid>
 </ContentPage>

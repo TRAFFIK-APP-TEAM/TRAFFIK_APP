@@ -9,8 +9,6 @@ namespace TRAFFIK_APP.Views
     {
         private DashboardViewModel ViewModel => BindingContext as DashboardViewModel;
 
-        public ObservableCollection<object> VehicleCards { get; } = new();
-
         public DashboardPage(DashboardViewModel viewModel)
         {
             InitializeComponent();
@@ -22,22 +20,6 @@ namespace TRAFFIK_APP.Views
         {
             if (ViewModel?.LoadDashboardCommand?.CanExecute(null) == true)
                 ViewModel.LoadDashboardCommand.Execute(null);
-
-            UpdateVehicleCards();
-        }
-
-        private void UpdateVehicleCards()
-        {
-            VehicleCards.Clear();
-            VehicleCards.Add(null); // Add card placeholder
-
-            if (ViewModel?.Vehicles != null)
-            {
-                foreach (var vehicle in ViewModel.Vehicles)
-                {
-                    VehicleCards.Add(vehicle);
-                }
-            }
         }
 
         private async void OnAddVehicleTapped(object sender, EventArgs e)
@@ -50,8 +32,9 @@ namespace TRAFFIK_APP.Views
         {
             if (sender is VisualElement element && element.BindingContext is Vehicle vehicle)
             {
-                var route = $"{nameof(VehiclePage)}?vehicleId={vehicle.LicensePlate}";
-                await Shell.Current.GoToAsync(route);
+                // Set the selected vehicle and navigate
+                VehiclePage.SelectedVehicle = vehicle;
+                await Shell.Current.GoToAsync(nameof(VehiclePage));
             }
         }
 

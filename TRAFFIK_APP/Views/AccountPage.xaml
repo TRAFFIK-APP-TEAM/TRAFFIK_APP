@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:TRAFFIK_APP.Views"
              x:Class="TRAFFIK_APP.Views.AccountPage"
              BackgroundColor="Black"
              Shell.TabBarIsVisible="False"
@@ -71,33 +72,44 @@
                            HorizontalOptions="Center"
                            Margin="0,0,0,10"/>
 
-                    <CollectionView ItemsSource="{Binding Vehicles}"
-                                    ItemsLayout="HorizontalList"
-                                    HorizontalOptions="Center">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="#333" WidthRequest="100" HeightRequest="100" Padding="5" Margin="5">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10"/>
-                                    </Border.StrokeShape>
-                                    <VerticalStackLayout Spacing="5" VerticalOptions="Center">
-                                        <Image Source="{Binding ImageUrl}" HeightRequest="40" HorizontalOptions="Center"/>
-                                        <Label Text="{Binding Make}" TextColor="White" FontSize="13"
-                                               HorizontalOptions="Center"/>
-                                        <Label Text="{Binding Model}" TextColor="White" FontSize="11"
-                                               HorizontalOptions="Center"/>
-                                    </VerticalStackLayout>
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                    <ScrollView Orientation="Horizontal" HeightRequest="180">
+                        <HorizontalStackLayout Spacing="12" Padding="0,8">
 
-                    <Button Text="Add Vehicle"
-                            Command="{Binding AddVehicleCommand}"
-                            BackgroundColor="White"
-                            TextColor="Black"
-                            CornerRadius="20"
-                            Margin="0,15,0,0"/>
+                            <!-- Add Vehicle Card -->
+                            <Border Stroke="Gray"
+                                    StrokeThickness="1"
+                                    BackgroundColor="#1E1E1E"
+                                    WidthRequest="160"
+                                    HeightRequest="160"
+                                    StrokeShape="RoundRectangle 12"
+                                    Margin="2">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAddVehicleTapped" />
+                                </Border.GestureRecognizers>
+                                <Grid>
+                                    <Image Source="plus_icon.png"
+                                           HeightRequest="40"
+                                           WidthRequest="40"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+
+                            <!-- Vehicle Cards -->
+                            <CollectionView ItemsSource="{Binding Vehicles}" ItemsLayout="HorizontalList" HeightRequest="180" VerticalOptions="Center">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <views:VehicleCard>
+                                            <views:VehicleCard.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnVehicleTapped" />
+                                            </views:VehicleCard.GestureRecognizers>
+                                        </views:VehicleCard>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+
+                        </HorizontalStackLayout>
+                    </ScrollView>
                 </VerticalStackLayout>
             </Border>
 
