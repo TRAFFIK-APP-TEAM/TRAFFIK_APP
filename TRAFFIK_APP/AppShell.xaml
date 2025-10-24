@@ -4,22 +4,26 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:TRAFFIK_APP.Views"
-    Title="TRAFFIK_APP"
+    Title="TRAFFIK"
     Shell.NavBarHasShadow="False"
     Shell.BackgroundColor="Black"
     Shell.TitleColor="White">
 
-    <!-- Custom global title bar -->
     <Shell.TitleView>
-        <Grid BackgroundColor="Black" HeightRequest="56">
-            <Label 
-                Text="TRAFFIK"
-                TextColor="White"
-                FontSize="20"
-                FontAttributes="Bold"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"/>
-        </Grid>
+        <AbsoluteLayout BackgroundColor="Black"
+                    HeightRequest="56"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+
+            <Label Text="TRAFFIK"
+               TextColor="White"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"
+               AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
+               AbsoluteLayout.LayoutFlags="PositionProportional" />
+        </AbsoluteLayout>
     </Shell.TitleView>
 
     <!-- Login route (hidden tab bar) -->
@@ -32,22 +36,22 @@
     <!-- Main tabbed navigation (regular user) -->
     <TabBar Route="UserDashboardPage">
         <ShellContent Title="Dashboard"
-                      Icon="home_icon"
+                      Icon="home_icon.png"
                       ContentTemplate="{DataTemplate views:DashboardPage}"
                       Route="DashboardPage" />
 
         <ShellContent Title="Booking"
-                      Icon="calendar_icon"
+                      Icon="calendar_icon.png"
                       ContentTemplate="{DataTemplate views:BookingPage}"
                       Route="BookingPage" />
 
         <ShellContent Title="Rewards"
-                      Icon="gift_icon"
+                      Icon="gift_icon.png"
                       ContentTemplate="{DataTemplate views:RewardsPage}"
                       Route="RewardsPage" />
 
         <ShellContent Title="Account"
-                      Icon="account_icon"
+                      Icon="account_icon.png"
                       ContentTemplate="{DataTemplate views:AccountPage}"
                       Route="AccountPage" />
     </TabBar>

@@ -34,7 +34,7 @@
                     BorderWidth="0"
                     Command="{Binding GoBackCommand}"/>
             
-            <StackLayout Grid.Column="1" HorizontalOptions="Center">
+            <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
                 <Label Text="TRAFFIK"
                        TextColor="White"
                        FontAttributes="Bold"
@@ -253,10 +253,10 @@
 
         <!-- Bottom Navigation Bar -->
         <Grid Grid.Row="3"
-              BackgroundColor="#1A1A1A"
-              HeightRequest="80"
-              Padding="20,10"
-              ColumnSpacing="0">
+              BackgroundColor="#1E1E1E"
+              HeightRequest="70"
+              Padding="10,0"
+              ColumnSpacing="25">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -265,35 +265,31 @@
             </Grid.ColumnDefinitions>
 
             <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="home.png"
+                <ImageButton Source="home_icon.png"
                              Command="{Binding GoHomeCommand}"
                              BackgroundColor="Transparent"
-                             HeightRequest="24" WidthRequest="24"/>
-                <Label Text="Home" FontSize="11" TextColor="White" HorizontalOptions="Center" Margin="0,4,0,0"/>
+                             HeightRequest="28" WidthRequest="28"/>
             </StackLayout>
 
             <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="appointment.png"
+                <ImageButton Source="calendar_icon.png"
                              Command="{Binding GoAppointmentsCommand}"
                              BackgroundColor="Transparent"
-                             HeightRequest="24" WidthRequest="24"/>
-                <Label Text="Book" FontSize="11" TextColor="#007AFF" HorizontalOptions="Center" Margin="0,4,0,0"/>
+                             HeightRequest="28" WidthRequest="28"/>
             </StackLayout>
 
             <StackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="rewards.png"
+                <ImageButton Source="gift_icon.png"
                              Command="{Binding GoRewardsCommand}"
                              BackgroundColor="Transparent"
-                             HeightRequest="24" WidthRequest="24"/>
-                <Label Text="Rewards" FontSize="11" TextColor="White" HorizontalOptions="Center" Margin="0,4,0,0"/>
+                             HeightRequest="28" WidthRequest="28"/>
             </StackLayout>
 
             <StackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="account.png"
+                <ImageButton Source="account_icon.png"
                              Command="{Binding GoAccountCommand}"
                              BackgroundColor="Transparent"
-                             HeightRequest="24" WidthRequest="24"/>
-                <Label Text="Account" FontSize="11" TextColor="White" HorizontalOptions="Center" Margin="0,4,0,0"/>
+                             HeightRequest="28" WidthRequest="28"/>
             </StackLayout>
         </Grid>
     </Grid>

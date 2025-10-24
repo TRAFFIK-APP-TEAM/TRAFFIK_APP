@@ -10,14 +10,10 @@
              Shell.TabBarIsVisible="False"
              Title="Rewards">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+    <Grid RowDefinitions="Auto,*,Auto">
 
         <!-- Header -->
-        <VerticalStackLayout Grid.Row="0" Margin="0,20,0,20">
-            <Label Text="TRAFFIK"
-                   TextColor="White"
-                   FontAttributes="Bold"
-                   FontSize="22"/>
+        <VerticalStackLayout Grid.Row="0" Padding="20" Margin="0,20,0,20">
             <Label Text="Rewards"
                    TextColor="#C8C8C8"
                    FontSize="16"
@@ -31,7 +27,7 @@
 
         <!-- Content -->
         <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
-            <ScrollView>
+            <ScrollView Padding="20">
                 <VerticalStackLayout Spacing="25">
 
                     <!-- Available Rewards -->
@@ -89,7 +85,7 @@
                                     <VerticalStackLayout>
                                         <Label Text="{Binding Name, FallbackValue='Locked Reward'}" TextColor="#888" FontSize="16" FontAttributes="Bold"/>
                                         <Label Text="{Binding Description, FallbackValue='Locked Reward Description'}" TextColor="#666" FontSize="14"/>
-                                        <Label Text="{Binding Cost, StringFormat='Requires {0} pts', FallbackValue='Requires 0 pts'}" TextColor="#FF3B30" FontSize="14"/>
+                                        <Label Text="{Binding Cost, StringFormat='Requires {0} pts', FallbackValue='Requires 0 pts'}" TextColor="#FFD700" FontSize="14"/>
                                         <Button Text="Locked"
                                                 IsEnabled="False"
                                                 BackgroundColor="#444"
@@ -149,36 +145,32 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackLayout Grid.Column="0" HorizontalOptions="Center">
-                <ImageButton Source="home.png"
+            <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="home_icon.png"
                              Command="{Binding GoHomeCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Home" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
             </StackLayout>
 
-            <StackLayout Grid.Column="1" HorizontalOptions="Center">
-                <ImageButton Source="appointment.png"
+            <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="calendar_icon.png"
                              Command="{Binding GoAppointmentsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Appointment" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
             </StackLayout>
 
-            <StackLayout Grid.Column="2" HorizontalOptions="Center">
-                <ImageButton Source="rewards.png"
+            <StackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="gift_icon.png"
                              Command="{Binding GoRewardsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Rewards" FontSize="12" TextColor="#007AFF" HorizontalOptions="Center"/>
             </StackLayout>
 
-            <StackLayout Grid.Column="3" HorizontalOptions="Center">
-                <ImageButton Source="account.png"
+            <StackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="account_icon.png"
                              Command="{Binding GoAccountCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
             </StackLayout>
         </Grid>
     </Grid>

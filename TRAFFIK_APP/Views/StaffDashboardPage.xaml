@@ -85,36 +85,32 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackLayout Grid.Column="0" HorizontalOptions="Center">
-                <ImageButton Source="home.png"
+            <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="home_icon.png"
                              Command="{Binding GoHomeCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28" />
-                <Label Text="Home" FontSize="12" TextColor="#007AFF" HorizontalOptions="Center" />
             </StackLayout>
 
-            <StackLayout Grid.Column="1" HorizontalOptions="Center">
-                <ImageButton Source="appointment.png"
+            <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="calendar_icon.png"
                              Command="{Binding GoAppointmentsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28" />
-                <Label Text="Appointment" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </StackLayout>
 
-            <StackLayout Grid.Column="2" HorizontalOptions="Center">
-                <ImageButton Source="rewards.png"
+            <StackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="gift_icon.png"
                              Command="{Binding GoRewardsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28" />
-                <Label Text="Rewards" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </StackLayout>
 
-            <StackLayout Grid.Column="3" HorizontalOptions="Center">
-                <ImageButton Source="account.png"
+            <StackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="account_icon.png"
                              Command="{Binding GoAccountCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28" />
-                <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center" />
             </StackLayout>
         </Grid>
     </Grid>

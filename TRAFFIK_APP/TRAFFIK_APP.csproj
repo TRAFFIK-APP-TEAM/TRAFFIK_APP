@@ -53,10 +53,6 @@
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 		
 		<MauiImage Include="Resources\Icons\*" />
-		<MauiImage Update="Resources\Icons\home_icon.svg" Resize="True" BaseSize="24,24" />
-		<MauiImage Update="Resources\Icons\calendar_icon.svg" Resize="True" BaseSize="24,24" />
-		<MauiImage Update="Resources\Icons\gift_icon.svg" Resize="True" BaseSize="24,24" />
-		<MauiImage Update="Resources\Icons\account_icon.svg" Resize="True" BaseSize="24,24" />
 		
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />

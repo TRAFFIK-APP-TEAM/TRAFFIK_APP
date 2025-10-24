@@ -7,10 +7,10 @@
              Shell.TabBarIsVisible="False"
              BackgroundColor="#0D0D0D">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+    <Grid RowDefinitions="Auto,*,Auto">
 
         <!-- Header -->
-        <StackLayout Grid.Row="0" Margin="0,20,0,20">
+        <StackLayout Grid.Row="0" Padding="20" Margin="0,20,0,20">
             <Label Text="Welcome back,"
                    TextColor="#C8C8C8"
                    FontSize="14"/>
@@ -21,7 +21,7 @@
         </StackLayout>
 
         <!-- Vehicle Form -->
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="1" Padding="20">
             <VerticalStackLayout Spacing="15">
                 <Border Background="#1E1E1E" Padding="25">
                     <Border.StrokeShape>
@@ -150,36 +150,32 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackLayout Grid.Column="0" HorizontalOptions="Center">
-                <ImageButton Source="home_icon.svg"
+            <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="home_icon.png"
                              Command="{Binding GoHomeCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Home" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
             </StackLayout>
 
-            <StackLayout Grid.Column="1" HorizontalOptions="Center">
-                <ImageButton Source="calendar_icon.svg"
+            <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="calendar_icon.png"
                              Command="{Binding GoAppointmentsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Appointment" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
             </StackLayout>
 
-            <StackLayout Grid.Column="2" HorizontalOptions="Center">
-                <ImageButton Source="gift_icon.svg"
+            <StackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="gift_icon.png"
                              Command="{Binding GoRewardsCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Rewards" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
             </StackLayout>
 
-            <StackLayout Grid.Column="3" HorizontalOptions="Center">
-                <ImageButton Source="account_icon.svg"
+            <StackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="account_icon.png"
                              Command="{Binding GoAccountCommand}"
                              BackgroundColor="Transparent"
                              HeightRequest="28" WidthRequest="28"/>
-                <Label Text="Account" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
             </StackLayout>
         </Grid>
     </Grid>
