@@ -152,23 +152,27 @@ namespace TRAFFIK_APP.ViewModels
                     return;
                 }
 
+                // Build a VehicleDto with exact property names for the backend
                 var vehicleDto = new VehicleDto
                 {
+                    UserId = _session.UserId.Value,
                     Make = VehicleMake,
                     Model = VehicleModel,
                     LicensePlate = LicensePlate,
                     ImageUrl = VehicleImageBytes != null ? Convert.ToBase64String(VehicleImageBytes) : "",
                     VehicleType = SelectedVehicleType.Name,
                     Color = VehicleColor,
-                    Year = VehicleYear,
-                    UserId = _session.UserId.Value
+                    Year = VehicleYear
                 };
 
+                // Send DTO to backend
                 var result = await _vehicleClient.CreateAsync(vehicleDto);
 
                 if (result != null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Vehicle added successfully!", "OK");
+
+                    // Reset form
                     VehicleMake = string.Empty;
                     VehicleModel = string.Empty;
                     LicensePlate = string.Empty;
@@ -191,6 +195,7 @@ namespace TRAFFIK_APP.ViewModels
                 ErrorMessage = $"Error: {ex.Message}";
             }
         }
+
 
         private async Task NavigateToAsync(string route)
         {

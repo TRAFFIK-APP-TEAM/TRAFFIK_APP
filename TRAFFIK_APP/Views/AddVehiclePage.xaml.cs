@@ -9,4 +9,5 @@ public partial class AddVehiclePage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
 }
