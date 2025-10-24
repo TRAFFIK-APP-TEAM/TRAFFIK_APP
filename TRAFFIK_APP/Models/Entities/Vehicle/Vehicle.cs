@@ -12,9 +12,9 @@ namespace TRAFFIK_APP.Models.Entities.Vehicle
     public string VehicleType { get; set; } = string.Empty;
     public string Color { get; set; } = string.Empty;
     public int Year { get; set; }
-    public DateTime CreatedAt { get; set; }
+    //public DateTime CreatedAt { get; set; }
     
     // Computed property for display
-    public string DisplayName => $"{Make} {Model} ({LicensePlate})";
+    //public string DisplayName => $"{Make} {Model} ({LicensePlate})";
     }
 }
