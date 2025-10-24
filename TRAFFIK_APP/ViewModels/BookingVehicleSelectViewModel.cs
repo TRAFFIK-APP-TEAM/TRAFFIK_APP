@@ -15,6 +15,17 @@ namespace TRAFFIK_APP.ViewModels
         // Vehicle list
         public ObservableCollection<VehicleDto> Vehicles { get; } = new();
 
+        // Properties for UI binding
+        public bool HasVehicles => Vehicles.Count > 0;
+        public bool HasNoVehicles => Vehicles.Count == 0;
+
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
+
         // Commands
         public Command<VehicleDto> SelectVehicleCommand { get; }
         public Command GoHomeCommand { get; }
@@ -22,6 +33,7 @@ namespace TRAFFIK_APP.ViewModels
         public Command GoRewardsCommand { get; }
         public Command GoAccountCommand { get; }
         public Command LoadVehiclesCommand { get; }
+        public Command AddVehicleCommand { get; }
 
         public BookingVehicleSelectViewModel(VehicleClient vehicleClient, SessionService session)
         {
@@ -29,14 +41,21 @@ namespace TRAFFIK_APP.ViewModels
             _session = session;
 
             // Commands
-            SelectVehicleCommand = new Command<VehicleDto>(async vehicle =>
-            {
-                if (vehicle == null)
-                    return;
+                    SelectVehicleCommand = new Command<VehicleDto>(async vehicle =>
+                    {
+                        if (vehicle == null)
+                            return;
 
-                await Shell.Current.DisplayAlert("Vehicle Selected",
-                    $"You chose {vehicle.DisplayName}", "OK");
-            });
+                        System.Diagnostics.Debug.WriteLine($"Selected vehicle: {vehicle.DisplayName} (Type: {vehicle.VehicleType})");
+
+                        // Store the selected vehicle in a static property for the next page
+                        BookingServiceSelectViewModel.SelectedVehicle = vehicle;
+
+                        // Navigate to service selection
+                        await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.BookingServiceSelectPage));
+                    });
+
+            AddVehicleCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.AddVehiclePage)));
 
             GoHomeCommand = new Command(async () => await Shell.Current.GoToAsync("//DashboardPage"));
             GoAppointmentsCommand = new Command(async () => await Shell.Current.GoToAsync("//BookingPage"));
@@ -52,6 +71,8 @@ namespace TRAFFIK_APP.ViewModels
         {
             try
             {
+                IsRefreshing = true;
+                
                 if (_session.UserId is not int userId)
                 {
                     ErrorMessage = "Session expired. Please log in again.";
@@ -68,11 +89,19 @@ namespace TRAFFIK_APP.ViewModels
                         Vehicles.Add(vehicle);
                     }
                 }
+
+                // Notify UI of changes
+                OnPropertyChanged(nameof(HasVehicles));
+                OnPropertyChanged(nameof(HasNoVehicles));
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading vehicles: {ex.Message}");
                 ErrorMessage = "Failed to load vehicles. Please try again.";
+            }
+            finally
+            {
+                IsRefreshing = false;
             }
         }
     }

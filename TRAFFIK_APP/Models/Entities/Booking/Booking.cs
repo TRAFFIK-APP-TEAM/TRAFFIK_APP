@@ -7,7 +7,7 @@ namespace TRAFFIK_APP.Models.Entities.Booking
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public int VehicleId { get; set; }
+    public string LicensePlate { get; set; } = string.Empty;
     public int ServiceCatalogId { get; set; }
     public DateTime ScheduledDate { get; set; }
     public string Location { get; set; } = string.Empty;

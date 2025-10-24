@@ -12,8 +12,17 @@ namespace TRAFFIK_APP.Services.ApiClients
 
         public async Task<List<VehicleDto>> GetByUserAsync(int userId)
         {
-            var endpoint = Endpoints.Vehicle.GetByUser.Replace("{userId}", userId.ToString());
-            return await GetAsync<List<VehicleDto>>(endpoint);
+            try
+            {
+                var endpoint = Endpoints.Vehicle.GetByUser.Replace("{userId}", userId.ToString());
+                var result = await GetAsync<List<VehicleDto>>(endpoint);
+                return result ?? new List<VehicleDto>();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[VehicleClient] Error in GetByUserAsync: {ex.Message}");
+                return new List<VehicleDto>();
+            }
         }
 
         public async Task<VehicleDto?> GetByIdAsync(int id)

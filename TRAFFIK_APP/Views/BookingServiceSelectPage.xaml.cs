@@ -9,5 +9,16 @@ namespace TRAFFIK_APP.Views
 			InitializeComponent();
 			BindingContext = viewModel;
 		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			
+			// Reload services when the page appears to ensure vehicle filtering works
+			if (BindingContext is BookingServiceSelectViewModel viewModel)
+			{
+				viewModel.ReloadServicesForVehicle();
+			}
+		}
 	}
 }

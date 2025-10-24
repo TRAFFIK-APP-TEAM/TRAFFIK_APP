@@ -25,7 +25,7 @@
                     Padding="15">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Service" TextColor="#A0A0A0" FontSize="14"/>
-                    <Label Text="{Binding SelectedService.ServiceName}" TextColor="White" FontSize="18"/>
+                    <Label Text="{Binding SelectedService.Name}" TextColor="White" FontSize="18"/>
                     <Label Text="{Binding SelectedService.Description}" TextColor="#CCCCCC" FontSize="13"/>
                     <Label Text="{Binding SelectedService.Price, StringFormat='Price: R{0:F2}'}" 
                            TextColor="#FFD700" FontSize="14" FontAttributes="Bold"/>
@@ -39,9 +39,9 @@
                     Padding="15">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Vehicle" TextColor="#A0A0A0" FontSize="14"/>
-                    <Label Text="{Binding SelectedVehicle.Make}" TextColor="White" FontSize="18"/>
-                    <Label Text="{Binding SelectedVehicle.Model}" TextColor="#CCCCCC" FontSize="14"/>
-                    <Label Text="{Binding SelectedVehicle.PlateNumber, StringFormat='Plate: {0}'}" 
+                    <Label Text="{Binding SelectedVehicle.DisplayName}" TextColor="White" FontSize="18"/>
+                    <Label Text="{Binding SelectedVehicle.VehicleType}" TextColor="#CCCCCC" FontSize="14"/>
+                    <Label Text="{Binding SelectedVehicle.LicensePlate, StringFormat='Plate: {0}'}" 
                            TextColor="#CCCCCC" FontSize="13"/>
                 </VerticalStackLayout>
             </Border>

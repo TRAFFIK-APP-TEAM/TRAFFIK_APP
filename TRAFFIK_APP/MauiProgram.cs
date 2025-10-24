@@ -52,6 +52,8 @@ namespace TRAFFIK_APP
             Routing.RegisterRoute(nameof(AdminDashboardPage), typeof(AdminDashboardPage));
             Routing.RegisterRoute(nameof(BookingServiceSelectPage), typeof(BookingServiceSelectPage));
             Routing.RegisterRoute(nameof(BookingVehicleSelectPage), typeof(BookingVehicleSelectPage));
+            Routing.RegisterRoute(nameof(BookingDateTimeSelectPage), typeof(BookingDateTimeSelectPage));
+            Routing.RegisterRoute(nameof(BookingConfirmationPage), typeof(BookingConfirmationPage));
             
 
 

@@ -16,6 +16,17 @@
                    FontAttributes="Bold"
                    FontSize="20"
                    HorizontalOptions="Center" />
+            <Label Text="{Binding SelectedVehicleDisplayName}"
+                   TextColor="#007AFF"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,10,0,0" />
+            <Label Text="{Binding SelectedServiceDisplayName}"
+                   TextColor="#C8C8C8"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   Margin="0,5,0,0" />
         </VerticalStackLayout>
 
         <!-- Date and Time Pickers -->

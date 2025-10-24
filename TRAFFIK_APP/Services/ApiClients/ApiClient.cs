@@ -19,9 +19,28 @@ namespace TRAFFIK_APP.Services.ApiClients
 
         protected async Task<T?> GetAsync<T>(string url)
         {
-            var response = await _httpClient.GetAsync(url);
-            if (!response.IsSuccessStatusCode) return default;
-            return await response.Content.ReadFromJsonAsync<T>();
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+                
+                if (!response.IsSuccessStatusCode)
+                {
+                    return default;
+                }
+                
+                var content = await response.Content.ReadAsStringAsync();
+                var result = System.Text.Json.JsonSerializer.Deserialize<T>(content, new System.Text.Json.JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ApiClient] Exception in GetAsync: {ex.Message}");
+                return default;
+            }
         }
 
         protected async Task<T?> PostAsync<T>(string url, object payload)

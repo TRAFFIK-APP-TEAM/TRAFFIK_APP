@@ -23,6 +23,27 @@ namespace TRAFFIK_APP
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         protected override async void OnNavigating(ShellNavigatingEventArgs args)
