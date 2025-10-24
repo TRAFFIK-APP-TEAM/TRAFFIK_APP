@@ -54,5 +54,10 @@ namespace TRAFFIK_APP.Views
                 await Shell.Current.GoToAsync(route);
             }
         }
+
+        private async void OnNotificationClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(BookingTrackerPage));
+        }
     }
 }

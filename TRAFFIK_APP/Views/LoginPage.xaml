@@ -9,19 +9,13 @@
         <VerticalStackLayout Padding="24" Spacing="20">
 
             <!-- Logo -->
-            <Border BackgroundColor="#1C1C1E"
-                    StrokeShape="RoundRectangle 12"
-                    Padding="12"
-                    HorizontalOptions="Center"
-                    Shadow="0,2,4,#333333">
                 <Label Text="TRAFFIK"
                        FontSize="24"
                        FontAttributes="Bold"
                        TextColor="White"
                        HorizontalOptions="Center" />
-            </Border>
 
-            <!-- Heading -->
+                <!-- Heading -->
             <Label Text="Login"
                    FontSize="28"
                    FontAttributes="Bold"
@@ -65,7 +59,7 @@
                                FontSize="16"/>
 
                         <ImageButton Grid.Column="1"
-                                     Source="eye_icon.svg"
+                                     Source="eye_icon.png"
                                      BackgroundColor="Transparent"
                                      Aspect="AspectFit"
                                      HorizontalOptions="End"

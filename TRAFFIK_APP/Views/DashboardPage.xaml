@@ -15,8 +15,17 @@
             <VerticalStackLayout Padding="24" Spacing="24">
 
                 <!-- Greeting -->
-                <Label Text="Welcome back," FontSize="18" TextColor="White" />
-                <Label Text="{Binding UserFullName}" FontSize="24" FontAttributes="Bold" TextColor="White" />
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                    <Label Grid.Row="0" Text="Welcome back," FontSize="18" TextColor="White" />
+                    <Label Grid.Row="1" Text="{Binding UserFullName}" FontSize="24" FontAttributes="Bold" TextColor="White" />
+                    <ImageButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+                                 Source="bell_icon.png"
+                                 BackgroundColor="Transparent"
+                                 HeightRequest="24"
+                                 WidthRequest="24"
+                                 VerticalOptions="Center"
+                                 Clicked="OnNotificationClicked" />
+                </Grid>
 
                 <!-- Rewards -->
                 <VerticalStackLayout Padding="16" Spacing="20">
@@ -88,7 +97,7 @@
                                 <TapGestureRecognizer Tapped="OnAddVehicleTapped" />
                             </Border.GestureRecognizers>
                             <Grid>
-                                <Image Source="plus_icon.svg"
+                                <Image Source="plus_icon.png"
                                        HeightRequest="40"
                                        WidthRequest="40"
                                        HorizontalOptions="Center"

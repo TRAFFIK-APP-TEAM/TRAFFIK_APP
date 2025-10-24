@@ -12,7 +12,6 @@ public partial class AccountPage : ContentPage
 
 	private async void OnNotificationClicked(object sender, EventArgs e)
 	{
-		// TODO: Navigate to notifications page when implemented
-		await DisplayAlert("Notifications", "Notifications feature coming soon!", "OK");
+		await Shell.Current.GoToAsync(nameof(BookingTrackerPage));
 	}
 }

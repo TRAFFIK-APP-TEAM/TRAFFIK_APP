@@ -14,7 +14,7 @@
             <!-- HEADER -->
                 <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
 
-                    <ImageButton Source="bell_icon.svg"
+                    <ImageButton Source="bell_icon.png"
                              HeightRequest="26"
                              WidthRequest="26"
                              BackgroundColor="Transparent"
