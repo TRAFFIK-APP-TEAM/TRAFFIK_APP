@@ -62,13 +62,13 @@ namespace TRAFFIK_APP
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
             {
                 return new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
-            })
+            })*/
             ;
             builder.Services.AddHttpClient<UserClient>(client =>
             {
