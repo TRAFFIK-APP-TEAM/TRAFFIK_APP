@@ -95,7 +95,9 @@ namespace TRAFFIK_APP.ViewModels
                     Make = dto.Make,
                     Model = dto.Model,
                     LicensePlate = dto.LicensePlate,
-                    ImageUrl = dto.ImageUrl,
+                    ImageUrl = !string.IsNullOrEmpty(dto.ImageUrl) && !dto.ImageUrl.StartsWith("data:") 
+                        ? $"data:image/jpeg;base64,{dto.ImageUrl}" 
+                        : "car_placeholder.png",
                     UserId = userId
                 });
 

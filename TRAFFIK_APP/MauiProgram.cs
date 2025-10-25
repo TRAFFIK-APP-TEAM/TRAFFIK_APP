@@ -226,12 +226,25 @@ namespace TRAFFIK_APP
                 };
             })*/
             ;
+            builder.Services.AddHttpClient<CarModelClient>(client =>
+            {
+                client.Timeout = TimeSpan.FromSeconds(30);
+            })
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })*/
+            ;
 
             builder.Services.AddSingleton<SessionService>();
             builder.Services.AddSingleton<BookingClient>();
             builder.Services.AddSingleton<RewardClient>();
             builder.Services.AddSingleton<NotificationClient>();
             builder.Services.AddSingleton<VehicleClient>();
+            builder.Services.AddSingleton<CarModelClient>();
             builder.Services.AddSingleton<RewardCatalogClient>();
             builder.Services.AddSingleton<ServiceCatalogClient>();
 
@@ -243,6 +256,8 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<BookingViewModel>();
             builder.Services.AddTransient<BookingServiceSelectViewModel>();
             builder.Services.AddTransient<BookingVehicleSelectViewModel>();
+            builder.Services.AddTransient<BookingDateTimeSelectViewModel>();
+            builder.Services.AddTransient<BookingConfirmationViewModel>();
             builder.Services.AddTransient<RewardsViewModel>();
             builder.Services.AddTransient<StaffDashboardViewModel>();
 
@@ -252,6 +267,8 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<BookingPage>();
             builder.Services.AddTransient<BookingServiceSelectPage>();
             builder.Services.AddTransient<BookingVehicleSelectPage>();
+            builder.Services.AddTransient<BookingDateTimeSelectPage>();
+            builder.Services.AddTransient<BookingConfirmationPage>();
             builder.Services.AddTransient<RewardsPage>();
             builder.Services.AddTransient<AccountPage>();
             builder.Services.AddTransient<AddVehiclePage>();

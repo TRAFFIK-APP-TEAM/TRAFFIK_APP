@@ -1,5 +1,6 @@
 ﻿using TRAFFIK_APP.Configuration;
 using TRAFFIK_APP.Models.Entities.Booking;
+using TRAFFIK_APP.Models.Dtos.Booking;
 using Microsoft.Extensions.Logging;
 
 namespace TRAFFIK_APP.Services.ApiClients
@@ -14,8 +15,14 @@ namespace TRAFFIK_APP.Services.ApiClients
         public Task<Booking?> GetByIdAsync(int id) =>
             GetAsync<Booking>(Endpoints.Booking.GetById.Replace("{id}", id.ToString()));
 
-        public Task<Booking?> CreateAsync(Booking booking) =>
-            PostAsync<Booking>(Endpoints.Booking.Create, booking);
+        public Task<Booking?> CreateAsync(Booking booking)
+        {
+            // Wrap the booking object to match API's expected JSON shape
+            var payload = new { booking };
+            return PostAsync<Booking>(Endpoints.Booking.Create, payload);
+        }
+        public Task<Booking?> CreateAsync(BookingCreateDto bookingDto) =>
+            PostAsync<Booking>(Endpoints.Booking.Create, bookingDto);
 
         public Task<bool> UpdateAsync(int id, Booking booking) =>
             PutAsync(Endpoints.Booking.UpdateById.Replace("{id}", id.ToString()), booking);

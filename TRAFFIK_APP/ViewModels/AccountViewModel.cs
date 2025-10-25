@@ -123,7 +123,9 @@ namespace TRAFFIK_APP.ViewModels
                                 LicensePlate = vehicleDto.LicensePlate,
                                 Make = vehicleDto.Make ?? "Unknown",
                                 Model = vehicleDto.Model ?? "Unknown",
-                                ImageUrl = !string.IsNullOrEmpty(vehicleDto.ImageUrl) ? vehicleDto.ImageUrl : "car_placeholder.png",
+                                ImageUrl = !string.IsNullOrEmpty(vehicleDto.ImageUrl) && !vehicleDto.ImageUrl.StartsWith("data:") 
+                                    ? $"data:image/jpeg;base64,{vehicleDto.ImageUrl}" 
+                                    : "car_placeholder.png",
                                 VehicleType = vehicleDto.VehicleType ?? "Unknown",
                                 Color = "Unknown",
                                 UserId = _session.UserId ?? 0

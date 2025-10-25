@@ -106,6 +106,9 @@ namespace TRAFFIK_APP.ViewModels
         {
             _serviceCatalogClient = serviceCatalogClient;
             
+            System.Diagnostics.Debug.WriteLine($"[BookingServiceSelectViewModel] Constructor called");
+            System.Diagnostics.Debug.WriteLine($"[BookingServiceSelectViewModel] SelectedVehicle: {SelectedVehicle?.DisplayName ?? "null"}");
+            
             SelectServiceCommand = new Command<ServiceCatalogItem>(OnSelectService);
             LoadServicesCommand = new Command(() => ExecuteSafeAsync(LoadServicesAsync, "Loading services..."));
             RefreshCommand = new Command(() => ExecuteSafeAsync(RefreshServicesAsync, "Refreshing services..."));
@@ -131,13 +134,20 @@ namespace TRAFFIK_APP.ViewModels
             // Load services on initialization - but only if we have a vehicle selected
             if (SelectedVehicle != null)
             {
+                System.Diagnostics.Debug.WriteLine("[BookingServiceSelectViewModel] SelectedVehicle found, loading services");
                 _ = LoadServicesAsync();
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("[BookingServiceSelectViewModel] No SelectedVehicle, skipping service load");
             }
         }
 
         // Method to reload services when vehicle changes
         public void ReloadServicesForVehicle()
         {
+            System.Diagnostics.Debug.WriteLine($"[ReloadServicesForVehicle] Called");
+            System.Diagnostics.Debug.WriteLine($"[ReloadServicesForVehicle] SelectedVehicle: {SelectedVehicle?.DisplayName ?? "null"}");
             _ = LoadServicesAsync();
         }
 
@@ -145,9 +155,12 @@ namespace TRAFFIK_APP.ViewModels
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Starting to load services");
+                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] SelectedVehicle: {SelectedVehicle?.DisplayName ?? "null"}");
+                
                 // Use the ServiceCatalogClient to get services
                 var serviceDtos = await _serviceCatalogClient.GetAllAsync();
-                System.Diagnostics.Debug.WriteLine($"ServiceCatalogClient returned {serviceDtos?.Count ?? 0} services");
+                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] ServiceCatalogClient returned {serviceDtos?.Count ?? 0} services");
                 
                 Services.Clear();
                 
@@ -169,23 +182,23 @@ namespace TRAFFIK_APP.ViewModels
                                 EstimatedDurationMinutes = GetEstimatedDuration(serviceDto.Name)
                             };
                             Services.Add(serviceItem);
-                            System.Diagnostics.Debug.WriteLine($"Added compatible service: {serviceItem.Name} - {serviceItem.Price}");
+                            System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Added compatible service: {serviceItem.Name} - {serviceItem.Price}");
                         }
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine($"Skipped incompatible service: {serviceDto.Name} for vehicle type: {SelectedVehicle?.VehicleType}");
+                            System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Skipped incompatible service: {serviceDto.Name} for vehicle type: {SelectedVehicle?.VehicleType}");
                         }
                     }
                 }
                 
-                System.Diagnostics.Debug.WriteLine($"Total compatible services in collection: {Services.Count}");
+                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Total compatible services in collection: {Services.Count}");
                 FilterServices();
-                System.Diagnostics.Debug.WriteLine($"Filtered services: {FilteredServices.Count}");
+                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Filtered services: {FilteredServices.Count}");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error loading services: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Error loading services: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Stack trace: {ex.StackTrace}");
                 ErrorMessage = "Failed to load services. Please try again.";
             }
         }
@@ -332,20 +345,24 @@ namespace TRAFFIK_APP.ViewModels
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine($"[OnSelectService] Method called with service: {service?.Name ?? "null"}");
+                
                 if (service == null)
                 {
+                    System.Diagnostics.Debug.WriteLine("[OnSelectService] Service is null, showing alert");
                     await Shell.Current.DisplayAlert("Select a Service", "Please select a service to continue.", "OK");
                     return;
                 }
 
                 if (SelectedVehicle == null)
                 {
+                    System.Diagnostics.Debug.WriteLine("[OnSelectService] SelectedVehicle is null, showing alert");
                     await Shell.Current.DisplayAlert("No Vehicle Selected", "Please go back and select a vehicle first.", "OK");
                     return;
                 }
 
-                System.Diagnostics.Debug.WriteLine($"Selected service: {service.Name}");
-                System.Diagnostics.Debug.WriteLine($"Selected vehicle: {SelectedVehicle.DisplayName}");
+                System.Diagnostics.Debug.WriteLine($"[OnSelectService] Selected service: {service.Name}");
+                System.Diagnostics.Debug.WriteLine($"[OnSelectService] Selected vehicle: {SelectedVehicle.DisplayName}");
 
                 SelectedService = service;
                 
@@ -353,18 +370,20 @@ namespace TRAFFIK_APP.ViewModels
                 BookingDateTimeSelectViewModel.SelectedService = service;
                 BookingDateTimeSelectViewModel.SelectedVehicle = SelectedVehicle;
                 
-                System.Diagnostics.Debug.WriteLine("Navigating to DateTime selection page...");
-                System.Diagnostics.Debug.WriteLine($"Passing vehicle: {SelectedVehicle?.DisplayName}");
-                System.Diagnostics.Debug.WriteLine($"Passing service: {service.Name}");
+                System.Diagnostics.Debug.WriteLine("[OnSelectService] Stored data in static properties");
+                System.Diagnostics.Debug.WriteLine($"[OnSelectService] Passing vehicle: {SelectedVehicle?.DisplayName}");
+                System.Diagnostics.Debug.WriteLine($"[OnSelectService] Passing service: {service.Name}");
                 
                 // Navigate to DateTime selection page
+                System.Diagnostics.Debug.WriteLine("[OnSelectService] Attempting navigation...");
                 await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.BookingDateTimeSelectPage));
+                System.Diagnostics.Debug.WriteLine("[OnSelectService] Navigation completed successfully");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in OnSelectService: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
-                await Shell.Current.DisplayAlert("Error", "Failed to select service. Please try again.", "OK");
+                System.Diagnostics.Debug.WriteLine($"[OnSelectService] Error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[OnSelectService] Stack trace: {ex.StackTrace}");
+                await Shell.Current.DisplayAlert("Error", $"Failed to select service: {ex.Message}", "OK");
             }
         }
     }

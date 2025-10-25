@@ -52,7 +52,12 @@ namespace TRAFFIK_APP.Services.ApiClients
                     ? new Uri(_httpClient.BaseAddress, url).ToString() 
                     : url;
 
-                var payloadJson = System.Text.Json.JsonSerializer.Serialize(payload);
+                var payloadJson = System.Text.Json.JsonSerializer.Serialize(payload, new System.Text.Json.JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
+
+                _logger.LogInformation("[API] Request Payload: {Payload}", payloadJson);
 
                 var response = await _httpClient.PostAsJsonAsync(url, payload);
                 

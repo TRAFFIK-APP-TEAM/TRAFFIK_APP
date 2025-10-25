@@ -31,11 +31,11 @@ namespace TRAFFIK_APP.ViewModels
         public byte[] VehicleImageBytes { get; private set; }
         public string UserFullName => _session.UserName;
 
-        /*public string VehicleNickname
+        public string VehicleNickname
         {
             get => _vehicleNickname;
             set => SetProperty(ref _vehicleNickname, value);
-        }*/
+        }
         public string VehicleMake
         {
             get => _vehicleMake;

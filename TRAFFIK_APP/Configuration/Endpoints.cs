@@ -5,14 +5,14 @@ namespace TRAFFIK_APP.Configuration
     public static class Endpoints
     {
         // Toggle between local and Azure API
-/*#if ANDROID
+#if ANDROID
                 public const string BaseUrl = "http://10.0.2.2:5027"; // Android emulator localhost
         #elif IOS
                 public const string BaseUrl = "http://localhost:5027"; // iOS simulator localhost
         #else
                 public const string BaseUrl = "http://localhost:5027"; // Windows/other platforms
-        #endif*/
-        public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net"; // Azure API endpoint
+        #endif
+        //public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net"; // Azure API endpoint
 
         public static class Auth
         {
@@ -140,6 +140,14 @@ namespace TRAFFIK_APP.Configuration
             public const string UpdateById = "/api/vehicle/{id}"; // Update vehicle by ID
             public const string DeleteById = "/api/vehicle/{id}"; // Delete vehicle by ID
             public const string GetAllVehicleTypes = "/api/vehicle/types"; // Get all vehicle types
+        }
+
+        public static class CarModel
+        {
+            public const string Create = "/api/CarModels"; // Create a new car model
+            public const string GetById = "/api/CarModels/{id}"; // Get car model by ID
+            public const string GetByUser = "/api/CarModels/User/{userId}"; // Get car models for a user
+            public const string CreateOrGet = "/api/CarModels/CreateOrGet"; // Create or get car model
         }
     }
 }

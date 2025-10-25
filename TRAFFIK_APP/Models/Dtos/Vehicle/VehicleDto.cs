@@ -2,6 +2,7 @@
 {
     public class VehicleDto
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
 
         public string Make { get; set; } = string.Empty;

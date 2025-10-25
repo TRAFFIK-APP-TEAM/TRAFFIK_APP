@@ -3,9 +3,12 @@
     public class BookingCreateDto
     {
         public int UserId { get; set; }
-        public string LicensePlate { get; set; } = string.Empty;
-        public int ServiceCatalogId { get; set; }
-        public DateTime ScheduledDate { get; set; }
-        public string Location { get; set; } = string.Empty;
+        public int? ServiceId { get; set; }
+        public int CarModelId { get; set; }
+        public int? ServiceCatalogId { get; set; }
+        public string VehicleLicensePlate { get; set; } = string.Empty;
+        public DateOnly BookingDate { get; set; }
+        public TimeOnly BookingTime { get; set; }
+        public string Status { get; set; } = "Pending";
     }
 }
