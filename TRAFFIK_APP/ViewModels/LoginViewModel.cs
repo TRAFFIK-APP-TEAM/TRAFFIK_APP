@@ -87,16 +87,14 @@ namespace TRAFFIK_APP.ViewModels
             // RBAC navigation
             switch (user.RoleId)
             {
-                case 1: // Admin
+                case 1:
                     await Shell.Current.GoToAsync("//AdminDashboardPage");
                     break;
-                case 2: // Customer/User
-                    await Shell.Current.GoToAsync("//DashboardPage");
-                    break;
-                case 3: // Employee/Staff
+                case 2:
                     await Shell.Current.GoToAsync("//StaffDashboardPage");
                     break;
                 default:
+                case 3:
                     await Shell.Current.GoToAsync("//DashboardPage");
                     break;
             }

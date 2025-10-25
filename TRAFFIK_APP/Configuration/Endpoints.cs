@@ -5,14 +5,14 @@ namespace TRAFFIK_APP.Configuration
     public static class Endpoints
     {
         // Toggle between local and Azure API
-/*#if ANDROID
+#if ANDROID
                 public const string BaseUrl = "http://10.0.2.2:5027"; // Android emulator localhost
         #elif IOS
                 public const string BaseUrl = "http://localhost:5027"; // iOS simulator localhost
         #else
                 public const string BaseUrl = "http://localhost:5027"; // Windows/other platforms
-        #endif*/
-        public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net"; // Azure API endpoint
+        #endif
+        //public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net"; // Azure API endpoint
 
         public static class Auth
         {
@@ -98,13 +98,13 @@ namespace TRAFFIK_APP.Configuration
 
         public static class ServiceCatalog
         {
-            public const string GetAll = $"{BaseUrl}/api/ServiceCatalog"; // Get all services in catalog
-            public const string Create = $"{BaseUrl}/api/ServiceCatalog"; // Add a new service
-            public const string GetById = $"{BaseUrl}/api/ServiceCatalog/{{id}}"; // Get service by ID
-            public const string UpdateById = $"{BaseUrl}/api/ServiceCatalog/{{id}}"; // Update service by ID
-            public const string DeleteById = $"{BaseUrl}/api/ServiceCatalog/{{id}}"; // Delete service by ID
-            public const string AvailableForVehicle = $"{BaseUrl}/api/ServiceCatalog/AvailableForVehicle/{{carModelId}}"; // Get services available for a vehicle
-            public const string ByCarType = $"{BaseUrl}/api/ServiceCatalog/ByCarType/{{carTypeId}}"; // Get services for a car type
+            public const string GetAll = $"{BaseUrl}/api/ServiceCatalogs";
+            public const string Create = $"{BaseUrl}/api/ServiceCatalogs";
+            public const string GetById = $"{BaseUrl}/api/ServiceCatalogs/{{id}}";
+            public const string UpdateById = $"{BaseUrl}/api/ServiceCatalogs/{{id}}";
+            public const string DeleteById = $"{BaseUrl}/api/ServiceCatalogs/{{id}}";
+            public const string AvailableForVehicle = $"{BaseUrl}/api/ServiceCatalogs/AvailableForVehicle/{{carModelId}}";
+            public const string ByCarType = $"{BaseUrl}/api/ServiceCatalogs/ByCarType/{{carTypeId}}";
         }
 
         public static class ServiceHistory
