@@ -18,22 +18,10 @@ namespace TRAFFIK_APP.Services.ApiClients
         public Task<Reward?> CreateAsync(Reward reward) =>
             PostAsync<Reward>(Endpoints.Reward.Create, reward);
 
-        public Task<bool> UpdateAsync(int id, Reward reward) =>
-            PutAsync(Endpoints.Reward.UpdateById.Replace("{id}", id.ToString()), reward);
-
-        public Task<bool> DeleteAsync(int id) =>
-            DeleteAsync(Endpoints.Reward.DeleteById.Replace("{id}", id.ToString()));
-
-        public async Task<int?> GetBalanceAsync(int userId)
+        public Task<List<Reward>?> GetByUserAsync(int userId)
         {
-            var result = await GetAsync<int>(Endpoints.Reward.GetBalance.Replace("{userId}", userId.ToString()));
-            return result;
+            var endpoint = Endpoints.Reward.GetByUser.Replace("{userId}", userId.ToString());
+            return GetAsync<List<Reward>>(endpoint);
         }
-
-        public Task<Reward?> EarnAsync(EarnRewardRequest dto) =>
-    PostAsync<Reward>(Endpoints.Reward.Earn, dto);
-
-        public Task<RedemptionResponse> RedeemAsync(RedeemRewardRequest dto) =>
-            PostAsync<RedemptionResponse>(Endpoints.Reward.Redeem, dto);
     }
 }

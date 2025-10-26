@@ -22,5 +22,11 @@ namespace TRAFFIK_APP.Services.ApiClients
 
         public Task<bool> DeleteAsync(int id) =>
             DeleteAsync(Endpoints.Notification.DeleteById.Replace("{id}", id.ToString()));
+
+        public Task<List<Notification>?> GetByUserAsync(int userId)
+        {
+            var endpoint = Endpoints.Notification.GetByUser.Replace("{userId}", userId.ToString());
+            return GetAsync<List<Notification>>(endpoint);
+        }
     }
 }

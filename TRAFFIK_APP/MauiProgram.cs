@@ -190,7 +190,19 @@ namespace TRAFFIK_APP
                 };
             })*/
             ;
-            builder.Services.AddHttpClient<SocialFeedClient>(client =>
+            builder.Services.AddHttpClient<InstagramPostsClient>(client =>
+            {
+                client.Timeout = TimeSpan.FromSeconds(30);
+            })
+            /*.ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+            })*/
+            ;
+            builder.Services.AddHttpClient<VehicleTypeClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
             })
@@ -226,18 +238,6 @@ namespace TRAFFIK_APP
                 };
             })*/
             ;
-            builder.Services.AddHttpClient<CarModelClient>(client =>
-            {
-                client.Timeout = TimeSpan.FromSeconds(30);
-            })
-            /*.ConfigurePrimaryHttpMessageHandler(() =>
-            {
-                return new HttpClientHandler
-                {
-                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                };
-            })*/
-            ;
 
             builder.Services.AddSingleton<SessionService>();
             builder.Services.AddSingleton<BookingClient>();
@@ -247,6 +247,8 @@ namespace TRAFFIK_APP
             builder.Services.AddSingleton<CarModelClient>();
             builder.Services.AddSingleton<RewardCatalogClient>();
             builder.Services.AddSingleton<ServiceCatalogClient>();
+            builder.Services.AddSingleton<VehicleTypeClient>();
+            builder.Services.AddSingleton<InstagramPostsClient>();
 
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<SignupViewModel>();

@@ -3,6 +3,7 @@ using TRAFFIK_APP.Services.ApiClients;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TRAFFIK_APP.Models.Dtos.Reward;
+using TRAFFIK_APP.Models.Entities.Reward;
 
 
 namespace TRAFFIK_APP.ViewModels
@@ -35,7 +36,6 @@ namespace TRAFFIK_APP.ViewModels
         public ICommand GoAccountCommand { get; }
         public ICommand RedeemCommand { get; }
         public ICommand RefreshCommand { get; }
-        public ICommand MarkAsUsedCommand { get; }
 
         public RewardsViewModel(SessionService session, RewardClient rewardClient, RewardCatalogClient catalogClient)
         {
@@ -49,21 +49,6 @@ namespace TRAFFIK_APP.ViewModels
             GoAccountCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
             RedeemCommand = new Command<RewardItemDto>(async (item) => await RedeemReward(item));
             RefreshCommand = new Command(async () => await LoadRewardsAsync());
-            MarkAsUsedCommand = new Command<RedeemedRewardDto>(async item =>
-            {
-                try
-                {
-                    await _catalogClient.MarkAsUsedAsync(_session.UserId.Value, item.ItemId);
-                    item.Used = true;
-                    OnPropertyChanged(nameof(RedeemedRewards));
-
-                    await Application.Current.MainPage.DisplayAlert("Marked as Used", $"'{item.Name}' has been marked as used.", "OK");
-                }
-                catch (Exception ex)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", $"Failed to mark item as used: {ex.Message}", "OK");
-                }
-            });
 
             LoadRewardsAsync();
         }
@@ -79,8 +64,8 @@ namespace TRAFFIK_APP.ViewModels
                 // Load user points
                 if (_session.UserId.HasValue)
                 {
-                    var balance = await _rewardClient.GetBalanceAsync(_session.UserId.Value);
-                    Points = balance ?? 0;
+                    var rewards = await _rewardClient.GetByUserAsync(_session.UserId.Value);
+                    Points = rewards?.Where(r => !r.IsRedeemed).Sum(r => r.Points) ?? 0;
                 }
 
                 // Load reward catalog
@@ -187,7 +172,10 @@ namespace TRAFFIK_APP.ViewModels
                         await Application.Current.MainPage.DisplayAlert("Error", 
                             "Failed to redeem item. Please try again.", "OK");
                     }
-                    Points = await _rewardClient.GetBalanceAsync(_session.UserId.Value) ?? 0;
+                    
+                    // Refresh points balance
+                    var updatedRewards = await _rewardClient.GetByUserAsync(_session.UserId.Value);
+                    Points = updatedRewards?.Where(r => !r.IsRedeemed).Sum(r => r.Points) ?? 0;
                 }
             }
             catch (Exception ex)

@@ -104,7 +104,7 @@ namespace TRAFFIK_APP.ViewModels
                 if (types != null && types.Any())
                 {
                     foreach (var type in types)
-                        VehicleTypes.Add(new VehicleTypeDto { Name = type });
+                        VehicleTypes.Add(new VehicleTypeDto { Name = type.Type });
                 }
                 else
                 {

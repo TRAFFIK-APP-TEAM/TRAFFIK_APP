@@ -19,7 +19,10 @@ namespace TRAFFIK_APP.Services.ApiClients
         public Task<bool> UpdateAsync(int id, Payment payment) =>
             PutAsync(Endpoints.Payment.UpdateById.Replace("{id}", id.ToString()), payment);
 
-        public Task<bool> DeleteAsync(int id) =>
-            DeleteAsync(Endpoints.Payment.DeleteById.Replace("{id}", id.ToString()));
+        public Task<List<Payment>?> GetByBookingAsync(int bookingId)
+        {
+            var endpoint = Endpoints.Payment.GetByBooking.Replace("{bookingId}", bookingId.ToString());
+            return GetAsync<List<Payment>>(endpoint);
+        }
     }
 }
