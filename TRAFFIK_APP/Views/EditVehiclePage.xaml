@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TRAFFIK_APP.Views.EditVehiclePage"
+             Title="Edit Vehicle"
+             BackgroundColor="Black">
+
+    <Grid RowDefinitions="Auto,*">
+        
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="20" BackgroundColor="#1E1E1E">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0"
+                    Text="←"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="20"
+                    Command="{Binding GoBackCommand}" />
+            
+            <Label Grid.Column="1"
+                   Text="Edit Vehicle"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+            
+            <Button Grid.Column="2"
+                    Text="Save"
+                    BackgroundColor="#007AFF"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Padding="15,8"
+                    Command="{Binding SaveCommand}" />
+        </Grid>
+
+        <!-- Main Content -->
+        <ScrollView Grid.Row="1" Padding="20">
+            <VerticalStackLayout Spacing="20">
+
+                <!-- Vehicle Image -->
+                <Border BackgroundColor="#1E1E1E" 
+                        StrokeShape="RoundRectangle 16"
+                        Padding="20"
+                        HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="10">
+                        <Image x:Name="VehicleImage"
+                               Aspect="AspectFill"
+                               HeightRequest="200"
+                               WidthRequest="300"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                        <Button Text="Change Image"
+                                BackgroundColor="#2E2E2E"
+                                TextColor="White"
+                                CornerRadius="8"
+                                Command="{Binding ChangeImageCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Vehicle Information Form -->
+                <Border BackgroundColor="#1E1E1E" 
+                        StrokeShape="RoundRectangle 16"
+                        Padding="20">
+                    <VerticalStackLayout Spacing="15">
+                        
+                        <Label Text="Vehicle Information"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+
+                        <Entry Placeholder="License Plate"
+                               Text="{Binding LicensePlate}"
+                               BackgroundColor="#2E2E2E"
+                               TextColor="White"
+                               PlaceholderColor="#C8C8C8"
+                               IsEnabled="False" />
+
+                        <Entry Placeholder="Make"
+                               Text="{Binding Make}"
+                               BackgroundColor="#2E2E2E"
+                               TextColor="White"
+                               PlaceholderColor="#C8C8C8" />
+
+                        <Entry Placeholder="Model"
+                               Text="{Binding Model}"
+                               BackgroundColor="#2E2E2E"
+                               TextColor="White"
+                               PlaceholderColor="#C8C8C8" />
+
+                        <Picker x:Name="VehicleTypePicker"
+                                Title="Vehicle Type"
+                                BackgroundColor="#2E2E2E"
+                                TextColor="White"
+                                ItemsSource="{Binding VehicleTypes}"
+                                SelectedItem="{Binding SelectedVehicleType}" />
+
+                        <Entry Placeholder="Color"
+                               Text="{Binding Color}"
+                               BackgroundColor="#2E2E2E"
+                               TextColor="White"
+                               PlaceholderColor="#C8C8C8" />
+
+                        <Entry Placeholder="Year"
+                               Text="{Binding Year}"
+                               BackgroundColor="#2E2E2E"
+                               TextColor="White"
+                               PlaceholderColor="#C8C8C8"
+                               Keyboard="Numeric" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Action Buttons -->
+                <VerticalStackLayout Spacing="10">
+                    <Button Text="Update Vehicle"
+                            BackgroundColor="#007AFF"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Command="{Binding SaveCommand}" />
+                    
+                    <Button Text="Delete Vehicle"
+                            BackgroundColor="#FF3B30"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Command="{Binding DeleteCommand}" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

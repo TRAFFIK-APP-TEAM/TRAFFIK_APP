@@ -25,9 +25,9 @@ namespace TRAFFIK_APP.Services.ApiClients
             }
         }
 
-        public async Task<VehicleDto?> GetByIdAsync(int id)
+        public async Task<VehicleDto?> GetByLicensePlateAsync(string licensePlate)
         {
-            var endpoint = Endpoints.Vehicle.GetById.Replace("{id}", id.ToString());
+            var endpoint = Endpoints.Vehicle.GetById.Replace("{id}", licensePlate);
             return await GetAsync<VehicleDto>(endpoint);
         }
 
@@ -37,15 +37,15 @@ namespace TRAFFIK_APP.Services.ApiClients
             return await PostAsync<VehicleDto>(endpoint, dto);
         }
 
-        public async Task<bool> UpdateAsync(int id, VehicleDto dto)
+        public async Task<bool> UpdateAsync(string licensePlate, VehicleDto dto)
         {
-            var endpoint = Endpoints.Vehicle.UpdateById.Replace("{id}", id.ToString());
+            var endpoint = Endpoints.Vehicle.UpdateById.Replace("{id}", licensePlate);
             return await PutAsync(endpoint, dto);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(string licensePlate)
         {
-            var endpoint = Endpoints.Vehicle.DeleteById.Replace("{id}", id.ToString());
+            var endpoint = Endpoints.Vehicle.DeleteById.Replace("{id}", licensePlate);
             return await DeleteAsync(endpoint);
         }
 

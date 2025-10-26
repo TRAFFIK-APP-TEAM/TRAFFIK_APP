@@ -83,6 +83,20 @@
                             HeightRequest="50"
                             Clicked="OnBookServiceClicked" />
                     
+                    <Button Text="Edit Vehicle"
+                            BackgroundColor="#34C759"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Clicked="OnEditVehicleClicked" />
+                    
+                    <Button Text="Delete Vehicle"
+                            BackgroundColor="#FF3B30"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Clicked="OnDeleteVehicleClicked" />
+                    
                     <Button Text="View Service History"
                             BackgroundColor="#1E1E1E"
                             TextColor="White"

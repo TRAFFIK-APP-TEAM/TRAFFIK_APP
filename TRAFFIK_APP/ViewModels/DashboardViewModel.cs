@@ -73,10 +73,29 @@ namespace TRAFFIK_APP.ViewModels
             AvailableRewards.Clear();
             LockedRewards.Clear();
 
+            System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Starting to load dashboard data for user {userId}");
+            
             var bookings = await _bookingClient.GetByUserAsync(userId);
             var notifications = await _notificationClient.GetAllAsync();
             var balance = await _rewardClient.GetBalanceAsync(userId);
+            
+            System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Calling VehicleClient.GetByUserAsync for user {userId}");
             var vehicleDtos = await _vehicleClient.GetByUserAsync(userId);
+            System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] VehicleClient returned: {vehicleDtos?.Count ?? 0} vehicles");
+            
+            // Log the actual vehicle data
+            if (vehicleDtos != null && vehicleDtos.Any())
+            {
+                foreach (var dto in vehicleDtos)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Vehicle DTO: {dto.Make} {dto.Model} ({dto.LicensePlate})");
+                }
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("[DashboardViewModel] No vehicle DTOs returned from API");
+            }
+            
             var catalog = await _catalogClient.GetAllAsync();
 
             RewardBalance = balance ?? 0;
@@ -87,8 +106,38 @@ namespace TRAFFIK_APP.ViewModels
             if (notifications is not null)
                 foreach (var n in notifications) Notifications.Add(n);
 
+            // Add test vehicle for debugging
+            var testVehicle = new Vehicle
+            {
+                VehicleType = "Car",
+                Make = "Test",
+                Model = "Vehicle",
+                LicensePlate = "TEST123",
+                ImageUrl = "dotnet_bot.png",
+                UserId = userId
+            };
+            Vehicles.Add(testVehicle);
+            System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Added test vehicle: {testVehicle.Make} {testVehicle.Model} ({testVehicle.LicensePlate})");
+            
+            // Add another test vehicle to make it more obvious
+            var testVehicle2 = new Vehicle
+            {
+                VehicleType = "Truck",
+                Make = "Debug",
+                Model = "Truck",
+                LicensePlate = "DEBUG456",
+                ImageUrl = "dotnet_bot.png",
+                UserId = userId
+            };
+            Vehicles.Add(testVehicle2);
+            System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Added second test vehicle: {testVehicle2.Make} {testVehicle2.Model} ({testVehicle2.LicensePlate})");
+            
+            // Notify UI that the Vehicles collection has changed
+            OnPropertyChanged(nameof(Vehicles));
+
             if (vehicleDtos is not null)
             {
+                System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Found {vehicleDtos.Count()} vehicles from API");
                 var vehicles = vehicleDtos.Select(dto => new Vehicle
                 {
                     VehicleType = dto.VehicleType,
@@ -97,11 +146,40 @@ namespace TRAFFIK_APP.ViewModels
                     LicensePlate = dto.LicensePlate,
                     ImageUrl = !string.IsNullOrEmpty(dto.ImageUrl) && !dto.ImageUrl.StartsWith("data:") 
                         ? $"data:image/jpeg;base64,{dto.ImageUrl}" 
-                        : "car_placeholder.png",
+                        : "dotnet_bot.png",
                     UserId = userId
                 });
 
-                foreach (var v in vehicles) Vehicles.Add(v);
+                foreach (var v in vehicles) 
+                {
+                    System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Adding vehicle: {v.Make} {v.Model} ({v.LicensePlate})");
+                    Vehicles.Add(v);
+                }
+                System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Total vehicles in collection: {Vehicles.Count}");
+                
+                // Notify UI that the Vehicles collection has changed
+                OnPropertyChanged(nameof(Vehicles));
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("[DashboardViewModel] No vehicles returned from API");
+            }
+
+            // Ensure we always have at least the test vehicle visible
+            if (Vehicles.Count == 0)
+            {
+                System.Diagnostics.Debug.WriteLine("[DashboardViewModel] No vehicles found, adding fallback test vehicle");
+                var fallbackVehicle = new Vehicle
+                {
+                    VehicleType = "Car",
+                    Make = "Fallback",
+                    Model = "Vehicle",
+                    LicensePlate = "FALLBACK123",
+                    ImageUrl = "dotnet_bot.png",
+                    UserId = userId
+                };
+                Vehicles.Add(fallbackVehicle);
+                OnPropertyChanged(nameof(Vehicles));
             }
 
             if (catalog is not null)

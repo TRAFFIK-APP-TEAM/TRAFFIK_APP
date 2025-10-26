@@ -19,7 +19,7 @@ namespace TRAFFIK_APP.ViewModels
         private VehicleTypeDto _selectedVehicleType;
         private string _vehicleColor = string.Empty;
         private int _vehicleYear = DateTime.Now.Year;
-        private ImageSource _vehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
+        private ImageSource _vehicleImage = ImageSource.FromFile("dotnet_bot.png");
         public ObservableCollection<VehicleTypeDto> VehicleTypes { get; } = new();
         public VehicleTypeDto SelectedVehicleType { get; set; }
 
@@ -179,7 +179,7 @@ namespace TRAFFIK_APP.ViewModels
                     SelectedVehicleType = null;
                     VehicleColor = string.Empty;
                     VehicleYear = DateTime.Now.Year;
-                    VehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
+                    VehicleImage = ImageSource.FromFile("dotnet_bot.png");
                     VehicleImageBytes = null;
 
                     await Shell.Current.GoToAsync("//AccountPage");

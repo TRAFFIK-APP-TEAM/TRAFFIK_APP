@@ -85,7 +85,7 @@
                                     <VerticalStackLayout>
                                         <Label Text="{Binding Name, FallbackValue='Locked Reward'}" TextColor="#888" FontSize="16" FontAttributes="Bold"/>
                                         <Label Text="{Binding Description, FallbackValue='Locked Reward Description'}" TextColor="#666" FontSize="14"/>
-                                        <Label Text="{Binding Cost, StringFormat='Requires {0} pts', FallbackValue='Requires 0 pts'}" TextColor="#FFD700" FontSize="14"/>
+                                        <Label Text="{Binding Cost, StringFormat='Requires {0} pts', FallbackValue='Requires 0 pts'}" TextColor="#FF0000" FontSize="14"/>
                                         <Button Text="Locked"
                                                 IsEnabled="False"
                                                 BackgroundColor="#444"

@@ -18,13 +18,24 @@ namespace TRAFFIK_APP.Views
 
         private async void OnPageLoaded(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("[DashboardPage] Page loaded, executing LoadDashboardCommand");
             if (ViewModel?.LoadDashboardCommand?.CanExecute(null) == true)
                 ViewModel.LoadDashboardCommand.Execute(null);
+            
+            // Check vehicles count after loading
+            System.Diagnostics.Debug.WriteLine($"[DashboardPage] Vehicles count after loading: {ViewModel?.Vehicles?.Count ?? 0}");
+            
+            // Wait a moment for the UI to update, then check again
+            await Task.Delay(100);
+            System.Diagnostics.Debug.WriteLine($"[DashboardPage] Vehicles count after delay: {ViewModel?.Vehicles?.Count ?? 0}");
         }
 
         private async void OnAddVehicleTapped(object sender, EventArgs e)
         {
-            AddCardBorder.Stroke = Colors.Blue;
+            if (sender is Border border)
+            {
+                border.Stroke = Colors.Blue;
+            }
             await Shell.Current.GoToAsync(nameof(AddVehiclePage));
         }
 
