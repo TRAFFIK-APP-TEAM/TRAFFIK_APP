@@ -4,16 +4,17 @@ namespace TRAFFIK_APP.Configuration
 {
     public static class Endpoints
     {
-        // Toggle between local and Azure API
-/*#if ANDROID
-                public const string BaseUrl = "http://10.0.2.2:5027"; // Android emulator localhost
+        /*#if ANDROID
+                public const string BaseUrl = "http://10.0.2.2:5027";
         #elif IOS
-                public const string BaseUrl = "http://localhost:5027"; // iOS simulator localhost
+                public const string BaseUrl = "http://localhost:5027";
         #else
-                public const string BaseUrl = "http://localhost:5027"; // Windows/other platforms
+                public const string BaseUrl = "http://localhost:5027";
         #endif*/
-        public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net"; // Azure API endpoint
+        public const string BaseUrl = "http://localhost:5027";
 
+        /// public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net";
+      
         public static class Auth
         {
             public const string Login = "/api/Auth/Login"; // Authenticate user and return profile info
