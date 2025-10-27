@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
+using System.Text.Json.Serialization;
 using TRAFFIK_APP.Configuration;
 
 namespace TRAFFIK_APP.Services.ApiClients
@@ -27,7 +28,10 @@ namespace TRAFFIK_APP.Services.ApiClients
     // DTO for VehicleType
     public class VehicleTypeDto
     {
+        [JsonPropertyName("id")]
         public int Id { get; set; }
+        
+        [JsonPropertyName("type")]
         public string Type { get; set; } = string.Empty;
     }
 }

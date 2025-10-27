@@ -1,4 +1,6 @@
-﻿namespace TRAFFIK_APP.Models.Dtos.Vehicle
+﻿using System.Text.Json.Serialization;
+
+namespace TRAFFIK_APP.Models.Dtos.Vehicle
 {
     public class VehicleDto
     {
@@ -13,6 +15,7 @@
 
         public string ImageUrl { get; set; } = string.Empty; // Base64 string
 
+        [JsonPropertyName("vehicleType")]
         public string VehicleType { get; set; } = string.Empty;
 
         public string Color { get; set; } = string.Empty;

@@ -244,7 +244,6 @@ namespace TRAFFIK_APP
             builder.Services.AddSingleton<RewardClient>();
             builder.Services.AddSingleton<NotificationClient>();
             builder.Services.AddSingleton<VehicleClient>();
-            builder.Services.AddSingleton<CarModelClient>();
             builder.Services.AddSingleton<RewardCatalogClient>();
             builder.Services.AddSingleton<ServiceCatalogClient>();
             builder.Services.AddSingleton<VehicleTypeClient>();

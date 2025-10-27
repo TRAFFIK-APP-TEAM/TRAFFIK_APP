@@ -65,7 +65,7 @@
                                    TextColor="White" FontSize="16" Margin="0,0,0,5"/>
                             <Picker Title="Select Vehicle Type"
                                     ItemsSource="{Binding VehicleTypes}"
-                                    ItemDisplayBinding="{Binding Name}"
+                                    ItemDisplayBinding="{Binding Type}"
                                     SelectedItem="{Binding SelectedVehicleType}"
                                     TitleColor="Gray" TextColor="White"
                                     BackgroundColor="#333333"
