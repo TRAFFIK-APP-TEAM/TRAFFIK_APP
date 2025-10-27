@@ -1,4 +1,6 @@
-﻿public class InstagramPost
+﻿namespace TRAFFIK_APP.Models.Entities.Social;
+
+public class InstagramPost
 {
     public int Id { get; set; }
     public string ImageUrl { get; set; } = string.Empty;

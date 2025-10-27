@@ -76,14 +76,22 @@ namespace TRAFFIK_APP.Services.ApiClients
                 
                 _logger.LogInformation("[API] Attempting to deserialize to {TypeName}", typeof(T).Name);
                 
-                var result = System.Text.Json.JsonSerializer.Deserialize<T>(responseContent, new System.Text.Json.JsonSerializerOptions
+                try
                 {
-                    PropertyNameCaseInsensitive = true
-                });
-                
-                _logger.LogInformation("[API] Deserialization result: {Result}", result != null ? "SUCCESS" : "NULL");
-                
-                return result;
+                    var result = System.Text.Json.JsonSerializer.Deserialize<T>(responseContent, new System.Text.Json.JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                    
+                    _logger.LogInformation("[API] Deserialization result: {Result}", result != null ? "SUCCESS" : "NULL");
+                    
+                    return result;
+                }
+                catch (System.Text.Json.JsonException jsonEx)
+                {
+                    _logger.LogWarning("[API] Deserialization failed (vehicle was likely created): {Message}", jsonEx.Message);
+                    return default; // Return null on deserialization error
+                }
             }
             catch (HttpRequestException ex)
             {

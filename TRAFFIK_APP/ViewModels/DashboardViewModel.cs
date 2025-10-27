@@ -75,11 +75,12 @@ namespace TRAFFIK_APP.ViewModels
 
             var bookings = await _bookingClient.GetByUserAsync(userId);
             var notifications = await _notificationClient.GetAllAsync();
-            var balance = await _rewardClient.GetBalanceAsync(userId);
+            var rewards = await _rewardClient.GetByUserAsync(userId);
             var vehicleDtos = await _vehicleClient.GetByUserAsync(userId);
             var catalog = await _catalogClient.GetAllAsync();
 
-            RewardBalance = balance ?? 0;
+            // Calculate balance from user's rewards
+            RewardBalance = rewards?.Where(r => !r.IsRedeemed).Sum(r => r.Points) ?? 0;
 
             if (bookings is not null)
                 foreach (var b in bookings) Bookings.Add(b);
