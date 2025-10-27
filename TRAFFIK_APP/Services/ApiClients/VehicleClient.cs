@@ -57,46 +57,7 @@ namespace TRAFFIK_APP.Services.ApiClients
         public async Task<VehicleDto?> CreateAsync(VehicleDto dto)
         {
             var endpoint = Endpoints.Vehicle.Create;
-            try
-            {
-                var response = await _httpClient.PostAsJsonAsync(endpoint, dto);
-                
-                System.Diagnostics.Debug.WriteLine($"[VehicleClient] CreateAsync response status: {response.StatusCode}");
-                
-                if (response.IsSuccessStatusCode)
-                {
-                    // Try to deserialize, but if it fails, the vehicle was still created
-                    var content = await response.Content.ReadAsStringAsync();
-                    System.Diagnostics.Debug.WriteLine($"[VehicleClient] Response content: {content}");
-                    
-                    try
-                    {
-                        var result = System.Text.Json.JsonSerializer.Deserialize<VehicleDto>(content, new System.Text.Json.JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
-                        System.Diagnostics.Debug.WriteLine("[VehicleClient] Deserialization successful");
-                        return result;
-                    }
-                    catch (Exception deserializeEx)
-                    {
-                        // Deserialization failed but request succeeded - return a minimal DTO
-                        System.Diagnostics.Debug.WriteLine($"[VehicleClient] Vehicle created but response deserialization failed: {deserializeEx.Message}");
-                        System.Diagnostics.Debug.WriteLine($"[VehicleClient] Returned original dto");
-                        return dto; // Return the input DTO as a successful result
-                    }
-                }
-                
-                var errorContent = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine($"[VehicleClient] Request failed with status {response.StatusCode}: {errorContent}");
-                return null;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"[VehicleClient] Error creating vehicle: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"[VehicleClient] Stack trace: {ex.StackTrace}");
-                return null;
-            }
+            return await PostAsync<VehicleDto>(endpoint, dto);
         }
 
         public async Task<bool> UpdateAsync(string licensePlate, VehicleDto dto)

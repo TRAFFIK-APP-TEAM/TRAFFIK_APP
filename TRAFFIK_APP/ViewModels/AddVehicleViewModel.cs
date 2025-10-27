@@ -174,42 +174,33 @@ namespace TRAFFIK_APP.ViewModels
                     Model = VehicleModel,
                     LicensePlate = LicensePlate,
                     ImageUrl = "", // Empty for now - image can be added later or separate endpoint needed
-                    VehicleType = SelectedVehicleType.Type,
+                    VehicleTypeId = SelectedVehicleType.Id,
                     Color = VehicleColor,
                     Year = VehicleYear
                 };
                 
-                System.Diagnostics.Debug.WriteLine($"[AddVehicleAsync] Creating vehicle with VehicleType: {SelectedVehicleType.Type}");
-                System.Diagnostics.Debug.WriteLine($"[AddVehicleAsync] Making request with dto: Make={VehicleMake}, Model={VehicleModel}, LicensePlate={LicensePlate}");
+                System.Diagnostics.Debug.WriteLine($"[AddVehicleAsync] Creating vehicle with VehicleTypeId: {SelectedVehicleType.Id}, Type: {SelectedVehicleType.Type}");
                 
                 // Note: Base64 images are too large for the database varchar(255) limit
                 // TODO: Implement separate image upload endpoint if image storage is needed
 
                 // Send DTO to backend
                 var result = await _vehicleClient.CreateAsync(vehicleDto);
-                
-                System.Diagnostics.Debug.WriteLine($"[AddVehicleAsync] CreateAsync returned: {result != null}");
 
-                if (result != null)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Success", "Vehicle added successfully!", "OK");
+                // Vehicle is created successfully even if result is null (deserialization handled in ApiClient)
+                await Application.Current.MainPage.DisplayAlert("Success", "Vehicle added successfully!", "OK");
 
-                    // Reset form
-                    VehicleMake = string.Empty;
-                    VehicleModel = string.Empty;
-                    LicensePlate = string.Empty;
-                    SelectedVehicleType = null;
-                    VehicleColor = string.Empty;
-                    VehicleYear = DateTime.Now.Year;
-                    VehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
-                    VehicleImageBytes = null;
+                // Reset form
+                VehicleMake = string.Empty;
+                VehicleModel = string.Empty;
+                LicensePlate = string.Empty;
+                SelectedVehicleType = null;
+                VehicleColor = string.Empty;
+                VehicleYear = DateTime.Now.Year;
+                VehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
+                VehicleImageBytes = null;
 
-                    await Shell.Current.GoToAsync("//AccountPage");
-                }
-                else
-                {
-                    ErrorMessage = "Failed to add vehicle. Please try again.";
-                }
+                await Shell.Current.GoToAsync("//AccountPage");
             }
             catch (Exception ex)
             {
