@@ -187,7 +187,7 @@ namespace TRAFFIK_APP.ViewModels
                 // Send DTO to backend
                 var result = await _vehicleClient.CreateAsync(vehicleDto);
 
-                // Vehicle is created successfully even if result is null (deserialization handled in ApiClient)
+                // Vehicle is created successfully even if result is null
                 await Application.Current.MainPage.DisplayAlert("Success", "Vehicle added successfully!", "OK");
 
                 // Reset form
