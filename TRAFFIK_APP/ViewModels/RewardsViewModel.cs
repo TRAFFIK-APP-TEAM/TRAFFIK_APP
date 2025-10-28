@@ -64,8 +64,8 @@ namespace TRAFFIK_APP.ViewModels
                 // Load user points
                 if (_session.UserId.HasValue)
                 {
-                    var rewards = await _rewardClient.GetByUserAsync(_session.UserId.Value);
-                    Points = rewards?.Where(r => !r.IsRedeemed).Sum(r => r.Points) ?? 0;
+                    var balance = await _rewardClient.GetBalanceAsync(_session.UserId.Value);
+                    Points = balance ?? 0;
                 }
 
                 // Load reward catalog
@@ -76,11 +76,19 @@ namespace TRAFFIK_APP.ViewModels
                 System.Diagnostics.Debug.WriteLine($"Loaded {catalog.Count} catalog items, User has {Points} points");
 
                 RedeemedRewards.Clear();
-                var redeemed = await _catalogClient.GetRedeemedAsync(_session.UserId.Value) ?? new List<RedeemedRewardDto>();
-
-                foreach (var item in redeemed)
+                if (_session.UserId.HasValue)
                 {
-                    RedeemedRewards.Add(item);
+                    var redeemed = await _catalogClient.GetRedeemedAsync(_session.UserId.Value) ?? new List<RedeemedRewardDto>();
+
+                    System.Diagnostics.Debug.WriteLine($"Loaded {redeemed.Count} redeemed rewards for user {_session.UserId.Value}");
+
+                    foreach (var item in redeemed)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Redeemed item: Name='{item.Name}', Code='{item.Code}', RedeemedAt={item.RedeemedAt}");
+                        RedeemedRewards.Add(item);
+                    }
+                    
+                    System.Diagnostics.Debug.WriteLine($"RedeemedRewards collection now has {RedeemedRewards.Count} items");
                 }
                 OnPropertyChanged(nameof(RedeemedRewards));
 
@@ -158,8 +166,6 @@ namespace TRAFFIK_APP.ViewModels
 
                     if (response?.Redeemed > 0)
                     {
-                        Points -= item.Cost;
-
                         // Display success message with the redemption code
                         var message = $"Successfully redeemed '{item.Name}'!\n\nYour redemption code: {response.Code}";
                         if (!string.IsNullOrEmpty(response.Code))
@@ -169,7 +175,7 @@ namespace TRAFFIK_APP.ViewModels
                         
                         await Application.Current.MainPage.DisplayAlert("Success", message, "OK");
                         
-                        // Refresh the rewards list
+                        // Refresh the rewards list and balance
                         await LoadRewardsAsync();
                     }
                     else
@@ -177,10 +183,6 @@ namespace TRAFFIK_APP.ViewModels
                         await Application.Current.MainPage.DisplayAlert("Error", 
                             "Failed to redeem item. Please try again.", "OK");
                     }
-                    
-                    // Refresh points balance
-                    var updatedRewards = await _rewardClient.GetByUserAsync(_session.UserId.Value);
-                    Points = updatedRewards?.Where(r => !r.IsRedeemed).Sum(r => r.Points) ?? 0;
                 }
             }
             catch (Exception ex)

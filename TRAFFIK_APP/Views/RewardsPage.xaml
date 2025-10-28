@@ -108,7 +108,7 @@
                             </VerticalStackLayout>
                         </CollectionView.EmptyView>
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:RedeemedRewardDto">
                                 <Border BackgroundColor="#1E1E1E"
                                         Stroke="#1E1E1E"
                                         StrokeThickness="0"
