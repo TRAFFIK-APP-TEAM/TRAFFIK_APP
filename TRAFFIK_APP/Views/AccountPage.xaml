@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:TRAFFIK_APP.Views"
+             xmlns:components="clr-namespace:TRAFFIK_APP.Views.Components"
              x:Class="TRAFFIK_APP.Views.AccountPage"
              BackgroundColor="Black"
              Shell.TabBarIsVisible="False"
@@ -99,11 +100,11 @@
                             <CollectionView ItemsSource="{Binding Vehicles}" ItemsLayout="HorizontalList" HeightRequest="180" VerticalOptions="Center">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <views:VehicleCard>
-                                            <views:VehicleCard.GestureRecognizers>
+                                        <components:VehicleCard>
+                                            <components:VehicleCard.GestureRecognizers>
                                                 <TapGestureRecognizer Tapped="OnVehicleTapped" />
-                                            </views:VehicleCard.GestureRecognizers>
-                                        </views:VehicleCard>
+                                            </components:VehicleCard.GestureRecognizers>
+                                        </components:VehicleCard>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>

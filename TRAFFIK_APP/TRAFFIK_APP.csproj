@@ -61,6 +61,14 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Remove="Views\Components\VehicleCard.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Views\Components\VehicleCard.xaml.cs" />
+	</ItemGroup>
+
 	<!-- Removed old Remove rules for Helpers/Navigation folders to include source files -->
 
 	<ItemGroup>

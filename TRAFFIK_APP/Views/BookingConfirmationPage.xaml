@@ -28,7 +28,7 @@
                     <Label Text="{Binding SelectedServiceName}" TextColor="White" FontSize="18"/>
                     <Label Text="{Binding SelectedServiceDescription}" TextColor="#CCCCCC" FontSize="13"/>
                     <Label Text="{Binding SelectedServicePrice, StringFormat='Price: {0}'}" 
-                           TextColor="#FFD700" FontSize="14" FontAttributes="Bold"/>
+                           TextColor="#FF0000" FontSize="14" FontAttributes="Bold"/>
                 </VerticalStackLayout>
             </Border>
 
@@ -68,7 +68,7 @@
                 <Grid ColumnDefinitions="*, Auto">
                     <Label Text="Total:" TextColor="#A0A0A0" FontSize="18" Grid.Column="0"/>
                     <Label Text="{Binding SelectedServicePrice}"
-                           TextColor="#FFD700" FontSize="18" FontAttributes="Bold" Grid.Column="1"/>
+                           TextColor="#FF0000" FontSize="18" FontAttributes="Bold" Grid.Column="1"/>
                 </Grid>
             </Border>
 

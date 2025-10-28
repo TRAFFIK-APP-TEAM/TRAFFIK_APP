@@ -32,10 +32,10 @@
             
             <!-- Debug info -->
             <Label Text="{Binding AdminUsers.Count, StringFormat='Admin Users: {0}'}"
-                   TextColor="Yellow"
+                   TextColor="red"
                    FontSize="12"/>
             <Label Text="{Binding CustomerUsers.Count, StringFormat='Customer Users: {0}'}"
-                   TextColor="Yellow"
+                   TextColor="red"
                    FontSize="12"/>
 
             <!-- Search/filter -->
