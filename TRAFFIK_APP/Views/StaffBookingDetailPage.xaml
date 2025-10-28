@@ -15,9 +15,15 @@
             <Button Grid.Column="0"
                     Text="← Back"
                     Command="{Binding GoBackCommand}"
-                    BackgroundColor="Transparent"
-                    TextColor="#9CA3AF"
-                    FontSize="16" />
+                    BackgroundColor="#1E1E1E"
+                    TextColor="#FFFFFF"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    BorderColor="#9CA3AF"
+                    BorderWidth="1"
+                    CornerRadius="8"
+                    Padding="16,8"
+                    HorizontalOptions="Start" />
             <Label Grid.Column="1"
                    Text="Booking Details"
                    FontSize="20"
@@ -140,12 +146,12 @@
                                             StrokeShape="RoundRectangle 12"
                                             Margin="0,0,10,0"/>
                                     <Label Grid.Row="0" Grid.Column="1"
-                                           Text="Booking Confirmed"
+                                           Text="Pending"
                                            FontSize="13"
                                            TextColor="White"
                                            VerticalOptions="Center"/>
 
-                                    <!-- Stage 2: Service Started -->
+                                    <!-- Stage 2: Started -->
                                     <Border Grid.Row="1" Grid.Column="0"
                                             WidthRequest="24"
                                             HeightRequest="24"
@@ -153,12 +159,12 @@
                                             StrokeShape="RoundRectangle 12"
                                             Margin="0,0,10,0"/>
                                     <Label Grid.Row="1" Grid.Column="1"
-                                           Text="Service Started"
+                                           Text="Started"
                                            FontSize="13"
                                            TextColor="White"
                                            VerticalOptions="Center"/>
 
-                                    <!-- Stage 3: Wash -->
+                                    <!-- Stage 3: Inspection -->
                                     <Border Grid.Row="2" Grid.Column="0"
                                             WidthRequest="24"
                                             HeightRequest="24"
@@ -166,12 +172,12 @@
                                             StrokeShape="RoundRectangle 12"
                                             Margin="0,0,10,0"/>
                                     <Label Grid.Row="2" Grid.Column="1"
-                                           Text="Wash Completed"
+                                           Text="Inspection"
                                            FontSize="13"
                                            TextColor="White"
                                            VerticalOptions="Center"/>
 
-                                    <!-- Stage 4: Dry -->
+                                    <!-- Stage 4: Completed -->
                                     <Border Grid.Row="3" Grid.Column="0"
                                             WidthRequest="24"
                                             HeightRequest="24"
@@ -179,12 +185,12 @@
                                             StrokeShape="RoundRectangle 12"
                                             Margin="0,0,10,0"/>
                                     <Label Grid.Row="3" Grid.Column="1"
-                                           Text="Dry Completed"
+                                           Text="Completed"
                                            FontSize="13"
                                            TextColor="White"
                                            VerticalOptions="Center"/>
 
-                                    <!-- Stage 5: Completed -->
+                                    <!-- Stage 5: Paid -->
                                     <Border Grid.Row="4" Grid.Column="0"
                                             WidthRequest="24"
                                             HeightRequest="24"
@@ -192,7 +198,7 @@
                                             StrokeShape="RoundRectangle 12"
                                             Margin="0,0,10,0"/>
                                     <Label Grid.Row="4" Grid.Column="1"
-                                           Text="Service Completed"
+                                           Text="Paid"
                                            FontSize="13"
                                            TextColor="White"
                                            VerticalOptions="Center"/>

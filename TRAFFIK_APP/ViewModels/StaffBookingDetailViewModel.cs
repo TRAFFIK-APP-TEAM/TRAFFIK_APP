@@ -21,10 +21,48 @@ namespace TRAFFIK_APP.ViewModels
         private readonly ServiceCatalogClient _serviceCatalogClient;
         private readonly UserClient _userClient;
 
-        public BookingStageUpdateDto? CurrentBooking { get; set; }
-        public BookingDto? BookingDetails { get; private set; }
-        public string UserName { get; private set; } = string.Empty;
-        public string ServiceName { get; private set; } = string.Empty;
+        private BookingStageUpdateDto? _currentBooking;
+        public BookingStageUpdateDto? CurrentBooking 
+        { 
+            get => _currentBooking;
+            set 
+            { 
+                SetProperty(ref _currentBooking, value);
+                
+                // Explicitly notify that nested properties may have changed
+                if (value != null)
+                {
+                    OnPropertyChanged(nameof(CurrentBooking));
+                }
+                
+                OnPropertyChanged(nameof(Progress));
+                OnPropertyChanged(nameof(Stage2Color));
+                OnPropertyChanged(nameof(Stage3Color));
+                OnPropertyChanged(nameof(Stage4Color));
+                OnPropertyChanged(nameof(Stage5Color));
+            }
+        }
+        
+        private BookingDto? _bookingDetails;
+        public BookingDto? BookingDetails 
+        { 
+            get => _bookingDetails;
+            private set => SetProperty(ref _bookingDetails, value);
+        }
+        
+        private string _userName = string.Empty;
+        public string UserName 
+        { 
+            get => _userName;
+            private set => SetProperty(ref _userName, value);
+        }
+        
+        private string _serviceName = string.Empty;
+        public string ServiceName 
+        { 
+            get => _serviceName;
+            private set => SetProperty(ref _serviceName, value);
+        }
 
         // Tracking properties
         public double Progress => CalculateProgress();
@@ -55,7 +93,28 @@ namespace TRAFFIK_APP.ViewModels
             _userClient = userClient;
 
             UpdateStageCommand = new Command(() => ExecuteSafeAsync(UpdateStageAsync, "Updating status..."));
-            GoBackCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
+            GoBackCommand = new Command(async () => 
+            {
+                try
+                {
+                    // Try to pop the current page
+                    if (Shell.Current.Navigation.NavigationStack.Count > 1)
+                    {
+                        await Shell.Current.Navigation.PopAsync();
+                    }
+                    else
+                    {
+                        // If we can't pop, go to the booking list page
+                        await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[GoBackCommand] Error: {ex.Message}");
+                    // Fallback: navigate to booking list
+                    await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+                }
+            });
         }
 
         public async Task LoadBookingDetailsAsync(int bookingId)
@@ -102,6 +161,24 @@ namespace TRAFFIK_APP.ViewModels
                 {
                     CurrentBooking = stage[0];
                 }
+                else
+                {
+                    // No stages exist yet, initialize with Pending
+                    CurrentBooking = new BookingStageUpdateDto
+                    {
+                        BookingId = bookingId,
+                        CurrentStage = "Pending",
+                        AvailableStages = new List<string> { "Started", "Inspection", "Completed", "Paid" },
+                        SelectedStage = string.Empty,
+                        UpdatedAt = DateTime.UtcNow
+                    };
+                }
+                
+                // Make sure AvailableStages is populated (fallback)
+                if (CurrentBooking?.AvailableStages == null || CurrentBooking.AvailableStages.Count == 0)
+                {
+                    CurrentBooking!.AvailableStages = new List<string> { "Started", "Inspection", "Completed", "Paid" };
+                }
             }
             finally
             {
@@ -111,7 +188,17 @@ namespace TRAFFIK_APP.ViewModels
 
         private async Task UpdateStageAsync()
         {
-            if (CurrentBooking is null || string.IsNullOrEmpty(CurrentBooking.SelectedStage)) return;
+            if (CurrentBooking is null)
+            {
+                ErrorMessage = "No booking selected.";
+                return;
+            }
+            
+            if (string.IsNullOrEmpty(CurrentBooking.SelectedStage))
+            {
+                ErrorMessage = "Please select a stage from the dropdown.";
+                return;
+            }
 
             // Fetch booking details to get UserId
             var bookingDetails = await _bookingClient.GetByIdAsync(CurrentBooking.BookingId);
@@ -125,12 +212,16 @@ namespace TRAFFIK_APP.ViewModels
             var success = await _bookingStagesClient.UpdateStageAsync(CurrentBooking);
             if (!success)
             {
-                ErrorMessage = "Failed to update status.";
+                ErrorMessage = "Failed to update status. Please try again.";
                 return;
             }
+            
+            // Clear error on success
+            ErrorMessage = string.Empty;
+            StatusMessage = "Status updated successfully!";
 
-            // Handle Service Completed stage - send notification to user
-            if (CurrentBooking.SelectedStage == "Service Completed")
+            // Handle Completed stage - send notification to user
+            if (CurrentBooking.SelectedStage == "Completed")
             {
                 var notification = new Notification
                 {
@@ -145,8 +236,8 @@ namespace TRAFFIK_APP.ViewModels
                 await _notificationClient.CreateAsync(notification);
             }
 
-            // Handle Service Paid stage - award points to user
-            if (CurrentBooking.SelectedStage == "Service Paid")
+            // Handle Paid stage - award points to user
+            if (CurrentBooking.SelectedStage == "Paid")
             {
                 // Fetch service details to get the price
                 decimal pointsToAward = 0;
@@ -189,15 +280,43 @@ namespace TRAFFIK_APP.ViewModels
                 await _notificationClient.CreateAsync(pointsNotification);
             }
 
-            // Reload booking details
-            await LoadBookingDetailsAsync(CurrentBooking.BookingId);
+            // Update CurrentBooking with the new stage
+            if (CurrentBooking != null)
+            {
+                CurrentBooking.CurrentStage = CurrentBooking.SelectedStage;
+                CurrentBooking.UpdatedAt = DateTime.UtcNow;
+                
+                // Update UI for progress tracking
+                OnPropertyChanged(nameof(CurrentBooking));
+                OnPropertyChanged(nameof(Progress));
+                OnPropertyChanged(nameof(Stage2Color));
+                OnPropertyChanged(nameof(Stage3Color));
+                OnPropertyChanged(nameof(Stage4Color));
+                OnPropertyChanged(nameof(Stage5Color));
+            }
             
-            // Update UI for progress tracking
-            OnPropertyChanged(nameof(Progress));
-            OnPropertyChanged(nameof(Stage2Color));
-            OnPropertyChanged(nameof(Stage3Color));
-            OnPropertyChanged(nameof(Stage4Color));
-            OnPropertyChanged(nameof(Stage5Color));
+            // Navigate back to the booking list after a short delay to show success
+            await Task.Delay(1000); // Brief pause to show success message
+            
+            try
+            {
+                // Try to pop the current page
+                if (Shell.Current.Navigation.NavigationStack.Count > 1)
+                {
+                    await Shell.Current.Navigation.PopAsync();
+                }
+                else
+                {
+                    // If we can't pop, go to the booking list page
+                    await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[UpdateStage] Navigation error: {ex.Message}");
+                // Fallback: navigate to booking list
+                await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+            }
         }
 
         private double CalculateProgress()
@@ -214,7 +333,10 @@ namespace TRAFFIK_APP.ViewModels
             if (CurrentBooking == null) return "#3E3E3E";
             var currentStage = CurrentBooking.CurrentStage ?? "Pending";
             var currentIndex = StageSequence.IndexOf(currentStage);
-            if (stageIndex <= currentIndex)
+            // Convert UI stage number (2,3,4,5) to array index (1,2,3,4)
+            // because Stage 1 (Pending) is index 0 and always blue
+            var arrayIndex = stageIndex - 1;
+            if (arrayIndex <= currentIndex)
                 return "#007AFF"; // Blue for completed stages
             else
                 return "#3E3E3E"; // Gray for pending stages

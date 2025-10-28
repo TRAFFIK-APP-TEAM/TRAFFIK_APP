@@ -5,6 +5,7 @@ namespace TRAFFIK_APP.Views
     public partial class BookingDetailPage : ContentPage
     {
         public static TRAFFIK_APP.Models.Dtos.Booking.BookingDto? SelectedBooking { get; set; }
+        private BookingDetailViewModel? _viewModel;
 
         public BookingDetailPage()
         {
@@ -12,7 +13,19 @@ namespace TRAFFIK_APP.Views
             
             if (SelectedBooking != null)
             {
-                BindingContext = new BookingDetailViewModel(SelectedBooking);
+                _viewModel = new BookingDetailViewModel(SelectedBooking);
+                BindingContext = _viewModel;
+            }
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            
+            // Reload stages when the page appears to show updated progress
+            if (_viewModel != null)
+            {
+                await _viewModel.LoadStagesAsync();
             }
         }
     }

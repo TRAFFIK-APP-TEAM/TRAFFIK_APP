@@ -1,4 +1,8 @@
+using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TRAFFIK_APP.Models.Dtos.Booking;
 using TRAFFIK_APP.Services.ApiClients;
@@ -12,7 +16,21 @@ namespace TRAFFIK_APP.ViewModels
         public BookingDto Booking { get; private set; }
         public ObservableCollection<BookingStageUpdateDto> Stages { get; } = new();
         
-        public string CurrentStage { get; private set; } = "Pending";
+        private string _currentStage = "Pending";
+        public string CurrentStage 
+        { 
+            get => _currentStage;
+            private set 
+            { 
+                SetProperty(ref _currentStage, value);
+                OnPropertyChanged(nameof(Progress));
+                OnPropertyChanged(nameof(Stage2Color));
+                OnPropertyChanged(nameof(Stage3Color));
+                OnPropertyChanged(nameof(Stage4Color));
+                OnPropertyChanged(nameof(Stage5Color));
+            }
+        }
+        
         public double Progress => CalculateProgress();
 
         // Stage properties for tracking
@@ -21,20 +39,20 @@ namespace TRAFFIK_APP.ViewModels
         public string Stage4Color => GetStageColor(4);
         public string Stage5Color => GetStageColor(5);
         
-        public string Stage2Text => "Service Started";
-        public string Stage3Text => "Wash Completed";
-        public string Stage4Text => "Dry Completed";
-        public string Stage5Text => "Service Completed";
+        public string Stage2Text => "Started";
+        public string Stage3Text => "Inspection";
+        public string Stage4Text => "Completed";
+        public string Stage5Text => "Paid";
 
         public ICommand GoBackCommand { get; }
 
         private readonly List<string> StageSequence = new()
         {
             "Pending",
-            "Service Started",
-            "Wash Completed",
-            "Dry Completed",
-            "Service Completed"
+            "Started",
+            "Inspection",
+            "Completed",
+            "Paid"
         };
 
         public BookingDetailViewModel(BookingDto booking)
@@ -44,13 +62,13 @@ namespace TRAFFIK_APP.ViewModels
             // Try to get BookingStagesClient from dependency injection
             _bookingStagesClient = Helpers.ServiceHelper.GetService<BookingStagesClient>();
             
-            GoBackCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
+            GoBackCommand = new Command(async () => await Shell.Current.Navigation.PopAsync());
             
             // Load stages when view model is created
             _ = LoadStagesAsync();
         }
 
-        private async Task LoadStagesAsync()
+        public async Task LoadStagesAsync()
         {
             if (_bookingStagesClient == null) return;
             
@@ -68,19 +86,16 @@ namespace TRAFFIK_APP.ViewModels
                     // Update current stage
                     if (Stages.Count > 0)
                     {
-                    var latestStage = Stages.OrderByDescending(s => s.UpdatedAt).FirstOrDefault();
-                    if (latestStage != null)
+                        var latestStage = Stages.OrderByDescending(s => s.UpdatedAt).FirstOrDefault();
+                        if (latestStage != null)
+                        {
+                            CurrentStage = latestStage.CurrentStage ?? "Pending";
+                        }
+                    }
+                    else
                     {
-                        CurrentStage = latestStage.SelectedStage ?? latestStage.CurrentStage ?? "Pending";
+                        CurrentStage = Booking.Status ?? "Pending";
                     }
-                    }
-                    
-                    OnPropertyChanged(nameof(CurrentStage));
-                    OnPropertyChanged(nameof(Progress));
-                    OnPropertyChanged(nameof(Stage2Color));
-                    OnPropertyChanged(nameof(Stage3Color));
-                    OnPropertyChanged(nameof(Stage4Color));
-                    OnPropertyChanged(nameof(Stage5Color));
                 }
             }
             catch (Exception ex)
@@ -98,8 +113,11 @@ namespace TRAFFIK_APP.ViewModels
 
         private string GetStageColor(int stageIndex)
         {
+            if (string.IsNullOrEmpty(CurrentStage)) return "#3E3E3E";
             var currentIndex = StageSequence.IndexOf(CurrentStage);
-            if (stageIndex <= currentIndex)
+            if (currentIndex < 0) return "#3E3E3E";         
+            var arrayIndex = stageIndex - 1;
+            if (arrayIndex <= currentIndex)
                 return "#007AFF"; // Blue for completed stages
             else
                 return "#3E3E3E"; // Gray for pending stages
