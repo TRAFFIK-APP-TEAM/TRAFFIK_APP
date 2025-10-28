@@ -4,16 +4,16 @@ namespace TRAFFIK_APP.Configuration
 {
     public static class Endpoints
     {
-        #if ANDROID
+        /*#if ANDROID
                 public const string BaseUrl = "http://10.0.2.2:5027";
         #elif IOS
                 public const string BaseUrl = "http://localhost:5027";
         #else
                 public const string BaseUrl = "http://localhost:5027";
-        #endif
+        #endif*/
         //public const string BaseUrl = "http://localhost:5027";
 
-        //public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net";
+        public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net";
       
         public static class Auth
         {
@@ -33,7 +33,6 @@ namespace TRAFFIK_APP.Configuration
             public const string AvailableSlots = $"{BaseUrl}/api/Bookings/AvailableSlots"; // Get available time slots for a service
             public const string Confirm = $"{BaseUrl}/api/Bookings/Confirm"; // Confirm booking after checking availability
             public const string GetByUser = $"{BaseUrl}/api/Bookings/User/{{userId}}"; // Get bookings for a specific user
-            public const string GetStaffBookings = $"{BaseUrl}/api/Bookings/Staff"; // Get all bookings for staff
         }
 
         public static class BookingStages
