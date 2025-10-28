@@ -33,6 +33,7 @@ namespace TRAFFIK_APP.Configuration
             public const string AvailableSlots = $"{BaseUrl}/api/Bookings/AvailableSlots"; // Get available time slots for a service
             public const string Confirm = $"{BaseUrl}/api/Bookings/Confirm"; // Confirm booking after checking availability
             public const string GetByUser = $"{BaseUrl}/api/Bookings/User/{{userId}}"; // Get bookings for a specific user
+            public const string GetStaffBookings = $"{BaseUrl}/api/Bookings/Staff"; // Get all bookings for staff with details
         }
 
         public static class BookingStages
