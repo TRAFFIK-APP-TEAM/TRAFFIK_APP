@@ -158,9 +158,19 @@ namespace TRAFFIK_APP.ViewModels
                 System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Starting to load services");
                 System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] SelectedVehicle: {SelectedVehicle?.DisplayName ?? "null"}");
                 
-                // Use the ServiceCatalogClient to get services
-                var serviceDtos = await _serviceCatalogClient.GetAllAsync();
-                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] ServiceCatalogClient returned {serviceDtos?.Count ?? 0} services");
+                // Validate that we have a selected vehicle with a vehicle type ID
+                if (SelectedVehicle == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("[LoadServicesAsync] No vehicle selected, cannot load services");
+                    ErrorMessage = "Please select a vehicle first.";
+                    Services.Clear();
+                    FilterServices();
+                    return;
+                }
+                
+                // Use the ServiceCatalogClient to get services filtered by vehicle type ID
+                var serviceDtos = await _serviceCatalogClient.GetByVehicleTypeAsync(SelectedVehicle.VehicleTypeId);
+                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] ServiceCatalogClient returned {serviceDtos?.Count ?? 0} services for VehicleTypeId: {SelectedVehicle.VehicleTypeId}");
                 
                 Services.Clear();
                 
@@ -168,30 +178,21 @@ namespace TRAFFIK_APP.ViewModels
                 {
                     foreach (var serviceDto in serviceDtos)
                     {
-                        // Filter services based on vehicle type compatibility
-                        if (IsServiceCompatibleWithVehicle(serviceDto, SelectedVehicle))
+                        var serviceItem = new ServiceCatalogItem
                         {
-                            var serviceItem = new ServiceCatalogItem
-                            {
-                                Id = serviceDto.Id,
-                                Name = serviceDto.Name,
-                                Description = serviceDto.Description,
-                                Price = serviceDto.Price,
-                                CarTypeId = null,
-                                Category = GetServiceCategory(serviceDto.Name),
-                                EstimatedDurationMinutes = GetEstimatedDuration(serviceDto.Name)
-                            };
-                            Services.Add(serviceItem);
-                            System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Added compatible service: {serviceItem.Name} - {serviceItem.Price}");
-                        }
-                        else
-                        {
-                            System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Skipped incompatible service: {serviceDto.Name} for vehicle type: {SelectedVehicle?.VehicleType}");
-                        }
+                            Id = serviceDto.Id,
+                            Name = serviceDto.Name,
+                            Description = serviceDto.Description,
+                            Price = serviceDto.Price,
+                            Category = GetServiceCategory(serviceDto.Name),
+                            EstimatedDurationMinutes = GetEstimatedDuration(serviceDto.Name)
+                        };
+                        Services.Add(serviceItem);
+                        System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Added service: {serviceItem.Name} - {serviceItem.Price}");
                     }
                 }
                 
-                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Total compatible services in collection: {Services.Count}");
+                System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Total services in collection: {Services.Count}");
                 FilterServices();
                 System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Filtered services: {FilteredServices.Count}");
             }
@@ -200,67 +201,6 @@ namespace TRAFFIK_APP.ViewModels
                 System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Error loading services: {ex.Message}");
                 System.Diagnostics.Debug.WriteLine($"[LoadServicesAsync] Stack trace: {ex.StackTrace}");
                 ErrorMessage = "Failed to load services. Please try again.";
-            }
-        }
-
-        private bool IsServiceCompatibleWithVehicle(ServiceCatalogDto service, VehicleDto? vehicle)
-        {
-            if (vehicle == null) 
-            {
-                System.Diagnostics.Debug.WriteLine("IsServiceCompatibleWithVehicle: No vehicle provided");
-                return false;
-            }
-            
-            var vehicleType = vehicle.VehicleType?.ToLowerInvariant() ?? "";
-            var serviceName = service.Name?.ToLowerInvariant() ?? "";
-            var serviceDescription = service.Description?.ToLowerInvariant() ?? "";
-            
-            System.Diagnostics.Debug.WriteLine($"Checking compatibility: Vehicle={vehicleType}, Service={serviceName}");
-            
-            // Define compatibility rules based on vehicle type and service
-            switch (vehicleType)
-            {
-                case "sedan":
-                case "hatchback":
-                case "coupe":
-                case "car":
-                    // Most services are compatible with smaller vehicles
-                    System.Diagnostics.Debug.WriteLine($"Sedan/Hatchback/Coupe: Allowing service {serviceName}");
-                    return true;
-                    
-                case "suv":
-                case "truck":
-                case "pickup":
-                case "van":
-                    // Larger vehicles - most services are fine
-                    System.Diagnostics.Debug.WriteLine($"SUV/Truck/Pickup: Allowing service {serviceName}");
-                    return true;
-                    
-                case "luxury":
-                case "sports car":
-                case "supercar":
-                case "premium":
-                    // High-end vehicles - prefer premium services
-                    System.Diagnostics.Debug.WriteLine($"Luxury/Sports: Allowing service {serviceName}");
-                    return true;
-                    
-                case "motorcycle":
-                case "bike":
-                case "motorbike":
-                    // Motorcycles - only basic services
-                    if (serviceName.Contains("express") || serviceName.Contains("basic") || 
-                        serviceName.Contains("wash") || serviceName.Contains("quick"))
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Motorcycle: Allowing basic service {serviceName}");
-                        return true;
-                    }
-                    System.Diagnostics.Debug.WriteLine($"Motorcycle: Excluding complex service {serviceName}");
-                    return false;
-                    
-                default:
-                    // Unknown vehicle type - allow all services for now
-                    System.Diagnostics.Debug.WriteLine($"Unknown vehicle type '{vehicleType}': Allowing service {serviceName}");
-                    return true;
             }
         }
 

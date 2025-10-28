@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TRAFFIK_APP.ViewModels"
+             x:Class="TRAFFIK_APP.Views.BookingDetailPage"
+             BackgroundColor="#0D0D0D"
+             Shell.TabBarIsVisible="False"
+             Title="Booking Details">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Header -->
+            <Label Text="Booking Details"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+
+            <!-- Booking Info Card -->
+            <Border BackgroundColor="#1E1E1E"
+                    StrokeThickness="1"
+                    Stroke="Gray"
+                    Padding="20"
+                    StrokeShape="RoundRectangle 15">
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- Service Name -->
+                    <Label Text="{Binding Booking.ServiceName, StringFormat='Service: {0}'}"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <!-- License Plate -->
+                    <Label Text="{Binding Booking.VehicleLicensePlate, StringFormat='🚗 {0}'}"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#007AFF"/>
+
+                    <!-- Date and Time -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Label Grid.Column="0"
+                               Text="{Binding Booking.BookingDate, StringFormat='📅 {0:dd MMM yyyy}'}"
+                               FontSize="14"
+                               TextColor="#C8C8C8"/>
+                        <Label Grid.Column="1"
+                               Text="{Binding Booking.BookingTime, StringFormat='⏰ {0:hh\\:mm}'}"
+                               FontSize="14"
+                               TextColor="#C8C8C8"/>
+                    </Grid>
+
+                    <!-- Status -->
+                    <Border BackgroundColor="#2E2E2E"
+                            Padding="10"
+                            StrokeShape="RoundRectangle 10">
+                        <Label Text="{Binding Booking.Status, StringFormat='Status: {0}'}"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#C8C8C8"/>
+                    </Border>
+
+                    <!-- Vehicle Info -->
+                    <Label Text="{Binding Booking.VehicleDisplayName, StringFormat='Vehicle: {0}'}"
+                           FontSize="14"
+                           TextColor="#888"
+                           IsVisible="{Binding Booking.VehicleDisplayName, Converter={StaticResource StringToBoolConverter}}"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Tracking Section -->
+            <Label Text="Tracking"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="White"/>
+
+            <Border BackgroundColor="#1E1E1E"
+                    StrokeThickness="1"
+                    Stroke="Gray"
+                    Padding="20"
+                    StrokeShape="RoundRectangle 15">
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- Current Stage -->
+                    <Label Text="{Binding CurrentStage, StringFormat='Current Stage: {0}'}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <!-- Progress Bar -->
+                    <ProgressBar Progress="{Binding Progress}"
+                                 ProgressColor="#007AFF"
+                                 HeightRequest="12"/>
+
+                    <!-- Stage Timeline -->
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Progress:"
+                               FontSize="14"
+                               TextColor="#C8C8C8"/>
+                        
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                            
+                            <!-- Stage 1 -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                                    WidthRequest="24"
+                                    HeightRequest="24"
+                                    BackgroundColor="#007AFF"
+                                    StrokeShape="RoundRectangle 12"
+                                    Margin="0,0,10,0"/>
+                            <Label Grid.Row="0" Grid.Column="1"
+                                   Text="Pending"
+                                   FontSize="13"
+                                   TextColor="White"
+                                   VerticalOptions="Center"/>
+
+                            <!-- Stage 2 -->
+                            <Border Grid.Row="1" Grid.Column="0"
+                                    WidthRequest="24"
+                                    HeightRequest="24"
+                                    BackgroundColor="{Binding Stage2Color}"
+                                    StrokeShape="RoundRectangle 12"
+                                    Margin="0,0,10,0"/>
+                            <Label Grid.Row="1" Grid.Column="1"
+                                   Text="Started"
+                                   FontSize="13"
+                                   TextColor="White"
+                                   VerticalOptions="Center"/>
+
+                            <!-- Stage 3 -->
+                            <Border Grid.Row="2" Grid.Column="0"
+                                    WidthRequest="24"
+                                    HeightRequest="24"
+                                    BackgroundColor="{Binding Stage3Color}"
+                                    StrokeShape="RoundRectangle 12"
+                                    Margin="0,0,10,0"/>
+                            <Label Grid.Row="2" Grid.Column="1"
+                                   Text="Inspection"
+                                   FontSize="13"
+                                   TextColor="White"
+                                   VerticalOptions="Center"/>
+
+                            <!-- Stage 4 -->
+                            <Border Grid.Row="3" Grid.Column="0"
+                                    WidthRequest="24"
+                                    HeightRequest="24"
+                                    BackgroundColor="{Binding Stage4Color}"
+                                    StrokeShape="RoundRectangle 12"
+                                    Margin="0,0,10,0"/>
+                            <Label Grid.Row="3" Grid.Column="1"
+                                   Text="Completed"
+                                   FontSize="13"
+                                   TextColor="White"
+                                   VerticalOptions="Center"/>
+
+                            <!-- Stage 5 -->
+                            <Border Grid.Row="4" Grid.Column="0"
+                                    WidthRequest="24"
+                                    HeightRequest="24"
+                                    BackgroundColor="{Binding Stage5Color}"
+                                    StrokeShape="RoundRectangle 12"
+                                    Margin="0,0,10,0"/>
+                            <Label Grid.Row="4" Grid.Column="1"
+                                   Text="Paid"
+                                   FontSize="13"
+                                   TextColor="White"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Back Button -->
+            <Button Text="Back"
+                    Command="{Binding GoBackCommand}"
+                    BackgroundColor="#007AFF"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

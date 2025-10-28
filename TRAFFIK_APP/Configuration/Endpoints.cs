@@ -4,13 +4,13 @@ namespace TRAFFIK_APP.Configuration
 {
     public static class Endpoints
     {
-        /*#if ANDROID
-                public const string BaseUrl = "http://10.0.2.2:5027";
-        #elif IOS
-                public const string BaseUrl = "http://localhost:5027";
-        #else
-                public const string BaseUrl = "http://localhost:5027";
-        #endif*/
+//#if ANDROID
+//                public const string BaseUrl = "http://10.0.2.2:5027";
+//#elif IOS
+//                public const string BaseUrl = "http://localhost:5027";
+//#else
+//        public const string BaseUrl = "http://localhost:5027";
+//        #endif
         //public const string BaseUrl = "http://localhost:5027";
 
         public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net";
@@ -33,6 +33,7 @@ namespace TRAFFIK_APP.Configuration
             public const string AvailableSlots = $"{BaseUrl}/api/Bookings/AvailableSlots"; // Get available time slots for a service
             public const string Confirm = $"{BaseUrl}/api/Bookings/Confirm"; // Confirm booking after checking availability
             public const string GetByUser = $"{BaseUrl}/api/Bookings/User/{{userId}}"; // Get bookings for a specific user
+            public const string GetStaffBookings = $"{BaseUrl}/api/Bookings/Staff"; // Get all bookings for staff with details
         }
 
         public static class BookingStages
@@ -93,6 +94,8 @@ namespace TRAFFIK_APP.Configuration
             public const string GetAll = $"{BaseUrl}/api/RewardCatalog"; // Get all catalog items
             public const string RedeemItem = $"{BaseUrl}/api/RewardCatalog/redeem/{{itemId}}"; // Redeem a specific item
             public const string GetRedeemed = $"{BaseUrl}/api/RewardCatalog/user/{{userId}}/redeemed";
+            public const string GetAllRedeemed = $"{BaseUrl}/api/RewardCatalog/redeemed/all"; // Get all redeemed rewards (admin)
+            public const string MarkAsUsed = $"{BaseUrl}/api/RewardCatalog/redeemed/{{code}}/mark-used"; // Mark redemption code as used
         }
 
         public static class ServiceCatalog

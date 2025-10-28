@@ -9,8 +9,11 @@ namespace TRAFFIK_APP.Services.ApiClients
     {
         public BookingClient(HttpClient httpClient, ILogger<ApiClient> logger) : base(httpClient, logger) { }
 
-        public Task<List<Booking>?> GetAllAsync() =>
-            GetAsync<List<Booking>>(Endpoints.Booking.GetAll);
+        public Task<List<BookingDto>?> GetAllAsync() =>
+            GetAsync<List<BookingDto>>(Endpoints.Booking.GetAll);
+
+        public Task<List<BookingDto>?> GetStaffBookingsAsync() =>
+            GetAsync<List<BookingDto>>(Endpoints.Booking.GetStaffBookings);
 
         public Task<Booking?> GetByIdAsync(int id) =>
             GetAsync<Booking>(Endpoints.Booking.GetById.Replace("{id}", id.ToString()));
@@ -46,10 +49,10 @@ namespace TRAFFIK_APP.Services.ApiClients
         public Task<bool> DeleteAsync(int id) =>
             DeleteAsync(Endpoints.Booking.DeleteById.Replace("{id}", id.ToString()));
 
-        public async Task<List<Booking>> GetByUserAsync(int userId)
+        public async Task<List<BookingDto>> GetByUserAsync(int userId)
         {
             var endpoint = Endpoints.Booking.GetByUser.Replace("{userId}", userId.ToString());
-            return await GetAsync<List<Booking>>(endpoint);
+            return await GetAsync<List<BookingDto>>(endpoint);
         }
 
         public async Task<List<TimeOnly>?> GetAvailableSlotsAsync(int serviceCatalogId, string date)

@@ -10,14 +10,14 @@ namespace TRAFFIK_APP.ViewModels
 {
     public class BookingTrackerViewModel : BaseViewModel
     {
-        public ObservableCollection<BookingProgressDto> Booking { get; } = new();
+        public ObservableCollection<BookingProgressDto> Bookings { get; } = new();
 
-        public bool IsEmpty => Booking.Count == 0;
-        public bool IsNotEmpty => Booking.Count > 0;
+        public bool IsEmpty => Bookings.Count == 0;
+        public bool IsNotEmpty => Bookings.Count > 0;
 
         public BookingTrackerViewModel()
         {
-            Booking.CollectionChanged += (_, __) =>
+            Bookings.CollectionChanged += (_, __) =>
             {
                 OnPropertyChanged(nameof(IsEmpty));
                 OnPropertyChanged(nameof(IsNotEmpty));

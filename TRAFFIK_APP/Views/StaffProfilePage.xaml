@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TRAFFIK_APP.Views.StaffProfilePage"
+             BackgroundColor="Black"
+             Shell.TabBarIsVisible="False"
+             Title="Profile">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- HEADER -->
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+
+                    <Label Text="Profile"
+                           TextColor="White"
+                           FontSize="24"
+                           FontAttributes="Bold"/>
+
+                    <Button Text="Back"
+                            Grid.Column="1"
+                            BackgroundColor="#007AFF"
+                            TextColor="White"
+                            CornerRadius="8"
+                            Padding="16,8"
+                            Clicked="OnBackClicked"/>
+            </Grid>
+
+            <!-- Greeting -->
+            <VerticalStackLayout>
+                <Label Text="Welcome back," TextColor="White" FontSize="16"/>
+                <Label Text="{Binding FullName}" TextColor="White" FontAttributes="Bold" FontSize="18"/>
+            </VerticalStackLayout>
+
+            <!-- PROFILE INFO -->
+            <Border Background="#1E1E1E" Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Edit Profile" FontSize="18" FontAttributes="Bold"
+                           TextColor="White" HorizontalOptions="Center"/>
+
+                    <Entry Text="{Binding Name}" Placeholder="First Name" TextColor="White" PlaceholderColor="#8E8E93" />
+                    <Entry Text="{Binding Surname}" Placeholder="Surname" TextColor="White" PlaceholderColor="#8E8E93" />
+                    <Entry Text="{Binding Email}" Placeholder="Email" Keyboard="Email" TextColor="White" PlaceholderColor="#8E8E93" />
+                    <Entry Text="{Binding PhoneNumber}" Placeholder="Phone Number" Keyboard="Telephone" TextColor="White" PlaceholderColor="#8E8E93" />
+
+                    <Button Text="Save Changes"
+                            Command="{Binding SaveProfileCommand}"
+                            BackgroundColor="#007AFF"
+                            TextColor="White"
+                            CornerRadius="12"
+                            Margin="0,10,0,0"
+                            IsEnabled="{Binding IsNotBusy}"/>
+                    
+                    <!-- Loading indicator -->
+                    <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                     IsRunning="{Binding IsBusy}"
+                                     Color="#007AFF"
+                                     Margin="0,10,0,0"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Success Message -->
+            <Frame BackgroundColor="#00FF88" 
+                   Padding="15" 
+                   CornerRadius="8" 
+                   Margin="0,10,0,0"
+                   IsVisible="{Binding HasSuccess}">
+                <Label Text="{Binding SuccessMessage}"
+                       TextColor="White"
+                       FontSize="14"
+                       HorizontalOptions="Center"/>
+            </Frame>
+
+            <!-- Error Message -->
+            <Frame BackgroundColor="#007AFF" 
+                   Padding="15" 
+                   CornerRadius="8" 
+                   Margin="0,10,0,0"
+                   IsVisible="{Binding HasError}">
+                <Label Text="{Binding ErrorMessage}"
+                       TextColor="White"
+                       FontSize="14"
+                       HorizontalOptions="Center"/>
+            </Frame>
+
+            <!-- LOGOUT BUTTON -->
+            <Button Text="Logout"
+                    Command="{Binding LogoutCommand}"
+                    BackgroundColor="#007AFF"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="48"
+                    Margin="0,10,0,20"/>
+        </VerticalStackLayout>
+    </ScrollView>
+    </Grid>
+
+</ContentPage>
+

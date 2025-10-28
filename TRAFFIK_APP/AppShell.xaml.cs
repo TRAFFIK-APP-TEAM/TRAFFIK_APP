@@ -18,6 +18,7 @@ namespace TRAFFIK_APP
             Routing.RegisterRoute(nameof(AdminManageBookingsPage), typeof(AdminManageBookingsPage));
             Routing.RegisterRoute(nameof(AdminManageUsersPage), typeof(AdminManageUsersPage));
             Routing.RegisterRoute(nameof(AddAdminPage), typeof(AddAdminPage));
+            Routing.RegisterRoute(nameof(AdminManageRewardsPage), typeof(AdminManageRewardsPage));
             Routing.RegisterRoute("VehiclePage", typeof(VehiclePage));
             Routing.RegisterRoute(nameof(BookingTrackerPage), typeof(BookingTrackerPage));
             
@@ -26,6 +27,10 @@ namespace TRAFFIK_APP
             Routing.RegisterRoute(nameof(BookingServiceSelectPage), typeof(BookingServiceSelectPage));
             Routing.RegisterRoute(nameof(BookingDateTimeSelectPage), typeof(BookingDateTimeSelectPage));
             Routing.RegisterRoute(nameof(BookingConfirmationPage), typeof(BookingConfirmationPage));
+            
+            // Staff booking pages
+            Routing.RegisterRoute(nameof(StaffBookingListPage), typeof(StaffBookingListPage));
+            Routing.RegisterRoute(nameof(StaffBookingDetailPage), typeof(StaffBookingDetailPage));
 
 
 
@@ -66,7 +71,28 @@ namespace TRAFFIK_APP
 			{
 				args.Cancel();
 				await Shell.Current.DisplayAlert("Access Denied", "Staff only area.", "OK");
-				await Shell.Current.GoToAsync("//UserDashboardPage");
+				// Redirect based on user role
+				if (_sessionService.IsAdmin)
+					await Shell.Current.GoToAsync("//AdminDashboardPage");
+				else if (_sessionService.IsStaff)
+					await Shell.Current.GoToAsync("//StaffDashboardPage");
+				else
+					await Shell.Current.GoToAsync("//DashboardPage");
+				return;
+			}
+			
+			// Guard StaffProfilePage
+			if (target.Contains("StaffProfilePage", StringComparison.OrdinalIgnoreCase) && !_sessionService.IsStaff)
+			{
+				args.Cancel();
+				await Shell.Current.DisplayAlert("Access Denied", "Staff only area.", "OK");
+				// Redirect based on user role
+				if (_sessionService.IsAdmin)
+					await Shell.Current.GoToAsync("//AdminDashboardPage");
+				else if (_sessionService.IsStaff)
+					await Shell.Current.GoToAsync("//StaffDashboardPage");
+				else
+					await Shell.Current.GoToAsync("//DashboardPage");
 				return;
 			}
 
@@ -78,7 +104,13 @@ namespace TRAFFIK_APP
 			{
 				args.Cancel();
 				await Shell.Current.DisplayAlert("Access Denied", "Admin only area.", "OK");
-				await Shell.Current.GoToAsync("//UserDashboardPage");
+				// Redirect based on user role
+				if (_sessionService.IsAdmin)
+					await Shell.Current.GoToAsync("//AdminDashboardPage");
+				else if (_sessionService.IsStaff)
+					await Shell.Current.GoToAsync("//StaffDashboardPage");
+				else
+					await Shell.Current.GoToAsync("//DashboardPage");
 				return;
 			}
 		}

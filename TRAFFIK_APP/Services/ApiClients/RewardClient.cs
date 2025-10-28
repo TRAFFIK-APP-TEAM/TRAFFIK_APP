@@ -23,5 +23,11 @@ namespace TRAFFIK_APP.Services.ApiClients
             var endpoint = Endpoints.Reward.GetByUser.Replace("{userId}", userId.ToString());
             return GetAsync<List<Reward>>(endpoint);
         }
+
+        public Task<int?> GetBalanceAsync(int userId)
+        {
+            var endpoint = Endpoints.Reward.GetBalance.Replace("{userId}", userId.ToString());
+            return GetAsync<int?>(endpoint);
+        }
     }
 }
