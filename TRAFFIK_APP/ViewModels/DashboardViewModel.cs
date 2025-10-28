@@ -3,8 +3,8 @@ using TRAFFIK_APP.Services.ApiClients;
 using System.Collections.ObjectModel;
 using TRAFFIK_APP.Views;
 using TRAFFIK_APP.Models.Dtos.Reward;
+using TRAFFIK_APP.Models.Dtos.Booking;
 using TRAFFIK_APP.Models.Entities.Vehicle;
-using TRAFFIK_APP.Models.Entities.Booking;
 using TRAFFIK_APP.Models.Entities.Notification;
 
 namespace TRAFFIK_APP.ViewModels
@@ -18,7 +18,7 @@ namespace TRAFFIK_APP.ViewModels
         private readonly VehicleClient _vehicleClient;
         private readonly SessionService _session;
 
-        public ObservableCollection<Booking> Bookings { get; } = new();
+        public ObservableCollection<BookingDto> Bookings { get; } = new();
         public ObservableCollection<Notification> Notifications { get; } = new();
         public ObservableCollection<Vehicle> Vehicles { get; } = new();
         public ObservableCollection<RewardItemDto> AvailableRewards { get; } = new();

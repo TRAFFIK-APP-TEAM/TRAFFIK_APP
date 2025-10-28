@@ -55,8 +55,8 @@ namespace TRAFFIK_APP.ViewModels
                     {
                         Id = booking.Id,
                         UserId = booking.UserId,
-                        ServiceId = booking.ServiceId,
                         ServiceCatalogId = booking.ServiceCatalogId,
+                        VehicleLicensePlate = booking.VehicleLicensePlate,
                         BookingDate = booking.BookingDate,
                         BookingTime = booking.BookingTime,
                         Status = booking.Status
