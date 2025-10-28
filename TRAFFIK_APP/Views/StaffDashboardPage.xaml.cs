@@ -10,7 +10,7 @@ namespace TRAFFIK_APP.Views
 		{
 			InitializeComponent();
 			BindingContext = viewModel;
-			// Extra runtime guard in case of deep links
+			// runtime guard in case of deep links
 			var session = ServiceHelper.GetService<SessionService>();
 			if (session is not null && !session.IsStaff)
 			{
