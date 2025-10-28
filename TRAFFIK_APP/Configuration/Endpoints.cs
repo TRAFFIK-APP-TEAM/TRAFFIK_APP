@@ -11,9 +11,9 @@ namespace TRAFFIK_APP.Configuration
         #else
                 public const string BaseUrl = "http://localhost:5027";
         #endif*/
-        public const string BaseUrl = "http://localhost:5027";
+        //public const string BaseUrl = "http://localhost:5027";
 
-        /// public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net";
+        public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net";
       
         public static class Auth
         {
