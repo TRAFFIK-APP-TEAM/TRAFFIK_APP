@@ -45,16 +45,17 @@ namespace TRAFFIK_APP.ViewModels
 			}
 		}
 
-		private async Task LoadActiveBookingsAsync()
+		public async Task LoadActiveBookingsAsync()
 		{
 			ActiveBookings.Clear();
 			var items = await _bookingClient.GetStaffBookingsAsync();
 			if (items is null) return;
 			
-			// Filter for active bookings (not completed)
+			// Filter for active bookings (not completed or closed/paid)
 			foreach (var item in items)
 			{
-				if (item.Status != "Service Completed" && item.Status != "Service Paid")
+				// Status can be: "In Progress", "Completed", or "Closed" (Paid)
+				if (item.Status != "Completed" && item.Status != "Closed" && item.Status != "Paid")
 				{
 					ActiveBookings.Add(item);
 				}

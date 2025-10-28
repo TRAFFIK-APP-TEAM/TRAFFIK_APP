@@ -42,5 +42,16 @@ namespace TRAFFIK_APP.Views
         {
             await Shell.Current.GoToAsync(nameof(BookingTrackerPage));
         }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            
+            // Reload dashboard when the page appears to show updated booking statuses
+            if (ViewModel?.LoadDashboardCommand?.CanExecute(null) == true)
+            {
+                ViewModel.LoadDashboardCommand.Execute(null);
+            }
+        }
     }
 }

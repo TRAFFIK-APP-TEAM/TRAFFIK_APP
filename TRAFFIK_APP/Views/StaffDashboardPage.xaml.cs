@@ -6,6 +6,8 @@ namespace TRAFFIK_APP.Views
 {
 	public partial class StaffDashboardPage : ContentPage
 	{
+		private StaffDashboardViewModel? ViewModel => BindingContext as StaffDashboardViewModel;
+
 		public StaffDashboardPage(StaffDashboardViewModel viewModel)
 		{
 			InitializeComponent();
@@ -22,6 +24,17 @@ namespace TRAFFIK_APP.Views
 					_ = Shell.Current.GoToAsync("//StaffDashboardPage");
 				else
 					_ = Shell.Current.GoToAsync("//DashboardPage");
+			}
+		}
+
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing();
+			
+			// Reload active bookings when the page appears to show updated statuses
+			if (ViewModel != null)
+			{
+				await ViewModel.LoadActiveBookingsAsync();
 			}
 		}
 	}

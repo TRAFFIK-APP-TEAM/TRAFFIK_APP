@@ -58,7 +58,7 @@ namespace TRAFFIK_APP.ViewModels
             GoAccountCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
         }
 
-        private async Task LoadDashboardAsync()
+        public async Task LoadDashboardAsync()
         {
             if (_session.UserId is not int userId)
             {

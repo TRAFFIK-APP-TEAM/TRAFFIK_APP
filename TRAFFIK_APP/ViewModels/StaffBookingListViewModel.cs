@@ -59,7 +59,7 @@ namespace TRAFFIK_APP.ViewModels
             LoadBookingsCommand.Execute(null);
         }
 
-        private async Task LoadAllBookingsAsync()
+        public async Task LoadAllBookingsAsync()
         {
             try
             {

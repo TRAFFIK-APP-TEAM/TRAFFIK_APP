@@ -121,7 +121,7 @@
                                         <Label Text="{Binding VehicleDisplayName, StringFormat='Vehicle: {0}'}"
                                                FontSize="13"
                                                TextColor="#888"
-                                               IsVisible="{Binding VehicleDisplayName, TargetNullValue='False'}"/>
+                                               IsVisible="{Binding VehicleDisplayName, Converter={StaticResource StringToBoolConverter}}"/>
                                     </VerticalStackLayout>
                                 </Border>
                             </DataTemplate>

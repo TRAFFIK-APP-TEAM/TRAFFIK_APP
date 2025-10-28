@@ -4,13 +4,13 @@ namespace TRAFFIK_APP.Configuration
 {
     public static class Endpoints
     {
-        /*#if ANDROID
-                public const string BaseUrl = "http://10.0.2.2:5027";
-        #elif IOS
-                public const string BaseUrl = "http://localhost:5027";
-        #else
-                public const string BaseUrl = "http://localhost:5027";
-        #endif*/
+//#if ANDROID
+//                public const string BaseUrl = "http://10.0.2.2:5027";
+//#elif IOS
+//                public const string BaseUrl = "http://localhost:5027";
+//#else
+//        public const string BaseUrl = "http://localhost:5027";
+//        #endif
         //public const string BaseUrl = "http://localhost:5027";
 
         public const string BaseUrl = "https://traffikapi-a0bhabb4bag8g3g6.southafricanorth-01.azurewebsites.net";

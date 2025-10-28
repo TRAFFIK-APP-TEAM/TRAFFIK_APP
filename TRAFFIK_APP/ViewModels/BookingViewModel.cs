@@ -57,7 +57,7 @@ namespace TRAFFIK_APP.ViewModels
             };
         }
 
-        private async Task LoadBookingsAsync()
+        public async Task LoadBookingsAsync()
         {
             if (_session.UserId is not int userId)
             {
