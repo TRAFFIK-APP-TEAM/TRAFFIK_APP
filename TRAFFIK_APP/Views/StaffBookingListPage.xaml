@@ -3,44 +3,104 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:TRAFFIK_APP.ViewModels"
              x:Class="TRAFFIK_APP.Views.StaffBookingListPage"
-             x:DataType="viewmodels:StaffBookingListViewModel"
-             BackgroundColor="#0D0D0D"
-             Title="All Bookings">
+             x:Name="StaffBookingListRoot"
+             BackgroundColor="#0A0E27"
+             Shell.FlyoutBehavior="Disabled">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
-            <Label Text="All Bookings"
-                   FontSize="22"
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   HorizontalOptions="Center" />
-            <CollectionView ItemsSource="{Binding AllBookings}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="#1E1E1E"
-                               BorderColor="Gray"
-                               CornerRadius="12"
-                               Padding="20"
-                               Margin="0,5">
-                            <VerticalStackLayout Spacing="10">
-                                <Label Text="{Binding BookingId, StringFormat=Empty'Booking ID: {0}'}"
-                                       TextColor="white" />
-                                <Label Text="{Binding VehicleId, StringFormat='Vehicle: {0}'}"
-                                       TextColor="White" />
-                                <Label Text="{Binding ServiceName, StringFormat='Service: {0}'}"
-                                       TextColor="White" />
-                                <Label Text="{Binding CurrentStage, StringFormat='Stage: {0}'}"
-                                       TextColor="White" />
-                                <Label Text="{Binding ScheduledDate, StringFormat='Scheduled: {0:dd MMM yyyy}'}"
-                                       TextColor="White" />
+    <Grid RowDefinitions="Auto,*">
+        <!-- Top Bar -->
+        <Grid Padding="24,16" Row="0" BackgroundColor="#161B33">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Today's Bookings"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+                <Label Text="View and manage bookings in progress"
+                       FontSize="14"
+                       TextColor="#9CA3AF"
+                       Opacity="0.7" />
+            </VerticalStackLayout>
+        </Grid>
 
-                            </VerticalStackLayout>
+        <!-- Main Content -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="16">
+                <CollectionView ItemsSource="{Binding AllBookings}"
+                                SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="#1E293B"
+                                    StrokeThickness="1"
+                                    Stroke="#334155"
+                                    Padding="0"
+                                    Margin="0,0,0,14">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="#000000" 
+                                            Offset="0,4" 
+                                            Radius="8" 
+                                            Opacity="0.3"/>
+                                </Border.Shadow>
+                                <Grid Padding="16" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10">
+                                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                        <Label Text="{Binding BookingId, StringFormat='Booking #{0}'}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="White" />
+                                        <Border Grid.Column="1"
+                                                BackgroundColor="#2563EB"
+                                                Padding="10,5">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="6"/>
+                                            </Border.StrokeShape>
+                                            <Label Text="{Binding CurrentStage}"
+                                                   TextColor="White" />
+                                        </Border>
+                                    </Grid>
 
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+                                    <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                        <Label Text="🚗"
+                                               FontSize="16" />
+                                        <Label Text="{Binding VehicleId, StringFormat='Vehicle #{0}'}"
+                                               TextColor="#C8CDD6"
+                                               FontSize="14"
+                                               VerticalOptions="Center" />
+                                    </Grid>
+
+                                    <Grid Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                        <Label Text="📋"
+                                               FontSize="16" />
+                                        <Label Text="{Binding ServiceName}"
+                                               TextColor="#C8CDD6"
+                                               FontSize="14"
+                                               VerticalOptions="Center" />
+                                    </Grid>
+
+                                    <Button Grid.Row="3"
+                                            Text="View Details"
+                                            Command="{Binding Source={x:Reference StaffBookingListRoot}, Path=BindingContext.ViewBookingCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="#007AFF"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Padding="0,12"
+                                            FontAttributes="Bold" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Label Text="No bookings for today"
+                       FontSize="15"
+                       TextColor="#6B7280"
+                       HorizontalOptions="Center"
+                       Margin="0,40"
+                       IsVisible="{Binding AllBookings.Count, Converter={StaticResource CountToBoolConverter}, ConverterParameter='inverse'}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>
 

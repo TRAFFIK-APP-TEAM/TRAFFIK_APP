@@ -17,21 +17,14 @@ namespace TRAFFIK_APP.ViewModels
 
 		public ObservableCollection<BookingStageUpdateDto> ActiveBookings { get; set; } = new();
 
-		public ICommand UpdateStageCommand { get; }
-		public ICommand RefreshCommand { get; }
 		public ICommand EditProfileCommand { get; }
-
         public ICommand ViewAllBookingsCommand { get; }
-
-
 
         public StaffDashboardViewModel(SessionService sessionService, BookingStagesClient bookingStagesClient)
 		{
 			_sessionService = sessionService;
 			_bookingStagesClient = bookingStagesClient;
 
-			UpdateStageCommand = new Command<BookingStageUpdateDto>(booking => ExecuteSafeAsync(() => UpdateStageAsync(booking), "Updating stage..."));
-			RefreshCommand = new Command(() => ExecuteSafeAsync(LoadActiveBookingsAsync, "Loading bookings..."));
 			EditProfileCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
 			ViewAllBookingsCommand = new Command(async () =>
 			{
@@ -54,18 +47,6 @@ namespace TRAFFIK_APP.ViewModels
 			{
 				ActiveBookings.Add(item);
 			}
-		}
-
-		private async Task UpdateStageAsync(BookingStageUpdateDto booking)
-		{
-			if (booking is null) return;
-			var success = await _bookingStagesClient.UpdateStageAsync(booking);
-			if (!success)
-			{
-				ErrorMessage = "Failed to update stage.";
-				return;
-			}
-			await LoadActiveBookingsAsync();
 		}
 	}
 }

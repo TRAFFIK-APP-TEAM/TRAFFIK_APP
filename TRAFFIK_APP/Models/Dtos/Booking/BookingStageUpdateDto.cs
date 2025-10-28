@@ -8,7 +8,7 @@
 		public string CurrentStage { get; set; } = "Pending";
 		public List<string> AvailableStages { get; set; } = new()
 		{
-			"Wash started", "Wash done", "Dry started", "Dry done", "Service completed"
+			"Service Started", "Service Completed", "Service Paid"
 		};
 		public string SelectedStage { get; set; } = string.Empty;
 		public bool IsConfirmed { get; set; }

@@ -54,6 +54,8 @@ namespace TRAFFIK_APP
             Routing.RegisterRoute(nameof(BookingVehicleSelectPage), typeof(BookingVehicleSelectPage));
             Routing.RegisterRoute(nameof(BookingDateTimeSelectPage), typeof(BookingDateTimeSelectPage));
             Routing.RegisterRoute(nameof(BookingConfirmationPage), typeof(BookingConfirmationPage));
+            Routing.RegisterRoute(nameof(StaffBookingListPage), typeof(StaffBookingListPage));
+            Routing.RegisterRoute(nameof(StaffBookingDetailPage), typeof(StaffBookingDetailPage));
             
 
 
@@ -73,15 +75,7 @@ namespace TRAFFIK_APP
             builder.Services.AddHttpClient<UserClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
-            })
-            /*.ConfigurePrimaryHttpMessageHandler(() =>
-            {
-                return new HttpClientHandler
-                {
-                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                };
-            })*/
-            ;
+            });
             builder.Services.AddHttpClient<UserRoleClient>(client =>
             {
                 client.Timeout = TimeSpan.FromSeconds(30);
@@ -241,6 +235,7 @@ namespace TRAFFIK_APP
 
             builder.Services.AddSingleton<SessionService>();
             builder.Services.AddSingleton<BookingClient>();
+            builder.Services.AddSingleton<BookingStagesClient>();
             builder.Services.AddSingleton<RewardClient>();
             builder.Services.AddSingleton<NotificationClient>();
             builder.Services.AddSingleton<VehicleClient>();
@@ -248,6 +243,7 @@ namespace TRAFFIK_APP
             builder.Services.AddSingleton<ServiceCatalogClient>();
             builder.Services.AddSingleton<VehicleTypeClient>();
             builder.Services.AddSingleton<InstagramPostsClient>();
+            builder.Services.AddSingleton<UserClient>();
 
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<SignupViewModel>();
@@ -261,6 +257,8 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<BookingConfirmationViewModel>();
             builder.Services.AddTransient<RewardsViewModel>();
             builder.Services.AddTransient<StaffDashboardViewModel>();
+            builder.Services.AddTransient<StaffBookingListViewModel>();
+            builder.Services.AddTransient<StaffBookingDetailViewModel>();
 
             builder.Services.AddTransient<DashboardPage>();
             builder.Services.AddTransient<SignupPage>();
@@ -274,6 +272,8 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<AccountPage>();
             builder.Services.AddTransient<AddVehiclePage>();
             builder.Services.AddTransient<StaffDashboardPage>();
+            builder.Services.AddTransient<StaffBookingListPage>();
+            builder.Services.AddTransient<StaffBookingDetailPage>();
             builder.Services.AddTransient<AdminDashboardPage>();
 
 
