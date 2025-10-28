@@ -36,10 +36,10 @@ namespace TRAFFIK_APP.ViewModels
         private readonly List<string> StageSequence = new()
         {
             "Pending",
-            "Service Started",
-            "Wash Completed",
-            "Dry Completed",
-            "Service Completed"
+            "Started",
+            "Inspection",
+            "Completed",
+            "Paid"
         };
 
         public ICommand UpdateStageCommand { get; }
