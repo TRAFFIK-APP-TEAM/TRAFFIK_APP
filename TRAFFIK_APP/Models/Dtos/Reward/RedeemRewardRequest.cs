@@ -16,6 +16,7 @@
     {
         public int Redeemed { get; set; }
         public int ItemId { get; set; }
+        public string Code { get; set; } = string.Empty;
     }
 
     public class RedeemedRewardDto
@@ -26,5 +27,6 @@
         public int Cost { get; set; }
         public DateTime RedeemedAt { get; set; }
         public bool Used { get; set; }
+        public string Code { get; set; } = string.Empty;
     }
 }
