@@ -158,11 +158,16 @@ namespace TRAFFIK_APP.ViewModels
 
                     if (response?.Redeemed > 0)
                     {
-
                         Points -= item.Cost;
 
-                        await Application.Current.MainPage.DisplayAlert("Success", 
-                            $"Successfully redeemed '{item.Name}'!", "OK");
+                        // Display success message with the redemption code
+                        var message = $"Successfully redeemed '{item.Name}'!\n\nYour redemption code: {response.Code}";
+                        if (!string.IsNullOrEmpty(response.Code))
+                        {
+                            message = $"Successfully redeemed '{item.Name}'!\n\nYour redemption code:\n{response.Code}";
+                        }
+                        
+                        await Application.Current.MainPage.DisplayAlert("Success", message, "OK");
                         
                         // Refresh the rewards list
                         await LoadRewardsAsync();

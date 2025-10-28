@@ -68,6 +68,12 @@
                             Clicked="OnAddAdmin"
                             BackgroundColor="#2E8B57"
                             TextColor="White"/>
+
+					<Button Text="View Redeemed Rewards"
+                            CornerRadius="12"
+                            Clicked="OnViewRedeemedRewards"
+                            BackgroundColor="#303743"
+                            TextColor="White"/>
 				</VerticalStackLayout>
 			</Frame>
 

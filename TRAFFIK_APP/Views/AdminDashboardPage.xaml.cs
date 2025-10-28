@@ -28,5 +28,10 @@ namespace TRAFFIK_APP.Views
         {
             await Shell.Current.GoToAsync(nameof(AddAdminPage));
         }
+
+        private async void OnViewRedeemedRewards(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AdminManageRewardsPage));
+        }
     }
 }

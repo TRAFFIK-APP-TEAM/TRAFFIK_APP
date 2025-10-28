@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TRAFFIK_APP.ViewModels"
+             xmlns:models="clr-namespace:TRAFFIK_APP.Models.Dtos.Reward"
+             x:Class="TRAFFIK_APP.Views.AdminManageRewardsPage"
+             x:DataType="vm:AdminManageRewardsViewModel"
+             Title="Manage Rewards"
+             BackgroundColor="#101726">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+
+            <!-- Back Button -->
+            <Button Text="← Back to Admin Dashboard"
+                    BackgroundColor="#262B34"
+                    TextColor="White"
+                    CornerRadius="12"
+                    Command="{Binding GoBackCommand}"
+                    Margin="0,0,0,10"/>
+
+            <Label Text="All Redeemed Rewards"
+                   TextColor="White"
+                   FontSize="22"
+                   FontAttributes="Bold"/>
+            
+            <Label Text="View all reward codes that have been redeemed by customers."
+                   TextColor="#C8CDD6"
+                   FontSize="14"/>
+
+            <!-- Refresh Button -->
+            <Button Text="Refresh"
+                    CornerRadius="8"
+                    Command="{Binding RefreshCommand}"
+                    BackgroundColor="#303743"
+                    TextColor="White"/>
+
+            <!-- Loading indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                               IsVisible="{Binding IsBusy}"
+                               Color="White"
+                               Margin="0,20"/>
+
+            <!-- Empty state -->
+            <Label Text="No redeemed rewards found."
+                   TextColor="#C8CDD6"
+                   FontSize="14"
+                   IsVisible="{Binding HasNoRedeemedRewards}"
+                   HorizontalOptions="Center"
+                   Margin="0,20"/>
+
+            <CollectionView ItemsSource="{Binding RedeemedRewards}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:RedeemedRewardDto">
+                        <Border BackgroundColor="#262B34"
+                                Stroke="#262B34"
+                                StrokeThickness="0"
+                                Padding="16"
+                                Margin="0,0,0,12"
+                                StrokeShape="RoundRectangle 12">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                                <Label Text="{Binding Description}" TextColor="#C8CDD6" FontSize="14"/>
+                                <Label Text="{Binding Cost, StringFormat='Cost: {0} points'}" TextColor="#888" FontSize="12"/>
+                                
+                                <!-- Redemption Code -->
+                                <Border BackgroundColor="#007AFF"
+                                        Stroke="#007AFF"
+                                        StrokeThickness="0"
+                                        Padding="12,10"
+                                        Margin="0,10,0,0"
+                                        StrokeShape="RoundRectangle 8">
+                                    <VerticalStackLayout>
+                                        <Label Text="Redemption Code" TextColor="White" FontSize="11" Opacity="0.8"/>
+                                        <Label Text="{Binding Code}" TextColor="White" FontSize="20" FontAttributes="Bold"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                                
+                                <!-- Status Badge -->
+                                <Border BackgroundColor="{Binding Used, Converter={StaticResource BoolToColorConverter}}"
+                                        Padding="8,4"
+                                        Margin="0,8,0,0"
+                                        StrokeShape="RoundRectangle 6"
+                                        Opacity="{Binding Used, Converter={StaticResource BoolToOpacityConverter}}">
+                                    <Label Text="{Binding Used, Converter={StaticResource BoolToStatusTextConverter}}"
+                                           TextColor="White"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"/>
+                                </Border>
+                                
+                                <Label Text="{Binding RedeemedAt, StringFormat='Redeemed on {0:dd MMM yyyy HH:mm}'}" 
+                                       TextColor="#666" FontSize="12" Margin="0,10,0,0"/>
+                                
+                                <!-- Deactivate Button -->
+                                <Button Text="Deactivate Code"
+                                        IsVisible="{Binding Used, Converter={StaticResource InverseBoolConverter}}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AdminManageRewardsViewModel}}, Path=DeactivateCodeCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="#8B0000"
+                                        TextColor="White"
+                                        CornerRadius="8"
+                                        Margin="0,10,0,0"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+
