@@ -17,12 +17,28 @@ namespace TRAFFIK_APP.Services.ApiClients
 
         public Task<Booking?> CreateAsync(Booking booking)
         {
-            // Wrap the booking object to match API's expected JSON shape
-            var payload = new { booking };
+            // Wrap the booking object to match API's expected JSON shape (BookingRequest wrapper)
+            var payload = new BookingRequest { Booking = booking };
             return PostAsync<Booking>(Endpoints.Booking.Create, payload);
         }
-        public Task<Booking?> CreateAsync(BookingCreateDto bookingDto) =>
-            PostAsync<Booking>(Endpoints.Booking.Create, bookingDto);
+        
+        public Task<Booking?> CreateAsync(BookingCreateDto bookingDto)
+        {
+            // Create Booking from DTO
+            var booking = new Booking
+            {
+                UserId = bookingDto.UserId,
+                ServiceCatalogId = bookingDto.ServiceCatalogId,
+                VehicleLicensePlate = bookingDto.VehicleLicensePlate,
+                BookingDate = bookingDto.BookingDate,
+                BookingTime = bookingDto.BookingTime,
+                Status = bookingDto.Status
+            };
+            
+            // Wrap in BookingRequest
+            var payload = new BookingRequest { Booking = booking };
+            return PostAsync<Booking>(Endpoints.Booking.Create, payload);
+        }
 
         public Task<bool> UpdateAsync(int id, Booking booking) =>
             PutAsync(Endpoints.Booking.UpdateById.Replace("{id}", id.ToString()), booking);
@@ -34,6 +50,35 @@ namespace TRAFFIK_APP.Services.ApiClients
         {
             var endpoint = Endpoints.Booking.GetByUser.Replace("{userId}", userId.ToString());
             return await GetAsync<List<Booking>>(endpoint);
+        }
+
+        public async Task<List<TimeOnly>?> GetAvailableSlotsAsync(int serviceCatalogId, string date)
+        {
+            var endpoint = $"{Endpoints.Booking.AvailableSlots}?serviceCatalogId={serviceCatalogId}&date={date}";
+            return await GetAsync<List<TimeOnly>>(endpoint);
+        }
+
+        public async Task<Booking?> ConfirmBookingAsync(BookingCreateDto bookingDto)
+        {
+            // Create Booking from DTO
+            var booking = new Booking
+            {
+                UserId = bookingDto.UserId,
+                ServiceCatalogId = bookingDto.ServiceCatalogId,
+                VehicleLicensePlate = bookingDto.VehicleLicensePlate,
+                BookingDate = bookingDto.BookingDate,
+                BookingTime = bookingDto.BookingTime,
+                Status = "Pending" // API sets this
+            };
+            
+            // Wrap in BookingRequest
+            var payload = new BookingRequest { Booking = booking };
+            return await PostAsync<Booking>(Endpoints.Booking.Confirm, payload);
+        }
+        
+        public class BookingRequest
+        {
+            public Booking Booking { get; set; } = null!;
         }
     }
 }

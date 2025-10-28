@@ -4,7 +4,6 @@
     {
         public int UserId { get; set; }
         public int? ServiceId { get; set; }
-        public int CarModelId { get; set; }
         public int? ServiceCatalogId { get; set; }
         public string VehicleLicensePlate { get; set; } = string.Empty;
         public DateOnly BookingDate { get; set; }

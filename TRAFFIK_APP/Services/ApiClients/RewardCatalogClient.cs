@@ -29,14 +29,5 @@ namespace TRAFFIK_APP.Services.ApiClients
             var endpoint = Endpoints.RewardCatalog.GetRedeemed.Replace("{userId}", userId.ToString());
             return GetAsync<List<RedeemedRewardDto>>(endpoint);
         }
-
-        public Task MarkAsUsedAsync(int userId, int itemId)
-        {
-            var endpoint = Endpoints.RewardCatalog.MarkAsUsed
-                .Replace("{userId}", userId.ToString())
-                .Replace("{itemId}", itemId.ToString());
-
-            return PostAsync<object>(endpoint, null); // 👈 specify <object>
-        }
     }
 }

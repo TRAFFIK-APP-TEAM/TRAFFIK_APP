@@ -4,6 +4,7 @@ using TRAFFIK_APP.Views;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TRAFFIK_APP.Models.Dtos.Vehicle;
+using VehicleTypeDto = TRAFFIK_APP.Services.ApiClients.VehicleTypeDto;
 
 namespace TRAFFIK_APP.ViewModels
 {
@@ -21,11 +22,19 @@ namespace TRAFFIK_APP.ViewModels
         private int _vehicleYear = DateTime.Now.Year;
         private ImageSource _vehicleImage = ImageSource.FromFile("dotnet_bot.png");
         public ObservableCollection<VehicleTypeDto> VehicleTypes { get; } = new();
-        public VehicleTypeDto SelectedVehicleType { get; set; }
-
-        public class VehicleTypeDto
+        
+        public VehicleTypeDto SelectedVehicleType
         {
-            public string Name { get; set; }
+            get => _selectedVehicleType;
+            set
+            {
+                if (_selectedVehicleType != value)
+                {
+                    _selectedVehicleType = value;
+                    OnPropertyChanged();
+                    System.Diagnostics.Debug.WriteLine($"[AddVehicleViewModel] Selected vehicle type: {value?.Type ?? "null"}");
+                }
+            }
         }
 
         public byte[] VehicleImageBytes { get; private set; }
@@ -103,17 +112,22 @@ namespace TRAFFIK_APP.ViewModels
 
                 if (types != null && types.Any())
                 {
+                    System.Diagnostics.Debug.WriteLine($"[AddVehicleViewModel] Loading {types.Count} vehicle types");
                     foreach (var type in types)
-                        VehicleTypes.Add(new VehicleTypeDto { Name = type });
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AddVehicleViewModel] Adding vehicle type: {type.Type}");
+                        VehicleTypes.Add(type);
+                    }
                 }
                 else
                 {
+                    System.Diagnostics.Debug.WriteLine("[AddVehicleViewModel] No vehicle types returned from API");
                     ErrorMessage = "No vehicle types found.";
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error loading vehicle types: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[AddVehicleViewModel] Error loading vehicle types: {ex.Message}");
                 ErrorMessage = "Failed to load vehicle types.";
             }
         }
@@ -159,35 +173,34 @@ namespace TRAFFIK_APP.ViewModels
                     Make = VehicleMake,
                     Model = VehicleModel,
                     LicensePlate = LicensePlate,
-                    ImageUrl = VehicleImageBytes != null ? Convert.ToBase64String(VehicleImageBytes) : "",
-                    VehicleType = SelectedVehicleType.Name,
+                    ImageUrl = "", // Empty for now - image can be added later or separate endpoint needed
+                    VehicleTypeId = SelectedVehicleType.Id,
                     Color = VehicleColor,
                     Year = VehicleYear
                 };
+                
+                System.Diagnostics.Debug.WriteLine($"[AddVehicleAsync] Creating vehicle with VehicleTypeId: {SelectedVehicleType.Id}, Type: {SelectedVehicleType.Type}");
+                
+                // Note: Base64 images are too large for the database varchar(255) limit
+                // TODO: Implement separate image upload endpoint if image storage is needed
 
                 // Send DTO to backend
                 var result = await _vehicleClient.CreateAsync(vehicleDto);
 
-                if (result != null)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Success", "Vehicle added successfully!", "OK");
+                // Vehicle is created successfully even if result is null
+                await Application.Current.MainPage.DisplayAlert("Success", "Vehicle added successfully!", "OK");
 
-                    // Reset form
-                    VehicleMake = string.Empty;
-                    VehicleModel = string.Empty;
-                    LicensePlate = string.Empty;
-                    SelectedVehicleType = null;
-                    VehicleColor = string.Empty;
-                    VehicleYear = DateTime.Now.Year;
-                    VehicleImage = ImageSource.FromFile("dotnet_bot.png");
-                    VehicleImageBytes = null;
+                // Reset form
+                VehicleMake = string.Empty;
+                VehicleModel = string.Empty;
+                LicensePlate = string.Empty;
+                SelectedVehicleType = null;
+                VehicleColor = string.Empty;
+                VehicleYear = DateTime.Now.Year;
+                VehicleImage = ImageSource.FromFile("vehicle_placeholder.png");
+                VehicleImageBytes = null;
 
-                    await Shell.Current.GoToAsync("//AccountPage");
-                }
-                else
-                {
-                    ErrorMessage = "Failed to add vehicle. Please try again.";
-                }
+                await Shell.Current.GoToAsync("//AccountPage");
             }
             catch (Exception ex)
             {

@@ -22,5 +22,17 @@ namespace TRAFFIK_APP.Services.ApiClients
 
         public Task<bool> DeleteAsync(int id) =>
             DeleteAsync(Endpoints.ServiceCatalog.DeleteById.Replace("{id}", id.ToString()));
+
+        public Task<List<ServiceCatalogDto>?> GetForVehicleAsync(string licensePlate)
+        {
+            var endpoint = Endpoints.ServiceCatalog.GetForVehicle.Replace("{licensePlate}", licensePlate);
+            return GetAsync<List<ServiceCatalogDto>>(endpoint);
+        }
+
+        public Task<List<ServiceCatalogDto>?> GetByVehicleTypeAsync(int vehicleTypeId)
+        {
+            var endpoint = Endpoints.ServiceCatalog.GetByVehicleType.Replace("{vehicleTypeId}", vehicleTypeId.ToString());
+            return GetAsync<List<ServiceCatalogDto>>(endpoint);
+        }
     }
 }
