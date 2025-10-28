@@ -9,8 +9,11 @@ namespace TRAFFIK_APP.Services.ApiClients
     {
         public BookingClient(HttpClient httpClient, ILogger<ApiClient> logger) : base(httpClient, logger) { }
 
-        public Task<List<Booking>?> GetAllAsync() =>
-            GetAsync<List<Booking>>(Endpoints.Booking.GetAll);
+        public Task<List<BookingDto>?> GetAllAsync() =>
+            GetAsync<List<BookingDto>>(Endpoints.Booking.GetAll);
+
+        public Task<List<BookingDto>?> GetStaffBookingsAsync() =>
+            GetAsync<List<BookingDto>>(Endpoints.Booking.GetStaffBookings);
 
         public Task<Booking?> GetByIdAsync(int id) =>
             GetAsync<Booking>(Endpoints.Booking.GetById.Replace("{id}", id.ToString()));

@@ -12,55 +12,97 @@ namespace TRAFFIK_APP.ViewModels
 {
     public class StaffBookingListViewModel : BaseViewModel
     {
-        private readonly BookingStagesClient _bookingStagesClient;
+        private readonly BookingClient _bookingClient;
 
-        public ObservableCollection<BookingStageUpdateDto> AllBookings { get; } = new();
+        public ObservableCollection<BookingDto> AllBookings { get; } = new();
         public ICommand ViewBookingCommand { get; }
+        public ICommand LoadBookingsCommand { get; }
+        public ICommand GoBackCommand { get; }
 
-        public StaffBookingListViewModel(BookingStagesClient bookingStagesClient)
+        public StaffBookingListViewModel(BookingClient bookingClient)
         {
-            _bookingStagesClient = bookingStagesClient;
+            _bookingClient = bookingClient;
 
-            ViewBookingCommand = new Command<BookingStageUpdateDto>(async (booking) =>
+            ViewBookingCommand = new Command<BookingDto>(async (booking) =>
             {
                 if (booking != null)
                 {
-                    StaffBookingDetailPage.SelectedBooking = booking;
+                    // Convert BookingDto to BookingStageUpdateDto for the detail page
+                    var stageDto = new BookingStageUpdateDto
+                    {
+                        Id = booking.Id,
+                        BookingId = booking.Id,
+                        CurrentStage = booking.Status,
+                        VehicleId = 0, // Not used
+                        AvailableStages = new List<string>
+                        {
+                            "Service Started", "Service Completed", "Service Paid"
+                        }
+                    };
+                    StaffBookingDetailPage.SelectedBooking = stageDto;
                     await Shell.Current.GoToAsync(nameof(StaffBookingDetailPage));
                 }
             });
 
-            _ = LoadAllBookingsAsync();
+            LoadBookingsCommand = new Command(() => ExecuteSafeAsync(LoadAllBookingsAsync, "Loading bookings..."));
+            GoBackCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
+            
+            // Observe collection changes
+            AllBookings.CollectionChanged += (_, __) =>
+            {
+                System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Collection changed. Count: {AllBookings.Count}");
+                OnPropertyChanged(nameof(HasBookings));
+                OnPropertyChanged(nameof(NoBookings));
+            };
+            
+            // Load bookings when view model is created
+            LoadBookingsCommand.Execute(null);
         }
 
         private async Task LoadAllBookingsAsync()
         {
-            var items = await _bookingStagesClient.GetAllAsync();
-            if (items is null) return;
-
-            AllBookings.Clear();
-            foreach (var item in items)
+            try
             {
-                // Filter for today's bookings or bookings in progress
-                if (IsTodayOrInProgress(item))
+                System.Diagnostics.Debug.WriteLine("[StaffBookingListViewModel] Starting to load bookings...");
+                var bookings = await _bookingClient.GetStaffBookingsAsync();
+                
+                System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] API returned {bookings?.Count ?? 0} bookings");
+                
+                if (bookings is null)
                 {
-                    AllBookings.Add(item);
+                    System.Diagnostics.Debug.WriteLine("[StaffBookingListViewModel] Bookings is NULL!");
+                    ErrorMessage = "No bookings data received from server";
+                    return;
                 }
+
+                if (bookings.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("[StaffBookingListViewModel] No bookings found in the list");
+                    ErrorMessage = "No bookings found";
+                    return;
+                }
+
+                AllBookings.Clear();
+                foreach (var booking in bookings)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Adding booking: Id={booking.Id}, ServiceName='{booking.ServiceName}', Status='{booking.Status}', Vehicle='{booking.VehicleLicensePlate}', Date={booking.BookingDate}");
+                    AllBookings.Add(booking);
+                }
+                
+                System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] AllBookings collection now has {AllBookings.Count} items");
+                OnPropertyChanged(nameof(AllBookings));
+                OnPropertyChanged(nameof(HasBookings));
+                OnPropertyChanged(nameof(NoBookings));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Error loading bookings: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Stack trace: {ex.StackTrace}");
+                ErrorMessage = $"Error loading bookings: {ex.Message}";
             }
         }
 
-        private bool IsTodayOrInProgress(BookingStageUpdateDto booking)
-        {
-            // Check if booking is in progress (not at final stage)
-            var lastStage = booking.AvailableStages.LastOrDefault();
-            if (booking.CurrentStage != lastStage)
-            {
-                return true;
-            }
-            
-            // Check if booking is from today
-            // This is a simple check - you might want to enhance this based on your booking date logic
-            return true;
-        }
+        public bool HasBookings => AllBookings.Count > 0;
+        public bool NoBookings => AllBookings.Count == 0;
     }
 }

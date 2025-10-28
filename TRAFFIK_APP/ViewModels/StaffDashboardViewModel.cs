@@ -13,23 +13,30 @@ namespace TRAFFIK_APP.ViewModels
 	public class StaffDashboardViewModel : BaseViewModel
 	{
 		private readonly SessionService _sessionService;
-		private readonly BookingStagesClient _bookingStagesClient;
+		private readonly BookingClient _bookingClient;
 
-		public ObservableCollection<BookingStageUpdateDto> ActiveBookings { get; set; } = new();
+		public ObservableCollection<BookingDto> ActiveBookings { get; set; } = new();
+		public int ActiveBookingsCount => ActiveBookings.Count;
 
 		public ICommand EditProfileCommand { get; }
         public ICommand ViewAllBookingsCommand { get; }
 
-        public StaffDashboardViewModel(SessionService sessionService, BookingStagesClient bookingStagesClient)
+        public StaffDashboardViewModel(SessionService sessionService, BookingClient bookingClient)
 		{
 			_sessionService = sessionService;
-			_bookingStagesClient = bookingStagesClient;
+			_bookingClient = bookingClient;
 
 			EditProfileCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(StaffProfilePage)));
 			ViewAllBookingsCommand = new Command(async () =>
 			{
 				await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
 			});
+
+			// Observe collection changes to update count
+			ActiveBookings.CollectionChanged += (_, __) =>
+			{
+				OnPropertyChanged(nameof(ActiveBookingsCount));
+			};
 
 			// Auto-load on create for staff only
 			if (_sessionService.RoleId == 2)
@@ -41,12 +48,19 @@ namespace TRAFFIK_APP.ViewModels
 		private async Task LoadActiveBookingsAsync()
 		{
 			ActiveBookings.Clear();
-			var items = await _bookingStagesClient.GetAllAsync();
+			var items = await _bookingClient.GetStaffBookingsAsync();
 			if (items is null) return;
+			
+			// Filter for active bookings (not completed)
 			foreach (var item in items)
 			{
-				ActiveBookings.Add(item);
+				if (item.Status != "Service Completed" && item.Status != "Service Paid")
+				{
+					ActiveBookings.Add(item);
+				}
 			}
+			
+			OnPropertyChanged(nameof(ActiveBookingsCount));
 		}
 	}
 }

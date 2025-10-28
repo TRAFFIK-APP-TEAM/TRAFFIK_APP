@@ -107,6 +107,101 @@
                     </Grid>
                 </Border>
 
+                <!-- Tracking Timeline Card -->
+                <Border BackgroundColor="#1E1E1E"
+                        Stroke="Gray"
+                        StrokeThickness="1"
+                        Padding="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <Grid Padding="16" RowDefinitions="Auto,Auto" RowSpacing="16">
+                        <Label Text="Booking Progress"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               Grid.Row="0" />
+
+                        <VerticalStackLayout Grid.Row="1" Spacing="12">
+                            <!-- Progress Bar -->
+                            <ProgressBar Progress="{Binding Progress}"
+                                         ProgressColor="#007AFF"
+                                         HeightRequest="12"/>
+                            
+                            <!-- Stage Timeline -->
+                            <VerticalStackLayout Spacing="10">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                                    
+                                    <!-- Stage 1: Pending -->
+                                    <Border Grid.Row="0" Grid.Column="0"
+                                            WidthRequest="24"
+                                            HeightRequest="24"
+                                            BackgroundColor="#007AFF"
+                                            StrokeShape="RoundRectangle 12"
+                                            Margin="0,0,10,0"/>
+                                    <Label Grid.Row="0" Grid.Column="1"
+                                           Text="Booking Confirmed"
+                                           FontSize="13"
+                                           TextColor="White"
+                                           VerticalOptions="Center"/>
+
+                                    <!-- Stage 2: Service Started -->
+                                    <Border Grid.Row="1" Grid.Column="0"
+                                            WidthRequest="24"
+                                            HeightRequest="24"
+                                            BackgroundColor="{Binding Stage2Color}"
+                                            StrokeShape="RoundRectangle 12"
+                                            Margin="0,0,10,0"/>
+                                    <Label Grid.Row="1" Grid.Column="1"
+                                           Text="Service Started"
+                                           FontSize="13"
+                                           TextColor="White"
+                                           VerticalOptions="Center"/>
+
+                                    <!-- Stage 3: Wash -->
+                                    <Border Grid.Row="2" Grid.Column="0"
+                                            WidthRequest="24"
+                                            HeightRequest="24"
+                                            BackgroundColor="{Binding Stage3Color}"
+                                            StrokeShape="RoundRectangle 12"
+                                            Margin="0,0,10,0"/>
+                                    <Label Grid.Row="2" Grid.Column="1"
+                                           Text="Wash Completed"
+                                           FontSize="13"
+                                           TextColor="White"
+                                           VerticalOptions="Center"/>
+
+                                    <!-- Stage 4: Dry -->
+                                    <Border Grid.Row="3" Grid.Column="0"
+                                            WidthRequest="24"
+                                            HeightRequest="24"
+                                            BackgroundColor="{Binding Stage4Color}"
+                                            StrokeShape="RoundRectangle 12"
+                                            Margin="0,0,10,0"/>
+                                    <Label Grid.Row="3" Grid.Column="1"
+                                           Text="Dry Completed"
+                                           FontSize="13"
+                                           TextColor="White"
+                                           VerticalOptions="Center"/>
+
+                                    <!-- Stage 5: Completed -->
+                                    <Border Grid.Row="4" Grid.Column="0"
+                                            WidthRequest="24"
+                                            HeightRequest="24"
+                                            BackgroundColor="{Binding Stage5Color}"
+                                            StrokeShape="RoundRectangle 12"
+                                            Margin="0,0,10,0"/>
+                                    <Label Grid.Row="4" Grid.Column="1"
+                                           Text="Service Completed"
+                                           FontSize="13"
+                                           TextColor="White"
+                                           VerticalOptions="Center"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
                 <!-- Update Status Card -->
                 <Border BackgroundColor="#1E1E1E"
                         Stroke="Gray"

@@ -26,6 +26,22 @@ namespace TRAFFIK_APP.ViewModels
         public string UserName { get; private set; } = string.Empty;
         public string ServiceName { get; private set; } = string.Empty;
 
+        // Tracking properties
+        public double Progress => CalculateProgress();
+        public string Stage2Color => GetStageColor(2);
+        public string Stage3Color => GetStageColor(3);
+        public string Stage4Color => GetStageColor(4);
+        public string Stage5Color => GetStageColor(5);
+
+        private readonly List<string> StageSequence = new()
+        {
+            "Pending",
+            "Service Started",
+            "Wash Completed",
+            "Dry Completed",
+            "Service Completed"
+        };
+
         public ICommand UpdateStageCommand { get; }
         public ICommand GoBackCommand { get; }
 
@@ -175,6 +191,33 @@ namespace TRAFFIK_APP.ViewModels
 
             // Reload booking details
             await LoadBookingDetailsAsync(CurrentBooking.BookingId);
+            
+            // Update UI for progress tracking
+            OnPropertyChanged(nameof(Progress));
+            OnPropertyChanged(nameof(Stage2Color));
+            OnPropertyChanged(nameof(Stage3Color));
+            OnPropertyChanged(nameof(Stage4Color));
+            OnPropertyChanged(nameof(Stage5Color));
+        }
+
+        private double CalculateProgress()
+        {
+            if (CurrentBooking == null) return 0;
+            var currentStage = CurrentBooking.CurrentStage ?? "Pending";
+            var index = StageSequence.IndexOf(currentStage);
+            if (index < 0) return 0;
+            return (index + 1) / (double)StageSequence.Count;
+        }
+
+        private string GetStageColor(int stageIndex)
+        {
+            if (CurrentBooking == null) return "#3E3E3E";
+            var currentStage = CurrentBooking.CurrentStage ?? "Pending";
+            var currentIndex = StageSequence.IndexOf(currentStage);
+            if (stageIndex <= currentIndex)
+                return "#007AFF"; // Blue for completed stages
+            else
+                return "#3E3E3E"; // Gray for pending stages
         }
     }
 }

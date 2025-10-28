@@ -21,24 +21,40 @@ namespace TRAFFIK_APP.Services.ApiClients
         {
             try
             {
+                var fullUrl = _httpClient.BaseAddress != null 
+                    ? new Uri(_httpClient.BaseAddress, url).ToString() 
+                    : url;
+                    
+                System.Diagnostics.Debug.WriteLine($"[ApiClient] GET request to: {fullUrl}");
+                
                 var response = await _httpClient.GetAsync(url);
+                
+                System.Diagnostics.Debug.WriteLine($"[ApiClient] Response status: {response.StatusCode}");
                 
                 if (!response.IsSuccessStatusCode)
                 {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine($"[ApiClient] Error response: {errorContent}");
                     return default;
                 }
                 
                 var content = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine($"[ApiClient] Response content length: {content.Length}");
+                System.Diagnostics.Debug.WriteLine($"[ApiClient] Response content (first 500 chars): {content.Substring(0, Math.Min(500, content.Length))}");
+                
                 var result = System.Text.Json.JsonSerializer.Deserialize<T>(content, new System.Text.Json.JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
+                
+                System.Diagnostics.Debug.WriteLine($"[ApiClient] Deserialized result: {(result != null ? "SUCCESS" : "NULL")}");
                 
                 return result;
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[ApiClient] Exception in GetAsync: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[ApiClient] Stack trace: {ex.StackTrace}");
                 return default;
             }
         }
