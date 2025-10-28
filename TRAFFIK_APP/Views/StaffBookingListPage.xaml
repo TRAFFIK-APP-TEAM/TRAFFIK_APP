@@ -4,12 +4,12 @@
              xmlns:viewmodels="clr-namespace:TRAFFIK_APP.ViewModels"
              x:Class="TRAFFIK_APP.Views.StaffBookingListPage"
              x:Name="StaffBookingListRoot"
-             BackgroundColor="#0A0E27"
+             BackgroundColor="#000000"
              Shell.FlyoutBehavior="Disabled">
 
     <Grid RowDefinitions="Auto,*">
         <!-- Top Bar -->
-        <Grid Padding="24,16" Row="0" BackgroundColor="#161B33">
+        <Grid Padding="24,16" Row="0" BackgroundColor="#000000">
             <VerticalStackLayout Spacing="4">
                 <Label Text="Today's Bookings"
                        FontSize="24"
@@ -29,9 +29,9 @@
                                 SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border BackgroundColor="#1E293B"
+                            <Border BackgroundColor="#1E1E1E"
+                                    Stroke="Gray"
                                     StrokeThickness="1"
-                                    Stroke="#334155"
                                     Padding="0"
                                     Margin="0,0,0,14">
                                 <Border.StrokeShape>
@@ -50,7 +50,7 @@
                                                FontAttributes="Bold"
                                                TextColor="White" />
                                         <Border Grid.Column="1"
-                                                BackgroundColor="#2563EB"
+                                                BackgroundColor="#007AFF"
                                                 Padding="10,5">
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="6"/>
@@ -64,7 +64,7 @@
                                         <Label Text="🚗"
                                                FontSize="16" />
                                         <Label Text="{Binding VehicleId, StringFormat='Vehicle #{0}'}"
-                                               TextColor="#C8CDD6"
+                                               TextColor="White"
                                                FontSize="14"
                                                VerticalOptions="Center" />
                                     </Grid>
@@ -73,7 +73,7 @@
                                         <Label Text="📋"
                                                FontSize="16" />
                                         <Label Text="{Binding ServiceName}"
-                                               TextColor="#C8CDD6"
+                                               TextColor="White"
                                                FontSize="14"
                                                VerticalOptions="Center" />
                                     </Grid>

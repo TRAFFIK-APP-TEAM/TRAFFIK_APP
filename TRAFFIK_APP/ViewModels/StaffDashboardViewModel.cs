@@ -25,7 +25,7 @@ namespace TRAFFIK_APP.ViewModels
 			_sessionService = sessionService;
 			_bookingStagesClient = bookingStagesClient;
 
-			EditProfileCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
+			EditProfileCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(StaffProfilePage)));
 			ViewAllBookingsCommand = new Command(async () =>
 			{
 				await Shell.Current.GoToAsync(nameof(StaffBookingListPage));

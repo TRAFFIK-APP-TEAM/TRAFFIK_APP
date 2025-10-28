@@ -15,7 +15,13 @@ namespace TRAFFIK_APP.Views
 			if (session is not null && !session.IsStaff)
 			{
 				_ = Shell.Current.DisplayAlert("Access Denied", "Staff only area.", "OK");
-				_ = Shell.Current.GoToAsync("//UserDashboardPage");
+				// Redirect based on user role
+				if (session.IsAdmin)
+					_ = Shell.Current.GoToAsync("//AdminDashboardPage");
+				else if (session.IsStaff)
+					_ = Shell.Current.GoToAsync("//StaffDashboardPage");
+				else
+					_ = Shell.Current.GoToAsync("//DashboardPage");
 			}
 		}
 	}

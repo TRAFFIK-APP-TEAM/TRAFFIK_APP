@@ -56,6 +56,7 @@ namespace TRAFFIK_APP
             Routing.RegisterRoute(nameof(BookingConfirmationPage), typeof(BookingConfirmationPage));
             Routing.RegisterRoute(nameof(StaffBookingListPage), typeof(StaffBookingListPage));
             Routing.RegisterRoute(nameof(StaffBookingDetailPage), typeof(StaffBookingDetailPage));
+            Routing.RegisterRoute(nameof(StaffProfilePage), typeof(StaffProfilePage));
             
 
 
@@ -259,6 +260,7 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<StaffDashboardViewModel>();
             builder.Services.AddTransient<StaffBookingListViewModel>();
             builder.Services.AddTransient<StaffBookingDetailViewModel>();
+            builder.Services.AddTransient<StaffProfileViewModel>();
 
             builder.Services.AddTransient<DashboardPage>();
             builder.Services.AddTransient<SignupPage>();
@@ -274,6 +276,7 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<StaffDashboardPage>();
             builder.Services.AddTransient<StaffBookingListPage>();
             builder.Services.AddTransient<StaffBookingDetailPage>();
+            builder.Services.AddTransient<StaffProfilePage>();
             builder.Services.AddTransient<AdminDashboardPage>();
 
 
