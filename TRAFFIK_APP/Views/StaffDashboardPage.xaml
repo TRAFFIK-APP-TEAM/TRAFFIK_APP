@@ -2,12 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRAFFIK_APP.Views.StaffDashboardPage"
              x:Name="StaffDashboardRoot"
-             BackgroundColor="#0A0E27"
+             BackgroundColor="#000000"
              Shell.FlyoutBehavior="Disabled">
 
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- Top Bar -->
-        <Grid Padding="24,16" Row="0" BackgroundColor="#161B33">
+        <Grid Padding="24,16" Row="0" BackgroundColor="#000000">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -58,19 +58,13 @@
                 </Grid>
 
                 <!-- Quick Stats -->
-                <Border BackgroundColor="#1E293B"
+                <Border BackgroundColor="#1E1E1E"
+                        Stroke="Gray"
                         StrokeThickness="1"
-                        Stroke="#334155"
                         Padding="20">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="12"/>
                     </Border.StrokeShape>
-                    <Border.Shadow>
-                        <Shadow Brush="#000000" 
-                                Offset="0,4" 
-                                Radius="8" 
-                                Opacity="0.3"/>
-                    </Border.Shadow>
                     <VerticalStackLayout Spacing="12">
                         <Label Text="Active Bookings"
                                FontSize="16"
@@ -79,32 +73,26 @@
                         <Label Text="{Binding ActiveBookings.Count, StringFormat='{0} bookings in progress'}"
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="#10B981"
+                               TextColor="#007AFF"
                                HorizontalOptions="Center"
                                Padding="0,10,0,0" />
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- Quick Actions -->
-                <Border BackgroundColor="#1E293B"
+                <Border BackgroundColor="#1E1E1E"
+                        Stroke="Gray"
                         StrokeThickness="1"
-                        Stroke="#334155"
                         Padding="20">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="12"/>
                     </Border.StrokeShape>
-                    <Border.Shadow>
-                        <Shadow Brush="#000000" 
-                                Offset="0,4" 
-                                Radius="8" 
-                                Opacity="0.3"/>
-                    </Border.Shadow>
                     <VerticalStackLayout Spacing="16">
                         <Label Text="Quick Actions"
                                FontSize="16"
                                FontAttributes="Bold"
                                TextColor="White" />
-                        
+
                         <Button Text="View &amp; Manage Bookings"
                                 Command="{Binding ViewAllBookingsCommand}"
                                 BackgroundColor="#007AFF"
@@ -117,52 +105,6 @@
                 </Border>
             </VerticalStackLayout>
         </ScrollView>
-
-        <!-- Bottom Navigation Bar -->
-        <Grid Grid.Row="2"
-              BackgroundColor="#1E293B"
-              HeightRequest="70"
-              Padding="10,0"
-              ColumnSpacing="25">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <StackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="home_icon.png"
-                             Command="{Binding GoHomeCommand}"
-                             BackgroundColor="Transparent"
-                             HeightRequest="28"
-                             WidthRequest="28" />
-            </StackLayout>
-
-            <StackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="calendar_icon.png"
-                             Command="{Binding GoAppointmentsCommand}"
-                             BackgroundColor="Transparent"
-                             HeightRequest="28"
-                             WidthRequest="28" />
-            </StackLayout>
-
-            <StackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="gift_icon.png"
-                             Command="{Binding GoRewardsCommand}"
-                             BackgroundColor="Transparent"
-                             HeightRequest="28"
-                             WidthRequest="28" />
-            </StackLayout>
-
-            <StackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton Source="account_icon.png"
-                             Command="{Binding GoAccountCommand}"
-                             BackgroundColor="Transparent"
-                             HeightRequest="28"
-                             WidthRequest="28" />
-            </StackLayout>
-        </Grid>
     </Grid>
 
 </ContentPage>
