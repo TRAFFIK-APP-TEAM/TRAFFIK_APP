@@ -40,7 +40,7 @@ namespace TRAFFIK_APP.ViewModels
                         }
                     };
                     StaffBookingDetailPage.SelectedBooking = stageDto;
-                    await Shell.Current.GoToAsync(nameof(StaffBookingDetailPage));
+                    await Shell.Current.GoToAsync($"/StaffBookingDetailPage");
                 }
             });
 

@@ -123,7 +123,7 @@ namespace TRAFFIK_APP.ViewModels
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"Error in GoBackCommand: {ex.Message}");
-                    await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.BookingVehicleSelectPage));
+                    await Shell.Current.GoToAsync($"/BookingVehicleSelectPage");
                 }
             });
             GoHomeCommand = new Command(async () => await Shell.Current.GoToAsync("//DashboardPage"));
@@ -316,7 +316,7 @@ namespace TRAFFIK_APP.ViewModels
                 
                 // Navigate to DateTime selection page
                 System.Diagnostics.Debug.WriteLine("[OnSelectService] Attempting navigation...");
-                await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.BookingDateTimeSelectPage));
+                await Shell.Current.GoToAsync($"/BookingDateTimeSelectPage");
                 System.Diagnostics.Debug.WriteLine("[OnSelectService] Navigation completed successfully");
             }
             catch (Exception ex)

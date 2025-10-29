@@ -419,9 +419,9 @@
         <Setter Property="Shell.BackgroundColor" Value="Black" />
         <Setter Property="Shell.TitleColor" Value="White" />
         <Setter Property="Shell.NavBarHasShadow" Value="False" />
-        <Setter Property="Shell.TabBarBackgroundColor" Value="Black" />
-        <Setter Property="Shell.TabBarTitleColor" Value="White" />
-        <Setter Property="Shell.TabBarUnselectedColor" Value="Gray" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="#1E1E1E" />
+        <Setter Property="Shell.TabBarTitleColor" Value="#007AFF" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="#666666" />
     </Style>
 
 

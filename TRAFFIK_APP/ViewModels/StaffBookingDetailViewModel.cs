@@ -105,14 +105,14 @@ namespace TRAFFIK_APP.ViewModels
                     else
                     {
                         // If we can't pop, go to the booking list page
-                        await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+                        await Shell.Current.GoToAsync($"/StaffBookingListPage");
                     }
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"[GoBackCommand] Error: {ex.Message}");
                     // Fallback: navigate to booking list
-                    await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+                    await Shell.Current.GoToAsync($"/StaffBookingListPage");
                 }
             });
         }
@@ -308,14 +308,14 @@ namespace TRAFFIK_APP.ViewModels
                 else
                 {
                     // If we can't pop, go to the booking list page
-                    await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+                    await Shell.Current.GoToAsync($"/StaffBookingListPage");
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[UpdateStage] Navigation error: {ex.Message}");
                 // Fallback: navigate to booking list
-                await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+                await Shell.Current.GoToAsync($"///StaffBookingListPage");
             }
         }
 
