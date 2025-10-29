@@ -30,7 +30,7 @@ namespace TRAFFIK_APP.ViewModels
 			EditProfileCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(StaffProfilePage)));
 			ViewAllBookingsCommand = new Command(async () =>
 			{
-				await Shell.Current.GoToAsync($"/StaffBookingListPage");
+				await Shell.Current.GoToAsync("StaffBookingListPage");
 			});
 			ViewCodesCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(StaffViewCodesPage)));
 
@@ -49,7 +49,10 @@ namespace TRAFFIK_APP.ViewModels
 
 		public async Task LoadActiveBookingsAsync()
 		{
+			// Clear collection first to reset count immediately
 			ActiveBookings.Clear();
+			OnPropertyChanged(nameof(ActiveBookingsCount));
+			
 			var items = await _bookingClient.GetStaffBookingsAsync();
 			if (items is null) return;
 			
@@ -63,6 +66,7 @@ namespace TRAFFIK_APP.ViewModels
 				}
 			}
 			
+			// Notify count change after all items are added
 			OnPropertyChanged(nameof(ActiveBookingsCount));
 		}
 	}

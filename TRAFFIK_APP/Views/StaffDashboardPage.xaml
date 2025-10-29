@@ -8,10 +8,6 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- Top Bar -->
         <Grid Padding="24,16" Row="0" BackgroundColor="#000000">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
             <VerticalStackLayout Spacing="4">
                 <Label Text="Staff Dashboard"
                        FontSize="26"
@@ -22,40 +18,15 @@
                        TextColor="#9CA3AF"
                        Opacity="0.7" />
             </VerticalStackLayout>
-            <Button Text="Profile"
-                    Grid.Column="1"
-                    Command="{Binding EditProfileCommand}"
-                    BackgroundColor="#2563EB"
-                    TextColor="White"
-                    CornerRadius="8"
-                    Padding="20,8" />
         </Grid>
 
         <!-- Main Content -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="20" Spacing="16">
                 <!-- Header Section -->
-                <Grid ColumnDefinitions="*,Auto">
-                    <VerticalStackLayout Grid.Column="0">
-                        <Label Text="Active Bookings"
-                               FontSize="20"
-                               FontAttributes="Bold"
-                               TextColor="White" />
-                        <Label Text="Update booking status in real-time"
-                               FontSize="13"
-                               TextColor="#9CA3AF"
-                               Margin="0,-5,0,0" />
-                    </VerticalStackLayout>
-                    <Button Text="View All"
-                            Grid.Column="1"
-                            Command="{Binding ViewAllBookingsCommand}"
-                            BackgroundColor="#1E293B"
-                            TextColor="White"
-                            CornerRadius="8"
-                            Padding="16,8"
-                            BorderWidth="1"
-                            BorderColor="#334155" />
-                </Grid>
+                <Label Text="Update booking status in real-time"
+                       FontSize="13"
+                       TextColor="#9CA3AF" />
 
                 <!-- Quick Stats -->
                 <Border BackgroundColor="#1E1E1E"
@@ -104,6 +75,15 @@
 
                         <Button Text="View Active Codes"
                                 Command="{Binding ViewCodesCommand}"
+                                BackgroundColor="#2563EB"
+                                TextColor="White"
+                                CornerRadius="8"
+                                Padding="0,15"
+                                FontAttributes="Bold"
+                                FontSize="16" />
+
+                        <Button Text="Profile"
+                                Command="{Binding EditProfileCommand}"
                                 BackgroundColor="#2563EB"
                                 TextColor="White"
                                 CornerRadius="8"

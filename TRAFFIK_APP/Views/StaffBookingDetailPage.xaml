@@ -3,37 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRAFFIK_APP.Views.StaffBookingDetailPage"
              BackgroundColor="#000000"
-             Shell.FlyoutBehavior="Disabled">
+             Shell.FlyoutBehavior="Disabled"
+             Shell.NavBarIsVisible="True"
+             Title="Booking Details">
 
-    <Grid RowDefinitions="Auto,*">
-        <!-- Top Bar -->
-        <Grid Padding="24,16" Row="0" BackgroundColor="#000000">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0"
-                    Text="← Back"
-                    Command="{Binding GoBackCommand}"
-                    BackgroundColor="#1E1E1E"
-                    TextColor="#FFFFFF"
-                    FontSize="16"
-                    FontAttributes="Bold"
-                    BorderColor="#9CA3AF"
-                    BorderWidth="1"
-                    CornerRadius="8"
-                    Padding="16,8"
-                    HorizontalOptions="Start" />
-            <Label Grid.Column="1"
-                   Text="Booking Details"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   HorizontalOptions="Center" />
-        </Grid>
-
+    <Grid RowDefinitions="*">
         <!-- Main Content -->
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="0">
             <VerticalStackLayout Padding="20" Spacing="20">
                 
                 <!-- Booking Info Card -->
@@ -44,7 +20,7 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="12"/>
                     </Border.StrokeShape>
-                    <Grid Padding="16" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="12">
+                    <Grid Padding="16" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="12">
                         <Label Text="Booking Information"
                                FontSize="18"
                                FontAttributes="Bold"
@@ -54,7 +30,8 @@
                         <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="12">
                             <Label Text="Booking ID:"
                                    TextColor="#9CA3AF"
-                                   FontSize="14" />
+                                   FontSize="14"
+                                   VerticalOptions="Center" />
                             <Label Text="{Binding CurrentBooking.BookingId, StringFormat='#{0}'}"
                                    TextColor="White"
                                    FontSize="14"
@@ -65,30 +42,35 @@
                         <Grid Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="12">
                             <Label Text="Customer:"
                                    TextColor="#9CA3AF"
-                                   FontSize="14" />
+                                   FontSize="14"
+                                   VerticalOptions="Center" />
                             <Label Text="{Binding UserName}"
                                    TextColor="White"
                                    FontSize="14"
                                    FontAttributes="Bold"
-                                   Grid.Column="1" />
+                                   Grid.Column="1"
+                                   LineBreakMode="WordWrap" />
                         </Grid>
 
                         <Grid Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="12">
                             <Label Text="Service:"
                                    TextColor="#9CA3AF"
-                                   FontSize="14" />
+                                   FontSize="14"
+                                   VerticalOptions="Center" />
                             <Label Text="{Binding ServiceName}"
                                    TextColor="White"
                                    FontSize="14"
                                    FontAttributes="Bold"
-                                   Grid.Column="1" />
+                                   Grid.Column="1"
+                                   LineBreakMode="WordWrap" />
                         </Grid>
 
                         <Grid Grid.Row="4" ColumnDefinitions="Auto,*" ColumnSpacing="12">
                             <Label Text="Vehicle:"
                                    TextColor="#9CA3AF"
-                                   FontSize="14" />
-                            <Label Text="{Binding CurrentBooking.VehicleId, StringFormat='Vehicle #{0}'}"
+                                   FontSize="14"
+                                   VerticalOptions="Center" />
+                            <Label Text="{Binding BookingDetails.VehicleLicensePlate, FallbackValue='N/A'}"
                                    TextColor="White"
                                    FontSize="14"
                                    FontAttributes="Bold"
@@ -98,7 +80,8 @@
                         <Grid Grid.Row="5" ColumnDefinitions="Auto,*" ColumnSpacing="12">
                             <Label Text="Current Status:"
                                    TextColor="#9CA3AF"
-                                   FontSize="14" />
+                                   FontSize="14"
+                                   VerticalOptions="Center" />
                             <Border Grid.Column="1"
                                     BackgroundColor="#007AFF"
                                     Padding="10,5"
