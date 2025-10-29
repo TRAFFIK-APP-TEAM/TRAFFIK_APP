@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRAFFIK_APP.Views.AdminDashboardPage"
              Title="Admin Dashboard"
-             BackgroundColor="#101726">
+             BackgroundColor="#000000">
 
 	<ScrollView>
 		<VerticalStackLayout Padding="20" Spacing="20">
@@ -16,7 +16,7 @@
                    Margin="0,0,0,10"/>
 
 			<!-- Admin Tools -->
-			<Frame BackgroundColor="#262B34"
+			<Frame BackgroundColor="#1E1E1E"
                    CornerRadius="16"
                    HasShadow="True"
                    Padding="16">
@@ -29,35 +29,57 @@
                            Margin="0,0,0,8"/>
 
 					<!-- Navigation Buttons -->
-					<Button Text="View Analytics"
+					<!--<Button Text="View Analytics"
                             CornerRadius="12"
                             Clicked="OnViewAnalytics"
-                            BackgroundColor="#303743"
-                            TextColor="White"/>
+                            BackgroundColor="#007AFF"
+                            TextColor="White"/>-->
 
 					<Button Text="Manage Bookings"
                             CornerRadius="12"
                             Clicked="OnManageBookings"
-                            BackgroundColor="#303743"
+                            BackgroundColor="#007AFF"
                             TextColor="White"/>
 
 					<Button Text="Manage Users"
                             CornerRadius="12"
                             Clicked="OnManageUsers"
-                            BackgroundColor="#303743"
+                            BackgroundColor="#007AFF"
                             TextColor="White"/>
 
 					<Button Text="Add Admin / Employee"
                             CornerRadius="12"
                             Clicked="OnAddAdmin"
-                            BackgroundColor="#2E8B57"
+                            BackgroundColor="#007AFF"
                             TextColor="White"/>
 
 					<Button Text="View Redeemed Rewards"
                             CornerRadius="12"
                             Clicked="OnViewRedeemedRewards"
-                            BackgroundColor="#303743"
+                            BackgroundColor="#007AFF"
                             TextColor="White"/>
+				</VerticalStackLayout>
+			</Frame>
+
+			<!-- Profile Section -->
+			<Frame BackgroundColor="#1E1E1E"
+                   CornerRadius="16"
+                   HasShadow="True"
+                   Padding="16">
+				<VerticalStackLayout Spacing="12">
+
+					<Label Text="Profile"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           Margin="0,0,0,8"/>
+
+					<Button Text="View Profile"
+                            CornerRadius="12"
+                            Clicked="OnViewProfile"
+                            BackgroundColor="#007AFF"
+                            TextColor="White"/>
+
 				</VerticalStackLayout>
 			</Frame>
 

@@ -9,7 +9,7 @@ namespace TRAFFIK_APP.Converters
         {
             if (value is bool isUsed)
             {
-                return isUsed ? "#28a745" : "#ffc107"; // Green for used, Yellow/Orange for active
+                return isUsed ? "#ffc107" : "#28a745"; // Green for active, Yellow/Orange for used
             }
             return "#666";
         }

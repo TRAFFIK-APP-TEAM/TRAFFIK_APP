@@ -25,6 +25,8 @@
                AbsoluteLayout.LayoutFlags="PositionProportional" />
         </AbsoluteLayout>
     </Shell.TitleView>
+    
+    <Shell.FlyoutBehavior>Disabled</Shell.FlyoutBehavior>
 
     <!-- Login route (hidden tab bar) -->
     <ShellContent Title="Login"
@@ -66,15 +68,18 @@
     <ShellContent Title="Admin"
                   ContentTemplate="{DataTemplate views:AdminDashboardPage}"
                   Route="AdminDashboardPage"
-                  Shell.TabBarIsVisible="False" />
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False" />
 
     <ShellContent Title="AdminAnalytics"
                   ContentTemplate="{DataTemplate views:AdminAnalyticsPage}"
                   Route="AdminAnalyticsPage"
-                  Shell.TabBarIsVisible="False" />
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False" />
 
     <ShellContent Title="AddAdmin"
                   ContentTemplate="{DataTemplate views:AddAdminPage}"
                   Route="AddAdminPage"
-                  Shell.TabBarIsVisible="False" />
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False" />
 </Shell>

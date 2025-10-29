@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRAFFIK_APP.Views.AddAdminPage"
              Title="Add Admin / Employee"
-             BackgroundColor="#101726">
+             BackgroundColor="#000000">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
 
             <!-- Back Button -->
             <Button Text="← Back to Analytics"
-                    BackgroundColor="#262B34"
+                    BackgroundColor="#007AFF"
                     TextColor="White"
                     CornerRadius="12"
                     Clicked="OnBackClicked"

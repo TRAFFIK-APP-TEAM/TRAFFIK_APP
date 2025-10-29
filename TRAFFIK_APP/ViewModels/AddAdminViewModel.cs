@@ -127,7 +127,7 @@ namespace TRAFFIK_APP.ViewModels
 
                 // Wait a moment to show success message, then navigate back
                 await Task.Delay(1500);
-                await Shell.Current.GoToAsync("///AdminAnalyticsPage");
+                await Shell.Current.GoToAsync("///AdminDashboardPage");
             }
             else
             {

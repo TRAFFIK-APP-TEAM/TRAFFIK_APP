@@ -38,5 +38,11 @@ namespace TRAFFIK_APP.Views
             // Navigate using unambiguous route name
             await Shell.Current.GoToAsync("admin_manage_rewards");
         }
+
+        private async void OnViewProfile(object sender, EventArgs e)
+        {
+            // Navigate to Admin Profile page
+            await Shell.Current.GoToAsync(nameof(AdminProfilePage));
+        }
     }
 }
