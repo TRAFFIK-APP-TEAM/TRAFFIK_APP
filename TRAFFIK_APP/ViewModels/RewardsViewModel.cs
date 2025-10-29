@@ -13,6 +13,8 @@ namespace TRAFFIK_APP.ViewModels
         private readonly RewardClient _rewardClient;
         private readonly RewardCatalogClient _catalogClient;
         private readonly SessionService _session;
+        
+        private bool _isLoading = false;
 
         private int _points;
         public int Points 
@@ -49,17 +51,28 @@ namespace TRAFFIK_APP.ViewModels
             GoAccountCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
             RedeemCommand = new Command<RewardItemDto>(async (item) => await RedeemReward(item));
             RefreshCommand = new Command(async () => await LoadRewardsAsync());
-
-            LoadRewardsAsync();
         }
 
 
 
-        private async Task LoadRewardsAsync()
+        public async Task LoadRewardsAsync()
         {
+            // Prevent duplicate loads
+            if (_isLoading)
+            {
+                System.Diagnostics.Debug.WriteLine("[LoadRewardsAsync] Already loading, skipping duplicate call");
+                return;
+            }
+
             try
             {
+                _isLoading = true;
                 IsBusy = true;
+
+                // Clear collections first to prevent duplicates
+                AvailableRewards.Clear();
+                LockedRewards.Clear();
+                RedeemedRewards.Clear();
 
                 // Load user points
                 if (_session.UserId.HasValue)
@@ -70,12 +83,9 @@ namespace TRAFFIK_APP.ViewModels
 
                 // Load reward catalog
                 var catalog = await _catalogClient.GetAllAsync() ?? new List<RewardItemDto>();
-                AvailableRewards.Clear();
-                LockedRewards.Clear();
 
                 System.Diagnostics.Debug.WriteLine($"Loaded {catalog.Count} catalog items, User has {Points} points");
 
-                RedeemedRewards.Clear();
                 if (_session.UserId.HasValue)
                 {
                     var redeemed = await _catalogClient.GetRedeemedAsync(_session.UserId.Value) ?? new List<RedeemedRewardDto>();
@@ -100,7 +110,7 @@ namespace TRAFFIK_APP.ViewModels
                 }
                 OnPropertyChanged(nameof(RedeemedRewards));
 
-                if (catalog is not null)
+                if (catalog != null && catalog.Any())
                 {
                     foreach (var reward in catalog)
                     {
@@ -142,6 +152,7 @@ namespace TRAFFIK_APP.ViewModels
             }
             finally
             {
+                _isLoading = false;
                 IsBusy = false;
             }
         }

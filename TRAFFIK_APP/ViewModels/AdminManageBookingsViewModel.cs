@@ -4,6 +4,7 @@ using System.Windows.Input;
 using TRAFFIK_APP.Models.Dtos.Booking;
 using TRAFFIK_APP.Services.ApiClients;
 using TRAFFIK_APP.Views;
+using Microsoft.Maui.Controls;
 
 namespace TRAFFIK_APP.ViewModels
 {
@@ -28,7 +29,11 @@ namespace TRAFFIK_APP.ViewModels
 
             LoadBookingsCommand = new Command(() => ExecuteSafeAsync(LoadAllBookingsAsync, "Loading bookings..."));
             RefreshCommand = new Command(() => ExecuteSafeAsync(LoadAllBookingsAsync, "Refreshing..."));
-            GoBackCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
+            GoBackCommand = new Command(async () => 
+            {
+                // Navigate back to AdminDashboardPage using absolute path
+                await Shell.Current.GoToAsync("//AdminDashboardPage");
+            });
             
             ViewBookingCommand = new Command<BookingDto>(async (booking) =>
             {
@@ -36,8 +41,8 @@ namespace TRAFFIK_APP.ViewModels
                 {
                     // Store the selected booking and navigate to detail page
                     BookingDetailPage.SelectedBooking = booking;
-                    BookingDetailPage.SourcePage = "AdminManageBookingsPage"; // Track source for back navigation
-                    await Shell.Current.GoToAsync($"/BookingDetailPage");
+                    BookingDetailPage.SourcePage = "AdminManageBookingsPage";
+                    await Shell.Current.GoToAsync("BookingDetailPage");
                 }
             });
 

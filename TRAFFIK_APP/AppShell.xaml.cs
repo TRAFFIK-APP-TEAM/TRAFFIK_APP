@@ -13,14 +13,19 @@ namespace TRAFFIK_APP
 			InitializeComponent();
 			_sessionService = ServiceHelper.GetService<SessionService>();
 
-            Routing.RegisterRoute(nameof(AdminDashboardPage), typeof(AdminDashboardPage));
-            Routing.RegisterRoute(nameof(AdminAnalyticsPage), typeof(AdminAnalyticsPage));
-            Routing.RegisterRoute(nameof(AdminManageBookingsPage), typeof(AdminManageBookingsPage));
-            Routing.RegisterRoute(nameof(AdminManageUsersPage), typeof(AdminManageUsersPage));
-            Routing.RegisterRoute(nameof(AddAdminPage), typeof(AddAdminPage));
-            Routing.RegisterRoute(nameof(AdminManageRewardsPage), typeof(AdminManageRewardsPage));
+            // Note: AdminDashboardPage, AdminAnalyticsPage, and AddAdminPage are defined as ShellContent in AppShell.xaml, don't register as routes
+            // Routing.RegisterRoute(nameof(AdminDashboardPage), typeof(AdminDashboardPage));
+            // Routing.RegisterRoute(nameof(AdminAnalyticsPage), typeof(AdminAnalyticsPage));
+            // Routing.RegisterRoute(nameof(AddAdminPage), typeof(AddAdminPage));
+            
+            // Register admin management pages with unique, unambiguous route names
+            // Using "admin_" prefix ensures no conflicts with other routes
+            Routing.RegisterRoute("admin_manage_bookings", typeof(AdminManageBookingsPage));
+            Routing.RegisterRoute("admin_manage_users", typeof(AdminManageUsersPage));
+            Routing.RegisterRoute("admin_manage_rewards", typeof(AdminManageRewardsPage));
             Routing.RegisterRoute("VehiclePage", typeof(VehiclePage));
             Routing.RegisterRoute(nameof(BookingTrackerPage), typeof(BookingTrackerPage));
+            Routing.RegisterRoute(nameof(BookingDetailPage), typeof(BookingDetailPage));
             
             // Booking flow pages
             Routing.RegisterRoute(nameof(BookingVehicleSelectPage), typeof(BookingVehicleSelectPage));
