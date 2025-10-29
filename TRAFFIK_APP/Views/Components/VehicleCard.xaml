@@ -43,7 +43,7 @@
             
             <!-- Make and Model -->
             <Label Grid.Row="2"
-                   Text="{Binding Make}"
+                   Text="{Binding DisplayName}"
                    FontSize="11"
                    TextColor="#C8C8C8"
                    HorizontalOptions="Center"

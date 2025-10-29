@@ -15,6 +15,6 @@ namespace TRAFFIK_APP.Models.Entities.Vehicle
     //public DateTime CreatedAt { get; set; }
     
     // Computed property for display
-    //public string DisplayName => $"{Make} {Model} ({LicensePlate})";
+    public string DisplayName => $"{Make} {Model}";
     }
 }

@@ -104,32 +104,6 @@ namespace TRAFFIK_APP.ViewModels
 
             if (notifications is not null)
                 foreach (var n in notifications) Notifications.Add(n);
-
-            // Add test vehicle for debugging
-            var testVehicle = new Vehicle
-            {
-                VehicleType = "Car",
-                Make = "Test",
-                Model = "Vehicle",
-                LicensePlate = "TEST123",
-                ImageUrl = "dotnet_bot.png",
-                UserId = userId
-            };
-            Vehicles.Add(testVehicle);
-            System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Added test vehicle: {testVehicle.Make} {testVehicle.Model} ({testVehicle.LicensePlate})");
-            
-            // Add another test vehicle to make it more obvious
-            var testVehicle2 = new Vehicle
-            {
-                VehicleType = "Truck",
-                Make = "Debug",
-                Model = "Truck",
-                LicensePlate = "DEBUG456",
-                ImageUrl = "dotnet_bot.png",
-                UserId = userId
-            };
-            Vehicles.Add(testVehicle2);
-            System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Added second test vehicle: {testVehicle2.Make} {testVehicle2.Model} ({testVehicle2.LicensePlate})");
             
             // Notify UI that the Vehicles collection has changed
             OnPropertyChanged(nameof(Vehicles));
