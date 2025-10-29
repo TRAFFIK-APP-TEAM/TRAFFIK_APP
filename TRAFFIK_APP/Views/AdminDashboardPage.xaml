@@ -15,22 +15,6 @@
                    FontAttributes="Bold"
                    Margin="0,0,0,10"/>
 
-			<!-- Overview Card -->
-			<Frame BackgroundColor="#262B34"
-                   CornerRadius="16"
-                   HasShadow="True"
-                   Padding="16">
-				<VerticalStackLayout Spacing="8">
-					<Label Text="Quick Overview"
-                           TextColor="White"
-                           FontSize="18"
-                           FontAttributes="Bold"/>
-					<Label Text="Monitor your business operations at a glance."
-                           TextColor="#C8CDD6"
-                           FontSize="13"/>
-				</VerticalStackLayout>
-			</Frame>
-
 			<!-- Admin Tools -->
 			<Frame BackgroundColor="#262B34"
                    CornerRadius="16"

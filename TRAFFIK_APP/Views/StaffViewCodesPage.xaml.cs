@@ -1,10 +1,10 @@
-﻿using TRAFFIK_APP.ViewModels;
+using TRAFFIK_APP.ViewModels;
 
 namespace TRAFFIK_APP.Views;
 
-public partial class AdminManageBookingsPage : ContentPage
+public partial class StaffViewCodesPage : ContentPage
 {
-    public AdminManageBookingsPage(AdminManageBookingsViewModel viewModel)
+    public StaffViewCodesPage(StaffViewCodesViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
@@ -22,4 +22,16 @@ public partial class AdminManageBookingsPage : ContentPage
         Shell.Current.GoToAsync("..").Wait();
         return true; // Prevent default back button behavior
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        
+        // Reload codes when page appears
+        if (BindingContext is StaffViewCodesViewModel viewModel)
+        {
+            await viewModel.LoadActiveCodesAsync();
+        }
+    }
 }
+

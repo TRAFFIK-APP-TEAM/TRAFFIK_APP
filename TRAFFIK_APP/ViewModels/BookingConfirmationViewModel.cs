@@ -91,11 +91,14 @@ namespace TRAFFIK_APP.ViewModels
                     // Note: Reward points are automatically awarded by the backend
                     // No need to manually call EarnAsync
 
+                    // Reset the booking flow state to fresh
+                    ResetBookingState();
+
                     await Shell.Current.DisplayAlert("Success!", 
                         $"Your booking has been confirmed!", "OK");
                     
-                    // Navigate back to dashboard
-                    await Shell.Current.GoToAsync("//DashboardPage");
+                    // Navigate back to bookings page and reload bookings
+                    await Shell.Current.GoToAsync("//BookingPage");
                 }
                 else
                 {
@@ -108,6 +111,24 @@ namespace TRAFFIK_APP.ViewModels
                 System.Diagnostics.Debug.WriteLine($"[BookingConfirmation] Stack trace: {ex.StackTrace}");
                 await Shell.Current.DisplayAlert("Error", $"Failed to create booking: {ex.Message}", "OK");
             }
+        }
+
+        /// <summary>
+        /// Resets all booking selection state to prepare for a new booking flow
+        /// </summary>
+        public static void ResetBookingState()
+        {
+            // Reset BookingConfirmationViewModel state
+            SelectedService = null;
+            SelectedVehicle = null;
+            SelectedDateTime = default(DateTime);
+            
+            // Reset BookingDateTimeSelectViewModel state
+            BookingDateTimeSelectViewModel.SelectedService = null;
+            BookingDateTimeSelectViewModel.SelectedVehicle = null;
+            
+            // Reset BookingServiceSelectViewModel state
+            BookingServiceSelectViewModel.SelectedVehicle = null;
         }
     }
 }

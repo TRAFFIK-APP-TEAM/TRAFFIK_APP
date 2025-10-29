@@ -31,6 +31,7 @@ namespace TRAFFIK_APP
             // Staff booking pages
             Routing.RegisterRoute(nameof(StaffBookingListPage), typeof(StaffBookingListPage));
             Routing.RegisterRoute(nameof(StaffBookingDetailPage), typeof(StaffBookingDetailPage));
+            Routing.RegisterRoute(nameof(StaffViewCodesPage), typeof(StaffViewCodesPage));
 
 
 

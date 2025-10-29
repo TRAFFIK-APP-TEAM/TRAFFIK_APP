@@ -44,7 +44,7 @@ namespace TRAFFIK_APP.ViewModels
         public string Stage4Text => "Completed";
         public string Stage5Text => "Paid";
 
-        public ICommand GoBackCommand { get; }
+        public ICommand GoBackCommand { get; private set; }
 
         private readonly List<string> StageSequence = new()
         {
@@ -66,6 +66,12 @@ namespace TRAFFIK_APP.ViewModels
             
             // Load stages when view model is created
             _ = LoadStagesAsync();
+        }
+        
+        public void SetBackNavigation(Func<Task> backAction)
+        {
+            GoBackCommand = new Command(async () => await backAction());
+            OnPropertyChanged(nameof(GoBackCommand));
         }
 
         public async Task LoadStagesAsync()

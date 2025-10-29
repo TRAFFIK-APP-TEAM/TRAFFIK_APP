@@ -101,6 +101,15 @@
                                 Padding="0,15"
                                 FontAttributes="Bold"
                                 FontSize="16" />
+
+                        <Button Text="View Active Codes"
+                                Command="{Binding ViewCodesCommand}"
+                                BackgroundColor="#2563EB"
+                                TextColor="White"
+                                CornerRadius="8"
+                                Padding="0,15"
+                                FontAttributes="Bold"
+                                FontSize="16" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

@@ -36,7 +36,7 @@ namespace TRAFFIK_APP.ViewModels
             GoRewardsCommand = new Command(async () => await Shell.Current.GoToAsync("//RewardsPage"));
             GoAccountCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
             EditProfileCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
-            StartBookingCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.BookingVehicleSelectPage)));
+            StartBookingCommand = new Command(async () => await Shell.Current.GoToAsync($"/BookingVehicleSelectPage"));
             LoadBookingsCommand = new Command(() => ExecuteSafeAsync(LoadBookingsAsync, "Loading bookings..."));
             ViewBookingDetailsCommand = new Command<int>(async (bookingId) =>
             {

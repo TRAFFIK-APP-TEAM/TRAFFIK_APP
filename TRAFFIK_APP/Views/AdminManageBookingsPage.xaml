@@ -1,48 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TRAFFIK_APP.ViewModels"
+             xmlns:models="clr-namespace:TRAFFIK_APP.Models.Dtos.Booking"
              x:Class="TRAFFIK_APP.Views.AdminManageBookingsPage"
+             x:DataType="viewmodels:AdminManageBookingsViewModel"
              Title="Manage Bookings"
              BackgroundColor="#101726">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="16">
+    <RefreshView IsRefreshing="{Binding IsBusy}"
+                 Command="{Binding RefreshCommand}">
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="16">
 
-            <Label Text="Manage Bookings"
-                   TextColor="White"
-                   FontSize="22"
-                   FontAttributes="Bold"/>
+                <Label Text="Manage Bookings"
+                       TextColor="White"
+                       FontSize="22"
+                       FontAttributes="Bold"/>
 
-            <Label Text="Below is a list of all customer bookings. Filter, view details, or update booking status."
-                   TextColor="#C8CDD6"
-                   FontSize="14"/>
+                <Label Text="Below is a list of all customer bookings. Click on a booking to view details or use the delete button to remove it."
+                       TextColor="#C8CDD6"
+                       FontSize="14"/>
 
-            <!-- Placeholder for future search/filter bar -->
-            <Frame BackgroundColor="#262B34" CornerRadius="12" Padding="10">
-                <Entry Placeholder="Search bookings..." TextColor="White" PlaceholderColor="#C8CDD6"/>
-            </Frame>
+                <!-- Bookings List -->
+                <CollectionView ItemsSource="{Binding AllBookings}"
+                                SelectionMode="None"
+                                IsVisible="{Binding HasBookings}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:BookingDto">
+                            <Border BackgroundColor="#262B34" 
+                                    StrokeThickness="1"
+                                    Stroke="Gray"
+                                    Padding="20" 
+                                    Margin="0,5" 
+                                    StrokeShape="RoundRectangle 15">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AdminManageBookingsViewModel}}, Path=ViewBookingCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="10">
+                                    
+                                    <!-- Booking Header -->
+                                    <Label Text="{Binding ServiceName, StringFormat='Service: {0}'}"
+                                           TextColor="White"
+                                           FontSize="16"
+                                           FontAttributes="Bold"/>
+                                    
+                                    <!-- Vehicle Info -->
+                                    <Label Text="{Binding VehicleDisplayName, StringFormat='Vehicle: {0}'}"
+                                           TextColor="#C8CDD6"
+                                           FontSize="14"
+                                           IsVisible="{Binding VehicleDisplayName, Converter={StaticResource StringToBoolConverter}}"/>
+                                    
+                                    <!-- Date and Time -->
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding BookingDate, StringFormat='📅 {0:dd MMM yyyy}'}"
+                                               FontSize="13"
+                                               TextColor="#C8CDD6"/>
+                                        <Label Grid.Column="1"
+                                               Text="{Binding BookingTime, StringFormat='⏰ {0:hh\\:mm}'}"
+                                               FontSize="13"
+                                               TextColor="#C8CDD6"/>
+                                    </Grid>
+                                    
+                                    <!-- Status -->
+                                    <Border BackgroundColor="#2E2E2E"
+                                            Padding="8"
+                                            StrokeShape="RoundRectangle 8">
+                                        <Label Text="{Binding Status, StringFormat='Status: {0}'}"
+                                               FontSize="13"
+                                               FontAttributes="Bold"
+                                               TextColor="#C8CDD6"/>
+                                    </Border>
+                                    
+                                    <!-- Action Buttons -->
+                                    <HorizontalStackLayout Spacing="8" Margin="0,10,0,0">
+                                        <Button Text="View Details"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AdminManageBookingsViewModel}}, Path=ViewBookingCommand}"
+                                                CommandParameter="{Binding .}"
+                                                CornerRadius="8"
+                                                BackgroundColor="#007AFF"
+                                                TextColor="White"
+                                                HorizontalOptions="Start"/>
+                                        <Button Text="Delete"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AdminManageBookingsViewModel}}, Path=DeleteBookingCommand}"
+                                                CommandParameter="{Binding .}"
+                                                CornerRadius="8"
+                                                BackgroundColor="#DC3545"
+                                                TextColor="White"
+                                                HorizontalOptions="Start"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-            <!-- Bookings List -->
-            <CollectionView x:Name="BookingsList">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="#262B34" CornerRadius="12" HasShadow="True" Padding="16" Margin="0,8">
-                            <VerticalStackLayout>
-                                <Label Text="{Binding CustomerName}" TextColor="White" FontAttributes="Bold" FontSize="16"/>
-                                <Label Text="{Binding ServiceName}" TextColor="#C8CDD6" FontSize="13"/>
-                                <Label Text="{Binding BookingDate}" TextColor="#C8CDD6" FontSize="13"/>
-                                <Label Text="{Binding Status}" TextColor="#C8CDD6" FontSize="13"/>
-                                <HorizontalStackLayout Spacing="8" Margin="0,10,0,0">
-                                    <Button Text="View" CornerRadius="8" WidthRequest="80"/>
-                                    <Button Text="Mark Complete" CornerRadius="8" WidthRequest="120"/>
-                                    <Button Text="Cancel" CornerRadius="8" WidthRequest="80" BackgroundColor="#8B0000" TextColor="White"/>
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <!-- Empty State -->
+                <Border BackgroundColor="#262B34" 
+                        StrokeShape="RoundRectangle 12"
+                        Padding="40"
+                        IsVisible="{Binding NoBookings}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="No Bookings Found"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                        <Label Text="There are no bookings to display at this time."
+                               TextColor="#C8CDD6"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Border>
 
-        </VerticalStackLayout>
-    </ScrollView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
 </ContentPage>

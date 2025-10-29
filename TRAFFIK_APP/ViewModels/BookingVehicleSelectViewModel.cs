@@ -52,7 +52,7 @@ namespace TRAFFIK_APP.ViewModels
                         BookingServiceSelectViewModel.SelectedVehicle = vehicle;
 
                         // Navigate to service selection
-                        await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.BookingServiceSelectPage));
+                        await Shell.Current.GoToAsync($"/BookingServiceSelectPage");
                     });
 
             AddVehicleCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.AddVehiclePage)));

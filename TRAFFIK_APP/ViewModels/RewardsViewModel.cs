@@ -84,11 +84,19 @@ namespace TRAFFIK_APP.ViewModels
 
                     foreach (var item in redeemed)
                     {
-                        System.Diagnostics.Debug.WriteLine($"Redeemed item: Name='{item.Name}', Code='{item.Code}', RedeemedAt={item.RedeemedAt}");
-                        RedeemedRewards.Add(item);
+                        // Only show active (non-deactivated) codes to users
+                        if (!item.Used)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Redeemed item: Name='{item.Name}', Code='{item.Code}', RedeemedAt={item.RedeemedAt}, Used={item.Used}");
+                            RedeemedRewards.Add(item);
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Skipping deactivated item: Name='{item.Name}', Code='{item.Code}'");
+                        }
                     }
                     
-                    System.Diagnostics.Debug.WriteLine($"RedeemedRewards collection now has {RedeemedRewards.Count} items");
+                    System.Diagnostics.Debug.WriteLine($"RedeemedRewards collection now has {RedeemedRewards.Count} active items");
                 }
                 OnPropertyChanged(nameof(RedeemedRewards));
 

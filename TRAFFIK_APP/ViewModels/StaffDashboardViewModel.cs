@@ -20,6 +20,7 @@ namespace TRAFFIK_APP.ViewModels
 
 		public ICommand EditProfileCommand { get; }
         public ICommand ViewAllBookingsCommand { get; }
+        public ICommand ViewCodesCommand { get; }
 
         public StaffDashboardViewModel(SessionService sessionService, BookingClient bookingClient)
 		{
@@ -29,8 +30,9 @@ namespace TRAFFIK_APP.ViewModels
 			EditProfileCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(StaffProfilePage)));
 			ViewAllBookingsCommand = new Command(async () =>
 			{
-				await Shell.Current.GoToAsync(nameof(StaffBookingListPage));
+				await Shell.Current.GoToAsync($"/StaffBookingListPage");
 			});
+			ViewCodesCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(StaffViewCodesPage)));
 
 			// Observe collection changes to update count
 			ActiveBookings.CollectionChanged += (_, __) =>

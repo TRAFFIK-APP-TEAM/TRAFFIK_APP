@@ -265,6 +265,8 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<StaffBookingDetailViewModel>();
             builder.Services.AddTransient<StaffProfileViewModel>();
             builder.Services.AddTransient<EditVehicleViewModel>();
+            builder.Services.AddTransient<AdminManageBookingsViewModel>();
+            builder.Services.AddTransient<StaffViewCodesViewModel>();
 
             builder.Services.AddTransient<DashboardPage>();
             builder.Services.AddTransient<SignupPage>();
@@ -284,6 +286,8 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<StaffBookingDetailPage>();
             builder.Services.AddTransient<StaffProfilePage>();
             builder.Services.AddTransient<AdminDashboardPage>();
+            builder.Services.AddTransient<AdminManageBookingsPage>();
+            builder.Services.AddTransient<StaffViewCodesPage>();
 
 
 

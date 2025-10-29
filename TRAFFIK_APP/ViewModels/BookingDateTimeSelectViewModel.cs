@@ -55,7 +55,7 @@ namespace TRAFFIK_APP.ViewModels
             BookingConfirmationViewModel.SelectedDateTime = selectedDateTime;
             
             // Navigate to confirmation page
-            await Shell.Current.GoToAsync(nameof(TRAFFIK_APP.Views.BookingConfirmationPage));
+            await Shell.Current.GoToAsync($"/BookingConfirmationPage");
         }
     }
 }
