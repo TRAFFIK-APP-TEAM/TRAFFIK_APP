@@ -116,7 +116,7 @@ namespace TRAFFIK_APP.ViewModels
                     VehicleTypes.Clear();
                     foreach (var type in types)
                     {
-                        VehicleTypes.Add(type);
+                        VehicleTypes.Add(type.Type);
                     }
                 }
             }
