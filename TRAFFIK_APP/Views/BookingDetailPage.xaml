@@ -5,6 +5,7 @@
              x:Class="TRAFFIK_APP.Views.BookingDetailPage"
              BackgroundColor="#0D0D0D"
              Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
              Title="Booking Details">
 
     <ScrollView>
@@ -168,14 +169,6 @@
 
                 </VerticalStackLayout>
             </Border>
-
-            <!-- Back Button -->
-            <Button Text="Back"
-                    Command="{Binding GoBackCommand}"
-                    BackgroundColor="#007AFF"
-                    TextColor="White"
-                    CornerRadius="10"
-                    HeightRequest="50"/>
 
         </VerticalStackLayout>
     </ScrollView>
