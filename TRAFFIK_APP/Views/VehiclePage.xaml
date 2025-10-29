@@ -31,7 +31,7 @@
             <VerticalStackLayout Spacing="20">
 
                 <!-- Vehicle Image -->
-                <Border BackgroundColor="#1E1E1E" 
+                <!-- <Border BackgroundColor="#1E1E1E" 
                         StrokeShape="RoundRectangle 16"
                         Padding="20"
                         HorizontalOptions="Center">
@@ -41,7 +41,7 @@
                            WidthRequest="300"
                            HorizontalOptions="Center"
                            VerticalOptions="Center" />
-                </Border>
+                </Border> -->
 
                 <!-- Vehicle Information -->
                 <Border BackgroundColor="#1E1E1E" 
@@ -55,7 +55,7 @@
                                TextColor="White" />
 
                         <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnSpacing="15" RowSpacing="10">
-                            
+
                             <Label Grid.Row="0" Grid.Column="0" Text="License Plate:" TextColor="#C8C8C8" FontSize="14" />
                             <Label x:Name="LicensePlateLabel" Grid.Row="0" Grid.Column="1" TextColor="White" FontSize="14" FontAttributes="Bold" />
                             
@@ -64,12 +64,12 @@
                             
                             <Label Grid.Row="2" Grid.Column="0" Text="Model:" TextColor="#C8C8C8" FontSize="14" />
                             <Label x:Name="ModelLabel" Grid.Row="2" Grid.Column="1" TextColor="White" FontSize="14" />
-                            
-                            <Label Grid.Row="3" Grid.Column="0" Text="Type:" TextColor="#C8C8C8" FontSize="14" />
+
+                            <!-- <Label Grid.Row="3" Grid.Column="0" Text="Type:" TextColor="#C8C8C8" FontSize="14" />
                             <Label x:Name="TypeLabel" Grid.Row="3" Grid.Column="1" TextColor="White" FontSize="14" />
                             
                             <Label Grid.Row="4" Grid.Column="0" Text="Color:" TextColor="#C8C8C8" FontSize="14" />
-                            <Label x:Name="ColorLabel" Grid.Row="4" Grid.Column="1" TextColor="White" FontSize="14" />
+                            <Label x:Name="ColorLabel" Grid.Row="4" Grid.Column="1" TextColor="White" FontSize="14" />-->
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
@@ -82,15 +82,15 @@
                             CornerRadius="8"
                             HeightRequest="50"
                             Clicked="OnBookServiceClicked" />
-                    
-                    <Button Text="Edit Vehicle"
+
+                    <!--<Button Text="Edit Vehicle"
                             BackgroundColor="#34C759"
                             TextColor="White"
                             CornerRadius="8"
                             HeightRequest="50"
                             Clicked="OnEditVehicleClicked" />
-                    
-                    <Button Text="Delete Vehicle"
+
+                     <Button Text="Delete Vehicle"
                             BackgroundColor="#FF3B30"
                             TextColor="White"
                             CornerRadius="8"
@@ -102,7 +102,7 @@
                             TextColor="White"
                             CornerRadius="8"
                             HeightRequest="50"
-                            Clicked="OnViewHistoryClicked" />
+                            Clicked="OnViewHistoryClicked" />-->
                 </VerticalStackLayout>
 
             </VerticalStackLayout>
