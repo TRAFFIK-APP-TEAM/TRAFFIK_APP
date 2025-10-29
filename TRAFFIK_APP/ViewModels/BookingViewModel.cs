@@ -14,8 +14,10 @@ namespace TRAFFIK_APP.ViewModels
 
         public string UserFullName => _session.UserName;
         public ObservableCollection<BookingDto> Bookings { get; } = new();
+        public ObservableCollection<BookingDto> ClosedBookings { get; } = new();
         public bool HasBookings => Bookings.Count > 0;
         public bool NoBookings => Bookings.Count == 0;
+        public bool HasClosedBookings => ClosedBookings.Count > 0;
 
         public ICommand GoHomeCommand { get; }
         public ICommand GoAppointmentsCommand { get; }
@@ -25,6 +27,7 @@ namespace TRAFFIK_APP.ViewModels
         public ICommand StartBookingCommand { get; }
         public ICommand LoadBookingsCommand { get; }
         public ICommand ViewBookingDetailsCommand { get; }
+        public ICommand ShowHistoryCommand { get; }
 
         public BookingViewModel(SessionService session, BookingClient bookingClient)
         {
@@ -48,12 +51,19 @@ namespace TRAFFIK_APP.ViewModels
                     await Shell.Current.GoToAsync(nameof(BookingDetailPage));
                 }
             });
+            ShowHistoryCommand = new Command(async () => await ShowHistoryAsync());
 
             // Observe collection changes to update HasBookings/NoBookings
             Bookings.CollectionChanged += (_, __) =>
             {
                 OnPropertyChanged(nameof(HasBookings));
                 OnPropertyChanged(nameof(NoBookings));
+                OnPropertyChanged(nameof(HasClosedBookings));
+            };
+
+            ClosedBookings.CollectionChanged += (_, __) =>
+            {
+                OnPropertyChanged(nameof(HasClosedBookings));
             };
         }
 
@@ -67,6 +77,7 @@ namespace TRAFFIK_APP.ViewModels
             }
 
             Bookings.Clear();
+            ClosedBookings.Clear();
             var bookings = await _bookingClient.GetByUserAsync(userId);
             
             System.Diagnostics.Debug.WriteLine($"[BookingViewModel] Loaded {bookings?.Count ?? 0} bookings");
@@ -76,7 +87,16 @@ namespace TRAFFIK_APP.ViewModels
                 foreach (var booking in bookings)
                 {
                     System.Diagnostics.Debug.WriteLine($"[BookingViewModel] Booking: Id={booking.Id}, ServiceCatalogId={booking.ServiceCatalogId}, ServiceName='{booking.ServiceName}', VehiclePlate='{booking.VehicleLicensePlate}', VehicleName='{booking.VehicleDisplayName}', Date={booking.BookingDate}, Time={booking.BookingTime}, Status={booking.Status}");
-                    Bookings.Add(booking);
+                    
+                    // Separate active and closed bookings
+                    if (booking.Status == "Paid")
+                    {
+                        ClosedBookings.Add(booking);
+                    }
+                    else
+                    {
+                        Bookings.Add(booking);
+                    }
                 }
             }
             else
@@ -86,6 +106,41 @@ namespace TRAFFIK_APP.ViewModels
             
             OnPropertyChanged(nameof(HasBookings));
             OnPropertyChanged(nameof(NoBookings));
+            OnPropertyChanged(nameof(HasClosedBookings));
+        }
+
+        private async Task ShowHistoryAsync()
+        {
+            if (ClosedBookings.Count == 0)
+            {
+                await Application.Current.MainPage.DisplayAlert("History", "You have no closed bookings yet.", "OK");
+                return;
+            }
+
+            var bookingTitles = ClosedBookings.Select(b => 
+                $"{b.ServiceName} - {b.VehicleLicensePlate} ({b.BookingDate:dd MMM yyyy})"
+            ).ToList();
+
+            var selected = await Application.Current.MainPage.DisplayActionSheet(
+                "Select a booking to view details",
+                "Cancel",
+                null,
+                bookingTitles.ToArray()
+            );
+
+            if (selected != "Cancel" && selected != null)
+            {
+                var selectedBooking = ClosedBookings.FirstOrDefault(b => 
+                    selected.Contains(b.ServiceName) && 
+                    selected.Contains(b.VehicleLicensePlate)
+                );
+
+                if (selectedBooking != null)
+                {
+                    BookingDetailPage.SelectedBooking = selectedBooking;
+                    await Shell.Current.GoToAsync(nameof(BookingDetailPage));
+                }
+            }
         }
     }
 }

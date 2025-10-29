@@ -6,14 +6,14 @@
              x:Class="TRAFFIK_APP.Views.AdminManageRewardsPage"
              x:DataType="vm:AdminManageRewardsViewModel"
              Title="Manage Rewards"
-             BackgroundColor="#101726">
+             BackgroundColor="#000000">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
 
             <!-- Back Button -->
             <Button Text="← Back to Admin Dashboard"
-                    BackgroundColor="#262B34"
+                    BackgroundColor="#007AFF"
                     TextColor="White"
                     CornerRadius="12"
                     Command="{Binding GoBackCommand}"

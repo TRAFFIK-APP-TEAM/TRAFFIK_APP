@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRAFFIK_APP.Views.AdminAnalyticsPage"
              Title="Analytics"
-             BackgroundColor="#101726">
+             BackgroundColor="#000000">
 
 	<ScrollView>
 		<VerticalStackLayout Padding="20" Spacing="16">
 
 			<!-- Back Button -->
 			<Button Text="← Back to Admin Dashboard"
-                    BackgroundColor="#262B34"
+                    BackgroundColor="#007AFF"
                     TextColor="White"
                     CornerRadius="12"
                     Clicked="OnBackClicked"
@@ -23,7 +23,7 @@
 
 			<!-- Add Admin Button -->
 			<Button Text="Add Admin / Employee Account"
-                    BackgroundColor="#2E8B57"
+                    BackgroundColor="#007AFF"
                     TextColor="White"
                     CornerRadius="12"
                     Clicked="OnAddAdminClicked"
@@ -47,7 +47,7 @@
 
 				<CollectionView.ItemTemplate>
 					<DataTemplate>
-						<Frame BackgroundColor="#262B34"
+						<Frame BackgroundColor="#1E1E1E"
                                CornerRadius="12"
                                HasShadow="True"
                                Padding="12"
@@ -76,7 +76,7 @@
 
 				<CollectionView.ItemTemplate>
 					<DataTemplate>
-						<Frame BackgroundColor="#262B34"
+						<Frame BackgroundColor="#1E1E1E"
                                CornerRadius="12"
                                HasShadow="True"
                                Padding="12"
