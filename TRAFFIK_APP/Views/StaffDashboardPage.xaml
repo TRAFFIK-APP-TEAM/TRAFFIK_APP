@@ -24,12 +24,12 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="20" Spacing="16">
                 <!-- Header Section -->
-                <Label Text="Update booking status in real-time"
+                <!--<Label Text="Update booking status in real-time"
                        FontSize="13"
-                       TextColor="#9CA3AF" />
+                       TextColor="#9CA3AF" />-->
 
                 <!-- Quick Stats -->
-                <Border BackgroundColor="#1E1E1E"
+                <!--<Border BackgroundColor="#1E1E1E"
                         Stroke="Gray"
                         StrokeThickness="1"
                         Padding="20">
@@ -48,7 +48,7 @@
                                HorizontalOptions="Center"
                                Padding="0,10,0,0" />
                     </VerticalStackLayout>
-                </Border>
+                </Border>-->
 
                 <!-- Quick Actions -->
                 <Border BackgroundColor="#1E1E1E"

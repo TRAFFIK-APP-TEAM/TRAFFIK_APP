@@ -32,7 +32,7 @@
 
        
                         <!-- Vehicle Image Upload -->
-                        <StackLayout>
+                        <!--<StackLayout>
                             <Label Text="Upload Vehicle Image"
                                 TextColor="White" FontSize="16" Margin="0,0,0,5"/>
                             <Image Source="{Binding VehicleImage}"
@@ -46,7 +46,7 @@
                                 FontAttributes="Bold"
                                 FontSize="14"
                                 HeightRequest="45"/>
-                        </StackLayout>
+                        </StackLayout>-->
 
 
                         <StackLayout>

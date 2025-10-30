@@ -18,6 +18,7 @@ namespace TRAFFIK_APP.ViewModels
         public bool HasBookings => Bookings.Count > 0;
         public bool NoBookings => Bookings.Count == 0;
         public bool HasClosedBookings => ClosedBookings.Count > 0;
+        public bool NoClosedBookings => ClosedBookings.Count == 0;
 
         public ICommand GoHomeCommand { get; }
         public ICommand GoAppointmentsCommand { get; }
@@ -44,7 +45,9 @@ namespace TRAFFIK_APP.ViewModels
             ViewBookingDetailsCommand = new Command<int>(async (bookingId) =>
             {
                 // Store the selected booking ID and navigate to detail page
-                var booking = Bookings.FirstOrDefault(b => b.Id == bookingId);
+                // Check both active and closed bookings
+                var booking = Bookings.FirstOrDefault(b => b.Id == bookingId) 
+                    ?? ClosedBookings.FirstOrDefault(b => b.Id == bookingId);
                 if (booking != null)
                 {
                     BookingDetailPage.SelectedBooking = booking;
@@ -64,6 +67,7 @@ namespace TRAFFIK_APP.ViewModels
             ClosedBookings.CollectionChanged += (_, __) =>
             {
                 OnPropertyChanged(nameof(HasClosedBookings));
+                OnPropertyChanged(nameof(NoClosedBookings));
             };
         }
 
@@ -89,7 +93,8 @@ namespace TRAFFIK_APP.ViewModels
                     System.Diagnostics.Debug.WriteLine($"[BookingViewModel] Booking: Id={booking.Id}, ServiceCatalogId={booking.ServiceCatalogId}, ServiceName='{booking.ServiceName}', VehiclePlate='{booking.VehicleLicensePlate}', VehicleName='{booking.VehicleDisplayName}', Date={booking.BookingDate}, Time={booking.BookingTime}, Status={booking.Status}");
                     
                     // Separate active and closed bookings
-                    if (booking.Status == "Paid")
+                    // A booking is closed if status is "Paid" or "Closed"
+                    if (booking.Status == "Paid" || booking.Status == "Closed")
                     {
                         ClosedBookings.Add(booking);
                     }
@@ -107,6 +112,7 @@ namespace TRAFFIK_APP.ViewModels
             OnPropertyChanged(nameof(HasBookings));
             OnPropertyChanged(nameof(NoBookings));
             OnPropertyChanged(nameof(HasClosedBookings));
+            OnPropertyChanged(nameof(NoClosedBookings));
         }
 
         private async Task ShowHistoryAsync()
@@ -117,30 +123,8 @@ namespace TRAFFIK_APP.ViewModels
                 return;
             }
 
-            var bookingTitles = ClosedBookings.Select(b => 
-                $"{b.ServiceName} - {b.VehicleLicensePlate} ({b.BookingDate:dd MMM yyyy})"
-            ).ToList();
-
-            var selected = await Application.Current.MainPage.DisplayActionSheet(
-                "Select a booking to view details",
-                "Cancel",
-                null,
-                bookingTitles.ToArray()
-            );
-
-            if (selected != "Cancel" && selected != null)
-            {
-                var selectedBooking = ClosedBookings.FirstOrDefault(b => 
-                    selected.Contains(b.ServiceName) && 
-                    selected.Contains(b.VehicleLicensePlate)
-                );
-
-                if (selectedBooking != null)
-                {
-                    BookingDetailPage.SelectedBooking = selectedBooking;
-                    await Shell.Current.GoToAsync(nameof(BookingDetailPage));
-                }
-            }
+            // Navigate to booking history page
+            await Shell.Current.GoToAsync(nameof(BookingHistoryPage));
         }
     }
 }

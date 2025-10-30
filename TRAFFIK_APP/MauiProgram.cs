@@ -293,6 +293,7 @@ namespace TRAFFIK_APP
             builder.Services.AddTransient<StaffViewCodesPage>();
             builder.Services.AddTransient<AddAdminPage>();
             builder.Services.AddTransient<AdminProfilePage>();
+            builder.Services.AddTransient<BookingHistoryPage>();
 
 
 

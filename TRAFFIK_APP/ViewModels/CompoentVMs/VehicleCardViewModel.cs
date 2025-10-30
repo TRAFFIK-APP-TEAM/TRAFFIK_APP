@@ -8,14 +8,14 @@ namespace TRAFFIK_APP.ViewModels
     {
         private readonly SessionService _session;
         public string LicensePlate { get; set; } = string.Empty;
-        public string ImageUrl { get; set; } = string.Empty;
+        //public string ImageUrl { get; set; } = string.Empty;
 
 
         public VehicleCardViewModel(string licensePlate, string imageUrl, SessionService session)
         {
             
             LicensePlate = licensePlate;
-            ImageUrl = imageUrl;
+            //ImageUrl = imageUrl;
             _session = session;
 
         }

@@ -18,12 +18,12 @@
                    FontAttributes="Bold"
                    TextColor="White"
                    HorizontalOptions="Center" />
-            <Button Grid.Column="1"
+            <!--<Button Grid.Column="1"
                     Text="✕"
                     BackgroundColor="Transparent"
                     TextColor="White"
                     FontSize="20"
-                    Clicked="OnBackClicked" />
+                    Clicked="OnBackClicked" />-->
         </Grid>
 
         <!-- Main Content -->
@@ -88,7 +88,7 @@
                             TextColor="White"
                             CornerRadius="8"
                             HeightRequest="50"
-                            Clicked="OnEditVehicleClicked" />
+                            Clicked="OnEditVehicleClicked" />-->
 
                      <Button Text="Delete Vehicle"
                             BackgroundColor="#FF3B30"
@@ -97,7 +97,7 @@
                             HeightRequest="50"
                             Clicked="OnDeleteVehicleClicked" />
                     
-                    <Button Text="View Service History"
+                    <!--<Button Text="View Service History"
                             BackgroundColor="#1E1E1E"
                             TextColor="White"
                             CornerRadius="8"
