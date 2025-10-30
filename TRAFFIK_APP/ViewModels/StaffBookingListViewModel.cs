@@ -83,10 +83,31 @@ namespace TRAFFIK_APP.ViewModels
                 }
 
                 AllBookings.Clear();
+                
+                // Filter bookings: only show bookings for today that are not closed
+                var today = DateOnly.FromDateTime(DateTime.Now);
+                
                 foreach (var booking in bookings)
                 {
-                    System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Adding booking: Id={booking.Id}, ServiceName='{booking.ServiceName}', Status='{booking.Status}', Vehicle='{booking.VehicleLicensePlate}', Date={booking.BookingDate}");
-                    AllBookings.Add(booking);
+                    System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Evaluating booking: Id={booking.Id}, ServiceName='{booking.ServiceName}', Status='{booking.Status}', Vehicle='{booking.VehicleLicensePlate}', Date={booking.BookingDate}");
+                    
+                    // Skip closed/paid bookings
+                    if (booking.Status == "Closed" || booking.Status == "Paid")
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Skipping closed booking: {booking.Id}");
+                        continue;
+                    }
+                    
+                    // Only show bookings for today (includes Pending, In Progress, Completed, etc.)
+                    if (booking.BookingDate == today)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Adding booking: Id={booking.Id}, Status={booking.Status}");
+                        AllBookings.Add(booking);
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Skipping booking (not today): {booking.Id}");
+                    }
                 }
                 
                 System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] AllBookings collection now has {AllBookings.Count} items");
