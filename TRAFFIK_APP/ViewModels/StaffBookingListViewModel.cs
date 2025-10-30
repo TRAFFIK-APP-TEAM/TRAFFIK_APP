@@ -13,6 +13,17 @@ namespace TRAFFIK_APP.ViewModels
     public class StaffBookingListViewModel : BaseViewModel
     {
         private readonly BookingClient _bookingClient;
+        private DateOnly _selectedDate;
+
+        public DateOnly SelectedDate 
+        { 
+            get => _selectedDate;
+            set 
+            {
+                SetProperty(ref _selectedDate, value);
+                FilterBookingsByDate();
+            }
+        }
 
         public ObservableCollection<BookingDto> AllBookings { get; } = new();
         public ICommand ViewBookingCommand { get; }
@@ -22,6 +33,7 @@ namespace TRAFFIK_APP.ViewModels
         public StaffBookingListViewModel(BookingClient bookingClient)
         {
             _bookingClient = bookingClient;
+            _selectedDate = DateOnly.FromDateTime(DateTime.Now); // Default to today
 
             ViewBookingCommand = new Command<BookingDto>(async (booking) =>
             {
@@ -83,32 +95,8 @@ namespace TRAFFIK_APP.ViewModels
                 }
 
                 AllBookings.Clear();
-                
-                // Filter bookings: only show bookings for today that are not closed
-                var today = DateOnly.FromDateTime(DateTime.Now);
-                
-                foreach (var booking in bookings)
-                {
-                    System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Evaluating booking: Id={booking.Id}, ServiceName='{booking.ServiceName}', Status='{booking.Status}', Vehicle='{booking.VehicleLicensePlate}', Date={booking.BookingDate}");
-                    
-                    // Skip closed/paid bookings
-                    if (booking.Status == "Closed" || booking.Status == "Paid")
-                    {
-                        System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Skipping closed booking: {booking.Id}");
-                        continue;
-                    }
-                    
-                    // Only show bookings for today (includes Pending, In Progress, Completed, etc.)
-                    if (booking.BookingDate == today)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Adding booking: Id={booking.Id}, Status={booking.Status}");
-                        AllBookings.Add(booking);
-                    }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] Skipping booking (not today): {booking.Id}");
-                    }
-                }
+                _allBookings = bookings;
+                FilterBookingsByDate();
                 
                 System.Diagnostics.Debug.WriteLine($"[StaffBookingListViewModel] AllBookings collection now has {AllBookings.Count} items");
                 OnPropertyChanged(nameof(AllBookings));
@@ -125,5 +113,34 @@ namespace TRAFFIK_APP.ViewModels
 
         public bool HasBookings => AllBookings.Count > 0;
         public bool NoBookings => AllBookings.Count == 0;
+
+        private List<BookingDto> _allBookings = new();
+
+        private void FilterBookingsByDate()
+        {
+            if (_allBookings == null || _allBookings.Count == 0)
+                return;
+
+            AllBookings.Clear();
+
+            foreach (var booking in _allBookings)
+            {
+                // Skip closed/paid bookings
+                if (booking.Status == "Closed" || booking.Status == "Paid")
+                {
+                    continue;
+                }
+
+                // Show bookings for the selected date
+                if (booking.BookingDate == SelectedDate)
+                {
+                    AllBookings.Add(booking);
+                }
+            }
+
+            OnPropertyChanged(nameof(AllBookings));
+            OnPropertyChanged(nameof(HasBookings));
+            OnPropertyChanged(nameof(NoBookings));
+        }
     }
 }
