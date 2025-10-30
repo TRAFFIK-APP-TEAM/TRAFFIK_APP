@@ -96,7 +96,7 @@
 
                         <!-- License Plate -->
                         <StackLayout>
-                            <Label Text="License Plate (Optional)"
+                            <Label Text="License Plate"
                                    TextColor="White" FontSize="16" Margin="0,0,0,5"/>
                             <Entry Placeholder="E.g. ABC 1234"
                                    Text="{Binding LicensePlate}"
