@@ -29,6 +29,7 @@ namespace TRAFFIK_APP.ViewModels
         public ICommand LoadBookingsCommand { get; }
         public ICommand ViewBookingDetailsCommand { get; }
         public ICommand ShowHistoryCommand { get; }
+        public ICommand DeleteBookingCommand { get; }
 
         public BookingViewModel(SessionService session, BookingClient bookingClient)
         {
@@ -55,6 +56,7 @@ namespace TRAFFIK_APP.ViewModels
                 }
             });
             ShowHistoryCommand = new Command(async () => await ShowHistoryAsync());
+            DeleteBookingCommand = new Command<int>(async (bookingId) => await DeleteBookingAsync(bookingId));
 
             // Observe collection changes to update HasBookings/NoBookings
             Bookings.CollectionChanged += (_, __) =>
@@ -125,6 +127,54 @@ namespace TRAFFIK_APP.ViewModels
 
             // Navigate to booking history page
             await Shell.Current.GoToAsync(nameof(BookingHistoryPage));
+        }
+
+        private async Task DeleteBookingAsync(int bookingId)
+        {
+            // Find the booking
+            var booking = Bookings.FirstOrDefault(b => b.Id == bookingId);
+            if (booking == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Booking not found.", "OK");
+                return;
+            }
+
+            // Confirm deletion
+            var result = await Application.Current.MainPage.DisplayAlert(
+                "Delete Booking",
+                "Are you sure you want to delete this booking? This action cannot be undone.",
+                "Delete",
+                "Cancel");
+
+            if (!result) return;
+
+            try
+            {
+                IsBusy = true;
+                var success = await _bookingClient.DeleteAsync(bookingId);
+
+                if (success)
+                {
+                    // Remove from collection
+                    Bookings.Remove(booking);
+                    await Application.Current.MainPage.DisplayAlert("Success", "Booking deleted successfully.", "OK");
+                    // Reload bookings to ensure UI is updated
+                    await LoadBookingsAsync();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Failed to delete booking. Please try again.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[BookingViewModel] Error deleting booking: {ex.Message}");
+                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while deleting the booking.", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

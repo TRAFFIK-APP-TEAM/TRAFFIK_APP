@@ -49,7 +49,7 @@
                         </StackLayout>-->
 
 
-                        <StackLayout>
+                        <!--<StackLayout>
                             <Label Text="Vehicle Nickname"
                                 TextColor="White" FontSize="16" Margin="0,0,0,5"/>
                             <Entry Placeholder="E.g. My Blue Ride"
@@ -57,7 +57,7 @@
                                 TextColor="White" PlaceholderColor="Gray"
                                 BackgroundColor="#333333"
                                 HeightRequest="45"/>
-                        </StackLayout>
+                        </StackLayout>-->
                         
                         <!-- Vehicle Type -->
                         <StackLayout>
