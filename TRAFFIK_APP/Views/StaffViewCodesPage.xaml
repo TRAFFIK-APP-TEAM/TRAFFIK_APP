@@ -110,7 +110,7 @@
                                     </Border>
                                     
                                     <!-- Status Badge -->
-                                    <Border BackgroundColor="#FFC107"
+                                    <Border BackgroundColor="#28a745"
                                             Padding="8,4"
                                             Margin="0,8,0,0">
                                         <Border.StrokeShape>

@@ -43,9 +43,9 @@ public partial class VehiclePage : ContentPage
             LicensePlateLabel.Text = _vehicle.LicensePlate;
             MakeLabel.Text = _vehicle.Make;
             ModelLabel.Text = _vehicle.Model;
-            TypeLabel.Text = _vehicle.VehicleType;
-            ColorLabel.Text = _vehicle.Color;
-            VehicleImage.Source = _vehicle.ImageUrl;
+            //TypeLabel.Text = _vehicle.VehicleType;
+            //ColorLabel.Text = _vehicle.Color;
+            //VehicleImage.Source = _vehicle.ImageUrl;
         }
     }
 

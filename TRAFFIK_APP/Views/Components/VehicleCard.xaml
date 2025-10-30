@@ -17,10 +17,13 @@
             HeightRequest="160"
             VerticalOptions="Center">
 
-        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+        <Grid RowDefinitions="Auto,Auto,Auto" 
+              RowSpacing="4"
+              HorizontalOptions="Center"
+              VerticalOptions="Center">
             
             <!-- Vehicle Image -->
-            <Border Grid.Row="0"
+            <!--<Border Grid.Row="0"
                     BackgroundColor="#2E2E2E"
                     StrokeShape="RoundRectangle 8"
                     Padding="4"
@@ -30,7 +33,7 @@
                        Aspect="AspectFill"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"/>
-            </Border>
+            </Border>-->
 
             <!-- License Plate -->
             <Label Grid.Row="1"
@@ -43,7 +46,7 @@
             
             <!-- Make and Model -->
             <Label Grid.Row="2"
-                   Text="{Binding Make}"
+                   Text="{Binding DisplayName}"
                    FontSize="11"
                    TextColor="#C8C8C8"
                    HorizontalOptions="Center"

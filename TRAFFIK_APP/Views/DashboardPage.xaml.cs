@@ -32,10 +32,6 @@ namespace TRAFFIK_APP.Views
 
         private async void OnAddVehicleTapped(object sender, EventArgs e)
         {
-            if (sender is Border border)
-            {
-                border.Stroke = Colors.Blue;
-            }
             await Shell.Current.GoToAsync(nameof(AddVehiclePage));
         }
 

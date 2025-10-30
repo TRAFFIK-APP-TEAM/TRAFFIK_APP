@@ -6,7 +6,7 @@
              x:Class="TRAFFIK_APP.Views.AdminManageBookingsPage"
              x:DataType="viewmodels:AdminManageBookingsViewModel"
              Title="Manage Bookings"
-             BackgroundColor="#101726">
+             BackgroundColor="#000000">
 
     <RefreshView IsRefreshing="{Binding IsBusy}"
                  Command="{Binding RefreshCommand}">

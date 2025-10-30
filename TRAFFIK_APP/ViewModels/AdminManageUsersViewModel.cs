@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using TRAFFIK_APP.Models.Entities;
 using TRAFFIK_APP.Services.ApiClients;
 using TRAFFIK_APP.Services;
+using Microsoft.Maui.Controls;
 
 namespace TRAFFIK_APP.ViewModels
 {
@@ -42,6 +43,7 @@ namespace TRAFFIK_APP.ViewModels
         public Command ViewUserCommand { get; }
         public Command DeactivateUserCommand { get; }
         public Command SuspendUserCommand { get; }
+        public Command GoBackCommand { get; }
 
         public AdminManageUsersViewModel(UserClient userClient, SessionService sessionService)
         {
@@ -53,6 +55,7 @@ namespace TRAFFIK_APP.ViewModels
             ViewUserCommand = new Command<User>(ViewUser);
             DeactivateUserCommand = new Command<User>(DeactivateUser);
             SuspendUserCommand = new Command<User>(SuspendUser);
+            GoBackCommand = new Command(async () => await Shell.Current.GoToAsync("//AdminDashboardPage"));
         }
 
         private async Task LoadUsersAsync()
@@ -175,9 +178,8 @@ namespace TRAFFIK_APP.ViewModels
             {
                 try
                 {
-                    // Update user to inactive (suspending)
-                    user.IsActive = false;
-                    var success = await _userClient.UpdateAsync(user.Id, user);
+                    // Delete the user account
+                    var success = await _userClient.DeleteAsync(user.Id);
                     
                     if (success)
                     {
