@@ -30,10 +30,4 @@ public partial class VehicleCard : ContentView
             System.Diagnostics.Debug.WriteLine($"[VehicleCard] BindingContext changed to: {BindingContext?.GetType().Name ?? "null"}");
         }
     }
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        System.Diagnostics.Debug.WriteLine($"[VehicleCard] OnAppearing called with BindingContext: {BindingContext?.GetType().Name ?? "null"}");
-    }
 }

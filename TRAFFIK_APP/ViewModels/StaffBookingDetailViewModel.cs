@@ -104,15 +104,23 @@ namespace TRAFFIK_APP.ViewModels
                     }
                     else
                     {
-                        // If we can't pop, go to the booking list page
-                        await Shell.Current.GoToAsync($"/StaffBookingListPage");
+                        // If we can't pop, use relative navigation
+                        await Shell.Current.GoToAsync("..");
                     }
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"[GoBackCommand] Error: {ex.Message}");
-                    // Fallback: navigate to booking list
-                    await Shell.Current.GoToAsync($"/StaffBookingListPage");
+                    // Fallback: use relative navigation
+                    try
+                    {
+                        await Shell.Current.GoToAsync("..");
+                    }
+                    catch
+                    {
+                        // Last resort: navigate to dashboard
+                        await Shell.Current.GoToAsync("//StaffDashboardPage");
+                    }
                 }
             });
         }
@@ -307,15 +315,23 @@ namespace TRAFFIK_APP.ViewModels
                 }
                 else
                 {
-                    // If we can't pop, go to the booking list page
-                    await Shell.Current.GoToAsync($"/StaffBookingListPage");
+                    // If we can't pop, use relative navigation
+                    await Shell.Current.GoToAsync("..");
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[UpdateStage] Navigation error: {ex.Message}");
-                // Fallback: navigate to booking list
-                await Shell.Current.GoToAsync($"///StaffBookingListPage");
+                // Fallback: use relative navigation
+                try
+                {
+                    await Shell.Current.GoToAsync("..");
+                }
+                catch
+                {
+                    // Navigate to dashboard if relative fails
+                    await Shell.Current.GoToAsync("//StaffDashboardPage");
+                }
             }
         }
 

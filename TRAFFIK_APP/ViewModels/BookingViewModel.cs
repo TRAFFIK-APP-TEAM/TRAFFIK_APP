@@ -14,8 +14,11 @@ namespace TRAFFIK_APP.ViewModels
 
         public string UserFullName => _session.UserName;
         public ObservableCollection<BookingDto> Bookings { get; } = new();
+        public ObservableCollection<BookingDto> ClosedBookings { get; } = new();
         public bool HasBookings => Bookings.Count > 0;
         public bool NoBookings => Bookings.Count == 0;
+        public bool HasClosedBookings => ClosedBookings.Count > 0;
+        public bool NoClosedBookings => ClosedBookings.Count == 0;
 
         public ICommand GoHomeCommand { get; }
         public ICommand GoAppointmentsCommand { get; }
@@ -25,6 +28,8 @@ namespace TRAFFIK_APP.ViewModels
         public ICommand StartBookingCommand { get; }
         public ICommand LoadBookingsCommand { get; }
         public ICommand ViewBookingDetailsCommand { get; }
+        public ICommand ShowHistoryCommand { get; }
+        public ICommand DeleteBookingCommand { get; }
 
         public BookingViewModel(SessionService session, BookingClient bookingClient)
         {
@@ -41,19 +46,30 @@ namespace TRAFFIK_APP.ViewModels
             ViewBookingDetailsCommand = new Command<int>(async (bookingId) =>
             {
                 // Store the selected booking ID and navigate to detail page
-                var booking = Bookings.FirstOrDefault(b => b.Id == bookingId);
+                // Check both active and closed bookings
+                var booking = Bookings.FirstOrDefault(b => b.Id == bookingId) 
+                    ?? ClosedBookings.FirstOrDefault(b => b.Id == bookingId);
                 if (booking != null)
                 {
                     BookingDetailPage.SelectedBooking = booking;
                     await Shell.Current.GoToAsync(nameof(BookingDetailPage));
                 }
             });
+            ShowHistoryCommand = new Command(async () => await ShowHistoryAsync());
+            DeleteBookingCommand = new Command<int>(async (bookingId) => await DeleteBookingAsync(bookingId));
 
             // Observe collection changes to update HasBookings/NoBookings
             Bookings.CollectionChanged += (_, __) =>
             {
                 OnPropertyChanged(nameof(HasBookings));
                 OnPropertyChanged(nameof(NoBookings));
+                OnPropertyChanged(nameof(HasClosedBookings));
+            };
+
+            ClosedBookings.CollectionChanged += (_, __) =>
+            {
+                OnPropertyChanged(nameof(HasClosedBookings));
+                OnPropertyChanged(nameof(NoClosedBookings));
             };
         }
 
@@ -67,6 +83,7 @@ namespace TRAFFIK_APP.ViewModels
             }
 
             Bookings.Clear();
+            ClosedBookings.Clear();
             var bookings = await _bookingClient.GetByUserAsync(userId);
             
             System.Diagnostics.Debug.WriteLine($"[BookingViewModel] Loaded {bookings?.Count ?? 0} bookings");
@@ -76,7 +93,17 @@ namespace TRAFFIK_APP.ViewModels
                 foreach (var booking in bookings)
                 {
                     System.Diagnostics.Debug.WriteLine($"[BookingViewModel] Booking: Id={booking.Id}, ServiceCatalogId={booking.ServiceCatalogId}, ServiceName='{booking.ServiceName}', VehiclePlate='{booking.VehicleLicensePlate}', VehicleName='{booking.VehicleDisplayName}', Date={booking.BookingDate}, Time={booking.BookingTime}, Status={booking.Status}");
-                    Bookings.Add(booking);
+                    
+                    // Separate active and closed bookings
+                    // A booking is closed if status is "Paid" or "Closed"
+                    if (booking.Status == "Paid" || booking.Status == "Closed")
+                    {
+                        ClosedBookings.Add(booking);
+                    }
+                    else
+                    {
+                        Bookings.Add(booking);
+                    }
                 }
             }
             else
@@ -86,6 +113,68 @@ namespace TRAFFIK_APP.ViewModels
             
             OnPropertyChanged(nameof(HasBookings));
             OnPropertyChanged(nameof(NoBookings));
+            OnPropertyChanged(nameof(HasClosedBookings));
+            OnPropertyChanged(nameof(NoClosedBookings));
+        }
+
+        private async Task ShowHistoryAsync()
+        {
+            if (ClosedBookings.Count == 0)
+            {
+                await Application.Current.MainPage.DisplayAlert("History", "You have no closed bookings yet.", "OK");
+                return;
+            }
+
+            // Navigate to booking history page
+            await Shell.Current.GoToAsync(nameof(BookingHistoryPage));
+        }
+
+        private async Task DeleteBookingAsync(int bookingId)
+        {
+            // Find the booking
+            var booking = Bookings.FirstOrDefault(b => b.Id == bookingId);
+            if (booking == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Booking not found.", "OK");
+                return;
+            }
+
+            // Confirm deletion
+            var result = await Application.Current.MainPage.DisplayAlert(
+                "Delete Booking",
+                "Are you sure you want to delete this booking? This action cannot be undone.",
+                "Delete",
+                "Cancel");
+
+            if (!result) return;
+
+            try
+            {
+                IsBusy = true;
+                var success = await _bookingClient.DeleteAsync(bookingId);
+
+                if (success)
+                {
+                    // Remove from collection
+                    Bookings.Remove(booking);
+                    await Application.Current.MainPage.DisplayAlert("Success", "Booking deleted successfully.", "OK");
+                    // Reload bookings to ensure UI is updated
+                    await LoadBookingsAsync();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Failed to delete booking. Please try again.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[BookingViewModel] Error deleting booking: {ex.Message}");
+                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while deleting the booking.", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

@@ -47,7 +47,7 @@ namespace TRAFFIK_APP.Services.ApiClients
             PutAsync(Endpoints.Booking.UpdateById.Replace("{id}", id.ToString()), booking);
 
         public Task<bool> DeleteAsync(int id) =>
-            DeleteAsync(Endpoints.Booking.DeleteById.Replace("{id}", id.ToString()));
+            base.DeleteAsync(Endpoints.Booking.DeleteById.Replace("{id}", id.ToString()));
 
         public async Task<List<BookingDto>> GetByUserAsync(int userId)
         {

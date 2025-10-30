@@ -3,15 +3,15 @@ using System.Globalization;
 
 namespace TRAFFIK_APP.Converters
 {
-    public class BoolToColorConverter : IValueConverter
+    public class StatusToBoolConverter : Microsoft.Maui.Controls.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool isUsed)
+            if (value is string status && parameter is string targetStatus)
             {
-                return isUsed ? "#ffc107" : "#28a745"; // Green for active, Yellow/Orange for used
+                return status.Equals(targetStatus, StringComparison.OrdinalIgnoreCase);
             }
-            return "#666";
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

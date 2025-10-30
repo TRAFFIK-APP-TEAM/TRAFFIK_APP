@@ -69,7 +69,7 @@ namespace TRAFFIK_APP.Services.ApiClients
         public async Task<bool> DeleteAsync(string licensePlate)
         {
             var endpoint = Endpoints.Vehicle.Delete.Replace("{licensePlate}", licensePlate);
-            return await DeleteAsync(endpoint);
+            return await base.DeleteAsync(endpoint);
         }
 
         public async Task<List<VehicleTypeDto>> GetAllVehicleTypesAsync()

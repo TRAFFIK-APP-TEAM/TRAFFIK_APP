@@ -11,21 +11,10 @@
         <VerticalStackLayout Padding="20" Spacing="20">
 
             <!-- HEADER -->
-                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
-
-                    <Label Text="Profile"
-                           TextColor="White"
-                           FontSize="24"
-                           FontAttributes="Bold"/>
-
-                    <Button Text="Back"
-                            Grid.Column="1"
-                            BackgroundColor="#007AFF"
-                            TextColor="White"
-                            CornerRadius="8"
-                            Padding="16,8"
-                            Clicked="OnBackClicked"/>
-            </Grid>
+            <Label Text="Profile"
+                   TextColor="White"
+                   FontSize="24"
+                   FontAttributes="Bold"/>
 
             <!-- Greeting -->
             <VerticalStackLayout>

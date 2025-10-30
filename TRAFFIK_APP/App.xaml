@@ -18,6 +18,8 @@
             <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
             <converters:BoolToStatusTextConverter x:Key="BoolToStatusTextConverter" />
             <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+            <converters:DateOnlyToDateTimeConverter x:Key="DateOnlyToDateTimeConverter" />
+            <converters:StatusToBoolConverter x:Key="StatusToBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

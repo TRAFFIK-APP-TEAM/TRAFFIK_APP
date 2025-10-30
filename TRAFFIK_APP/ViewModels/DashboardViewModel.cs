@@ -35,6 +35,7 @@ namespace TRAFFIK_APP.ViewModels
         public Command GoAppointmentsCommand { get; }
         public Command GoRewardsCommand { get; }
         public Command GoAccountCommand { get; }
+        public Command<RewardItemDto> RedeemCommand { get; }
 
         public DashboardViewModel(
             BookingClient bookingClient,
@@ -56,6 +57,7 @@ namespace TRAFFIK_APP.ViewModels
             GoAppointmentsCommand = new Command(async () => await Shell.Current.GoToAsync("//BookingPage"));
             GoRewardsCommand = new Command(async () => await Shell.Current.GoToAsync("//RewardsPage"));
             GoAccountCommand = new Command(async () => await Shell.Current.GoToAsync("//AccountPage"));
+            RedeemCommand = new Command<RewardItemDto>(async (item) => await RedeemReward(item));
         }
 
         public async Task LoadDashboardAsync()
@@ -104,32 +106,6 @@ namespace TRAFFIK_APP.ViewModels
 
             if (notifications is not null)
                 foreach (var n in notifications) Notifications.Add(n);
-
-            // Add test vehicle for debugging
-            var testVehicle = new Vehicle
-            {
-                VehicleType = "Car",
-                Make = "Test",
-                Model = "Vehicle",
-                LicensePlate = "TEST123",
-                ImageUrl = "dotnet_bot.png",
-                UserId = userId
-            };
-            Vehicles.Add(testVehicle);
-            System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Added test vehicle: {testVehicle.Make} {testVehicle.Model} ({testVehicle.LicensePlate})");
-            
-            // Add another test vehicle to make it more obvious
-            var testVehicle2 = new Vehicle
-            {
-                VehicleType = "Truck",
-                Make = "Debug",
-                Model = "Truck",
-                LicensePlate = "DEBUG456",
-                ImageUrl = "dotnet_bot.png",
-                UserId = userId
-            };
-            Vehicles.Add(testVehicle2);
-            System.Diagnostics.Debug.WriteLine($"[DashboardViewModel] Added second test vehicle: {testVehicle2.Make} {testVehicle2.Model} ({testVehicle2.LicensePlate})");
             
             // Notify UI that the Vehicles collection has changed
             OnPropertyChanged(nameof(Vehicles));
@@ -195,6 +171,59 @@ namespace TRAFFIK_APP.ViewModels
             OnPropertyChanged(nameof(RewardBalance));
             OnPropertyChanged(nameof(TopAvailableRewards));
             OnPropertyChanged(nameof(FourthLockedReward));
+        }
+
+        private async Task RedeemReward(RewardItemDto item)
+        {
+            try
+            {
+                if (_session.UserId is not int userId)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Please log in to redeem rewards.", "OK");
+                    return;
+                }
+
+                int currentBalance = RewardBalance;
+                if (currentBalance < item.Cost)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Insufficient Points", 
+                        $"You need {item.Cost} points to redeem this item. You currently have {currentBalance} points.", "OK");
+                    return;
+                }
+
+                var confirmed = await Application.Current.MainPage.DisplayAlert("Confirm Redemption", 
+                    $"Are you sure you want to redeem '{item.Name}' for {item.Cost} points?", "Yes", "No");
+
+                if (confirmed)
+                {
+                    var response = await _catalogClient.RedeemItemAsync(item.Id, userId);
+
+                    if (response?.Redeemed > 0)
+                    {
+                        // Display success message with the redemption code
+                        var message = $"Successfully redeemed '{item.Name}'!\n\nYour redemption code: {response.Code}";
+                        if (!string.IsNullOrEmpty(response.Code))
+                        {
+                            message = $"Successfully redeemed '{item.Name}'!\n\nYour redemption code:\n{response.Code}";
+                        }
+                        
+                        await Application.Current.MainPage.DisplayAlert("Success", message, "OK");
+                        
+                        // Refresh the dashboard to update points and rewards
+                        await LoadDashboardAsync();
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", 
+                            "Failed to redeem item. Please try again.", "OK");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", 
+                    $"An error occurred: {ex.Message}", "OK");
+            }
         }
     }
 }

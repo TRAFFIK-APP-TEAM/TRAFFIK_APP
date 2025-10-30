@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRAFFIK_APP.Views.AddAdminPage"
              Title="Add Admin / Employee"
-             BackgroundColor="#101726">
+             BackgroundColor="#000000">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
 
             <!-- Back Button -->
             <Button Text="← Back to Analytics"
-                    BackgroundColor="#262B34"
+                    BackgroundColor="#007AFF"
                     TextColor="White"
                     CornerRadius="12"
                     Clicked="OnBackClicked"
@@ -21,21 +21,54 @@
                    FontSize="22"
                    FontAttributes="Bold"/>
 
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   FontSize="14"
+                   IsVisible="{Binding HasError}"
+                   Margin="0,0,0,10"/>
+
+            <!-- Status Message -->
+            <Label Text="{Binding StatusMessage}"
+                   TextColor="#2E8B57"
+                   FontSize="14"
+                   IsVisible="{Binding StatusMessage, Converter={StaticResource StringToBoolConverter}}"
+                   Margin="0,0,0,10"/>
+
             <Frame BackgroundColor="#262B34" CornerRadius="16" HasShadow="True" Padding="16">
                 <VerticalStackLayout Spacing="12">
-                    <Entry Placeholder="Full Name" TextColor="White" PlaceholderColor="#C8CDD6"/>
-                    <Entry Placeholder="Email Address" TextColor="White" PlaceholderColor="#C8CDD6"/>
-                    <Entry Placeholder="Username" TextColor="White" PlaceholderColor="#C8CDD6"/>
-                    <Entry Placeholder="Password" IsPassword="True" TextColor="White" PlaceholderColor="#C8CDD6"/>
+                    <Entry Placeholder="Full Name" 
+                           Text="{Binding FullName}"
+                           TextColor="White" 
+                           PlaceholderColor="#C8CDD6"/>
+                    <Entry Placeholder="Email Address" 
+                           Text="{Binding Email}"
+                           TextColor="White" 
+                           PlaceholderColor="#C8CDD6"
+                           Keyboard="Email"/>
+                    <Entry Placeholder="Username" 
+                           Text="{Binding Username}"
+                           TextColor="White" 
+                           PlaceholderColor="#C8CDD6"/>
+                    <Entry Placeholder="Password" 
+                           Text="{Binding Password}"
+                           IsPassword="True" 
+                           TextColor="White" 
+                           PlaceholderColor="#C8CDD6"/>
 
-                    <Picker Title="Select Role" TextColor="White" TitleColor="#C8CDD6">
+                    <Picker Title="Select Role" 
+                            SelectedItem="{Binding SelectedRole}"
+                            TextColor="White" 
+                            TitleColor="#C8CDD6">
                         <Picker.Items>
                             <x:String>Admin (RoleID 1)</x:String>
-                            <x:String>Employee (RoleID 1)</x:String>
+                            <x:String>Employee (RoleID 2)</x:String>
                         </Picker.Items>
                     </Picker>
 
                     <Button Text="Create Account"
+                            Command="{Binding CreateAccountCommand}"
+                            IsEnabled="{Binding IsNotBusy}"
                             BackgroundColor="#2E8B57"
                             TextColor="White"
                             CornerRadius="12"

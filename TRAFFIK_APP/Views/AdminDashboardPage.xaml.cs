@@ -11,27 +11,38 @@ namespace TRAFFIK_APP.Views
 
         private async void OnViewAnalytics(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(AdminAnalyticsPage));
+            // AdminAnalyticsPage is a ShellContent, use absolute navigation
+            await Shell.Current.GoToAsync("//AdminAnalyticsPage");
         }
 
         private async void OnManageBookings(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(AdminManageBookingsPage));
+            // Navigate using unambiguous route name
+            await Shell.Current.GoToAsync("admin_manage_bookings");
         }
 
         private async void OnManageUsers(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(AdminManageUsersPage));
+            // Navigate using unambiguous route name
+            await Shell.Current.GoToAsync("admin_manage_users");
         }
 
         private async void OnAddAdmin(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(AddAdminPage));
+            // AddAdminPage is a ShellContent, use absolute navigation
+            await Shell.Current.GoToAsync("//AddAdminPage");
         }
 
         private async void OnViewRedeemedRewards(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(AdminManageRewardsPage));
+            // Navigate using unambiguous route name
+            await Shell.Current.GoToAsync("admin_manage_rewards");
+        }
+
+        private async void OnViewProfile(object sender, EventArgs e)
+        {
+            // Navigate to Admin Profile page
+            await Shell.Current.GoToAsync(nameof(AdminProfilePage));
         }
     }
 }

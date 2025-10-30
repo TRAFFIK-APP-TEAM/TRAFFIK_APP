@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<linker>
+  <!-- Keep everything in your app namespace -->
+  <assembly fullname="TRAFFIK_APP">
+    <type fullname="TRAFFIK_APP.Helpers.ServiceHelper" preserve="all" />
+    <type fullname="TRAFFIK_APP.App" preserve="all" />
+    <type fullname="TRAFFIK_APP.*" preserve="all" />
+  </assembly>
+
+  <!-- Keep essential DI + logging assemblies -->
+  <assembly fullname="Microsoft.Extensions.Http" preserve="all" />
+  <assembly fullname="Microsoft.Extensions.Logging" preserve="all" />
+  <assembly fullname="Microsoft.Extensions.DependencyInjection" preserve="all" />
+  <assembly fullname="Microsoft.Maui.Controls" preserve="all" />
+  <assembly fullname="Microsoft.Maui.Controls.Xaml" preserve="all" />
+  <assembly fullname="Microsoft.Maui" preserve="all" />
+  <assembly fullname="Microsoft.Maui.Graphics" preserve="all" />
+  <assembly fullname="Microsoft.Maui.Essentials" preserve="all" />
+
+  <!-- Keep all ViewModels -->
+  <assembly fullname="TRAFFIK_APP">
+    <type fullname="TRAFFIK_APP.ViewModels.*" preserve="all" />
+  </assembly>
+
+  <!-- Keep all Views -->
+  <assembly fullname="TRAFFIK_APP">
+    <type fullname="TRAFFIK_APP.Views.*" preserve="all" />
+  </assembly>
+
+  <!-- Keep all Models -->
+  <assembly fullname="TRAFFIK_APP">
+    <type fullname="TRAFFIK_APP.Models.*" preserve="all" />
+  </assembly>
+
+  <!-- Keep all Services -->
+  <assembly fullname="TRAFFIK_APP">
+    <type fullname="TRAFFIK_APP.Services.*" preserve="all" />
+  </assembly>
+
+  <!-- Keep all ApiClients -->
+  <assembly fullname="TRAFFIK_APP">
+    <type fullname="TRAFFIK_APP.Services.ApiClients.*" preserve="all" />
+  </assembly>
+
+  <!-- Keep HttpClient functionality -->
+  <assembly fullname="System.Net.Http">
+    <type fullname="System.Net.Http.*" preserve="all" />
+  </assembly>
+
+  <!-- Keep essential .NET types (removed overly broad preserve statements) -->
+
+  <!-- Keep JSON serialization -->
+  <assembly fullname="System.Text.Json">
+    <type fullname="System.Text.Json.*" preserve="all" />
+  </assembly>
+
+  <!-- Keep System.Collections.Generic for ObservableCollection, List, etc. -->
+  <assembly fullname="System.Collections">
+    <type fullname="System.Collections.Generic.*" preserve="all" />
+  </assembly>
+</linker>
+
