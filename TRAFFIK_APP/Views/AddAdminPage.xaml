@@ -9,7 +9,7 @@
         <VerticalStackLayout Padding="20" Spacing="16">
 
             <!-- Back Button -->
-            <Button Text="← Back to Analytics"
+            <Button Text="← Back"
                     BackgroundColor="#007AFF"
                     TextColor="White"
                     CornerRadius="12"

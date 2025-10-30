@@ -12,6 +12,6 @@ public partial class AddAdminPage : ContentPage
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("///AdminAnalyticsPage");
+        await Shell.Current.GoToAsync("///AdminDashboardPage");
     }
 }
